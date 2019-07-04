@@ -17,6 +17,10 @@ class Chainable {
     return this._enqueue('filter', callback)
   }
 
+  find (callback) {
+    return this._enqueue('find', callback)
+  }
+
   forEach (callback) {
     return this._enqueue('forEach', callback)
   }
