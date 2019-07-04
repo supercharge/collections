@@ -1,0 +1,33 @@
+{
+  "name": "@supercharge/collections",
+  "description": "Supercharge collections",
+  "version": "0.0.0",
+  "author": "Marcus Pöhls <marcus@futurestud.io>",
+  "bugs": {
+    "url": "https://github.com/superchargejs/collections/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "~6.0.1",
+    "eslint-config-standard": "~12.0.0",
+    "eslint-plugin-import": "~2.18.0",
+    "eslint-plugin-node": "~9.1.0",
+    "eslint-plugin-promise": "~4.2.1",
+    "eslint-plugin-standard": "~4.0.0"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "homepage": "https://github.com/superchargejs/collections",
+  "keywords": [
+    "supercharge",
+    "superchargejs",
+    "collections"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superchargejs/collections.git"
+  }
+}
