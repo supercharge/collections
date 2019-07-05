@@ -1,9 +1,9 @@
 'use strict'
 
 /**
- * Asynchronous version of Array#map(). It runs the given `callback` on
- * each item of the `array` and returns an array of transformed
- * items. Runs all transformations in parallel.
+ * Asynchronous version of Array#map(), running all transformations
+ * in parallel. It runs the given `callback` on each item of the
+ * `array` and returns an array of transformed items.
  *
  * @param {Array} array
  * @param {Function} callback
