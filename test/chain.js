@@ -17,6 +17,22 @@ describe('Chained Collection', () => {
     expect(result).to.equal([2, 3])
   })
 
+  it('map', async () => {
+    expect(
+      await Collect([1, 2, 3])
+        .map(item => item * 10)
+        .run()
+    ).to.equal([ 10, 20, 30 ])
+  })
+
+  it('mapSeries', async () => {
+    expect(
+      await Collect([1, 2, 3])
+        .mapSeries(item => item * 10)
+        .run()
+    ).to.equal([ 10, 20, 30 ])
+  })
+
   it('find', async () => {
     expect(
       await Collect([1, 2, 3])

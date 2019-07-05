@@ -6,5 +6,6 @@ module.exports = {
   find: require('./find'),
   forEach: require('./forEach'),
   map: require('./map'),
+  mapSeries: require('./mapSeries'),
   some: require('./some')
 }

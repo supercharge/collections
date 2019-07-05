@@ -13,6 +13,10 @@ class Chainable {
     return this._enqueue('map', callback)
   }
 
+  mapSeries (callback) {
+    return this._enqueue('mapSeries', callback)
+  }
+
   filter (callback) {
     return this._enqueue('filter', callback)
   }

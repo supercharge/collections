@@ -2,7 +2,7 @@
 
 const Lab = require('@hapi/lab')
 const { expect } = require('@hapi/code')
-const { map, filter, find, forEach, every, some } = require('..')
+const { map, mapSeries, filter, find, forEach, every, some } = require('..')
 
 const { describe, it } = (exports.lab = Lab.script())
 
@@ -22,6 +22,21 @@ describe('Collection Methods', () => {
 
     const elapsed = Date.now() - start
     expect(elapsed < 100).to.be.true() // functions should run in parallel
+  })
+
+  it('mapSeries', async () => {
+    const start = Date.now()
+
+    const result = await mapSeries([ 1, 2, 3 ], async (timeout) => {
+      await pause(50)
+
+      return timeout * 10
+    })
+
+    expect(result).to.be.equal([ 10, 20, 30 ])
+
+    const elapsed = Date.now() - start
+    expect(elapsed > 100 && elapsed < 200).to.be.true() // functions should run in sequence
   })
 
   it('filter', async () => {
