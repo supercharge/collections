@@ -6,7 +6,7 @@ const Queue = require('@supercharge/queue-datastructure')
 class Chainable {
   constructor (array) {
     this._callQueue = new Queue()
-    this._collection = Array.isArray(array) ? array : [array]
+    this._collection = array
   }
 
   map (callback) {
