@@ -1,7 +1,7 @@
 'use strict'
 
 const Methods = require('..')
-const Queue = require('./utils/queue')
+const Queue = require('@supercharge/queue-datastructure')
 
 class Chainable {
   constructor (array) {

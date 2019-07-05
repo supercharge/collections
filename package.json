@@ -6,8 +6,12 @@
   "bugs": {
     "url": "https://github.com/superchargejs/collections/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@supercharge/queue-datastructure": "~1.0.0"
+  },
   "devDependencies": {
+    "@hapi/code": "~5.3.1",
+    "@hapi/lab": "~19.1.0",
     "eslint": "~6.0.1",
     "eslint-config-standard": "~12.0.0",
     "eslint-plugin-import": "~2.18.0",
@@ -29,5 +33,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/superchargejs/collections.git"
+  },
+  "scripts": {
+    "lint": "eslint --fix",
+    "test": "lab --assert @hapi/code --leaks --coverage --lint"
   }
 }
