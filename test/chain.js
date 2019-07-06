@@ -35,52 +35,38 @@ describe('Chained Collection', () => {
 
   it('find', async () => {
     expect(
-      await Collect([1, 2, 3])
-        .find(item => item === 2)
-        .run()
+      await Collect([1, 2, 3]).find(item => item === 2)
     ).to.equal(2)
 
     expect(
-      await Collect([1, 2, 3])
-        .find(item => item === 10)
-        .run()
+      await Collect([1, 2, 3]).find(item => item === 10)
     ).to.be.undefined()
   })
 
   it('every', async () => {
     expect(
-      await Collect([1, 2, 3])
-        .every(item => item === 2)
-        .run()
+      await Collect([1, 2, 3]).every(item => item === 2)
     ).to.be.false()
 
     expect(
-      await Collect([1, 2, 3])
-        .every(item => item < 10)
-        .run()
+      await Collect([1, 2, 3]).every(item => item < 10)
     ).to.be.true()
   })
 
   it('some', async () => {
     expect(
-      await Collect([1, 2, 3])
-        .some(item => item > 5)
-        .run()
+      await Collect([1, 2, 3]).some(item => item > 5)
     ).to.be.false()
 
     expect(
-      await Collect([1, 2, 3])
-        .some(item => item < 10)
-        .run()
+      await Collect([1, 2, 3]).some(item => item < 10)
     ).to.be.true()
   })
 
   it('forEach', async () => {
     const callback = Sinon.spy()
 
-    await Collect([1, 2, 3])
-      .forEach(callback)
-      .run()
+    await Collect([1, 2, 3]).forEach(callback)
 
     expect(callback.called).to.be.true()
     expect(callback.calledWith(1)).to.be.true()
@@ -89,13 +75,11 @@ describe('Chained Collection', () => {
     expect(callback.calledWith(4)).to.be.false()
   })
 
-  it('fails', async () => {
-    expect(
-      Collect([1, 2, 3])
-        .forEach(item => item)
-        .filter(item => item > 1)
-        .run()
+  it('throws', async () => {
+    const fn = () => { throw new Error() }
 
+    expect(
+      Collect([ 1, 2, 3 ]).forEach(fn)
     ).to.reject()
   })
 })
