@@ -22,7 +22,8 @@ async function run () {
   const result = await Collect(input)
     .map(item => item * 100)
     .map(async timeout => {
-      return wait(timeout)
+      await wait(timeout)
+      return timeout
     })
     .filter(timeout => timeout > 500)
     .run()
