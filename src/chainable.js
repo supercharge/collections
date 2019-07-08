@@ -22,27 +22,27 @@ class Chainable {
   }
 
   find (callback) {
-    this._enqueue('find', callback)
-
-    return this.run()
+    return this.run(
+      this._enqueue('find', callback)
+    )
   }
 
   forEach (callback) {
-    this._enqueue('forEach', callback)
-
-    return this.run()
+    return this.run(
+      this._enqueue('forEach', callback)
+    )
   }
 
   every (callback) {
-    this._enqueue('every', callback)
-
-    return this.run()
+    return this.run(
+      this._enqueue('every', callback)
+    )
   }
 
   some (callback) {
-    this._enqueue('some', callback)
-
-    return this.run()
+    return this.run(
+      this._enqueue('some', callback)
+    )
   }
 
   _enqueue (method, callback) {
