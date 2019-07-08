@@ -9,6 +9,10 @@ class Chainable {
     this._collection = array
   }
 
+  flatMap (callback) {
+    return this._enqueue('flatMap', callback)
+  }
+
   map (callback) {
     return this._enqueue('map', callback)
   }
@@ -31,6 +35,10 @@ class Chainable {
     return this.run(
       this._enqueue('forEach', callback)
     )
+  }
+
+  collapse (callback) {
+    return this._enqueue('collapse', callback)
   }
 
   every (callback) {
