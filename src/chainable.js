@@ -3,10 +3,10 @@
 const Methods = require('./methods')
 const Queue = require('@supercharge/queue-datastructure')
 
-class Chainable {
+class Collection {
   constructor (array) {
     this._callQueue = new Queue()
-    this._collection = array
+    this._items = array
   }
 
   flatMap (callback) {
@@ -63,15 +63,15 @@ class Chainable {
     while (this._callQueue.isNotEmpty()) {
       try {
         const { method, callback } = this._callQueue.dequeue()
-        this._collection = await method(this._collection, callback)
+        this._items = await method(this._items, callback)
       } catch (error) {
         this._callQueue.clear()
         throw error
       }
     }
 
-    return this._collection
+    return this._items
   }
 }
 
-module.exports = Chainable
+module.exports = Collection

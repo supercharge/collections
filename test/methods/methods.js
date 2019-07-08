@@ -2,7 +2,7 @@
 
 const Lab = require('@hapi/lab')
 const { expect } = require('@hapi/code')
-const { map, mapSeries, filter, find, forEach, every, some } = require('..')
+const { map, mapSeries, filter, find, forEach, every, some } = require('../../src/methods')
 
 const { describe, it } = (exports.lab = Lab.script())
 

@@ -1,6 +1,7 @@
 'use strict'
 
-module.exports = Object.assign(
-  require('./src/collection'),
-  require('./src/methods')
-)
+const Collection = require('./src/collection')
+
+module.exports = function collect (...args) {
+  return new Collection(...args)
+}
