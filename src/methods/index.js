@@ -9,5 +9,6 @@ module.exports = {
   forEach: require('./forEach'),
   map: require('./map'),
   mapSeries: require('./mapSeries'),
+  reduce: require('./reduce'),
   some: require('./some')
 }
