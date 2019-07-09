@@ -7,7 +7,8 @@
   <br/>
   <p>
     <a href="#installation"><strong>Installation</strong></a> ·
-    <a href="#usage-methods"><strong>Usage</strong></a>
+    <a href="#usage"><strong>Usage</strong></a> ·
+    <a href="#Docs"><strong>Docs</strong></a>
   </p>
   <br/>
   <br/>
@@ -29,8 +30,43 @@ npm i @supercharge/collections
 ```
 
 
-## Usage & Methods
-Please find the [extensive docs over at superchargejs.com](https://superchargejs.com/docs/master/collections).
+## Usage
+The package exports a function accepting an array as a parameter. From there, you can chain all collection methods.
+
+The package is async/await-ready and supports async functions for most of the methods.
+
+**Notice:** if the result of your collection pipeline is an array, you must end the call chain with the `.run()` method. The `.run()` tells the library to start processing and not wait for additional methods in the chain.
+
+```js
+const Collect = require('@supercharge/collections')
+
+await Collect([ 1, 2, 3, 4, 5 ])
+  .map(item => item * 100)
+  .map(async timeout => {
+    await wait(timeout)
+    return timeout
+  })
+  .filter(timeout => timeout > 200)
+  .run()
+
+// result: [ 300, 400, 500 ]
+```
+
+For methods that return a definitive value (not an array), you can directly await the result:
+
+```js
+await Collect([ 1, 2, 3 ])
+  .map(item => item * 100)
+  .reduce((carry, item) => {
+    return carry + item
+  }, 0)
+
+// result: 600
+```
+
+
+## Docs
+Find all the [details and available methods in the extensive Supercharge docs](https://superchargejs.com/docs/master/collections).
 
 
 ## Contributing
