@@ -41,7 +41,7 @@ const Collect = require('@supercharge/collections')
 await Collect([ 1, 2, 3, 4, 5 ])
   .map(item => item * 100)
   .map(async timeout => {
-    await wait(timeout)
+    await new Promise(resolve => setTimeout(resolve, ms))
     return timeout
   })
   .filter(timeout => timeout > 200)
