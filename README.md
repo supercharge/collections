@@ -30,7 +30,7 @@ npm i @supercharge/collections
 
 
 ## Usage & Methods
-Please find the [extensive docs over at superchargejs.com](https://superchargejs.com/docs/collections).
+Please find the [extensive docs over at superchargejs.com](https://superchargejs.com/docs/master/collections).
 
 
 ## Contributing
