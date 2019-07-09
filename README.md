@@ -35,8 +35,6 @@ The package exports a function accepting an array as a parameter. From there, yo
 
 The package is async/await-ready and supports async functions for most of the methods.
 
-**Notice:** if the result of your collection pipeline is an array, you must end the call chain with the `.run()` method. The `.run()` tells the library to start processing and not wait for additional methods in the chain.
-
 ```js
 const Collect = require('@supercharge/collections')
 
@@ -51,6 +49,8 @@ await Collect([ 1, 2, 3, 4, 5 ])
 
 // result: [ 300, 400, 500 ]
 ```
+
+**Notice:** if the result of your collection pipeline is an array, you must end the call chain with the `.run()` method. The `.run()` tells the library to start processing and not wait for additional methods in the chain.
 
 For methods that return a definitive value (not an array), you can directly await the result:
 
