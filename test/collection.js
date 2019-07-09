@@ -7,6 +7,8 @@ const { expect } = require('@hapi/code')
 
 const { describe, it } = (exports.lab = Lab.script())
 
+const pause = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 describe('Chained Collection', () => {
   it('processes a collection pipeline', async () => {
     const result = await Collect([1, 2, 3])
@@ -18,25 +20,90 @@ describe('Chained Collection', () => {
   })
 
   it('map', async () => {
+    const start = Date.now()
+
     expect(
       await Collect([1, 2, 3])
-        .map(item => item * 10)
+        .map(async item => {
+          await pause(50)
+
+          return item * 10
+        })
         .run()
     ).to.equal([ 10, 20, 30 ])
+
+    const elapsed = Date.now() - start
+    expect(elapsed < 100).to.be.true() // map should run in parallel
   })
 
   it('mapSeries', async () => {
+    const start = Date.now()
+
     expect(
       await Collect([1, 2, 3])
-        .mapSeries(item => item * 10)
+        .mapSeries(async item => {
+          await pause(50)
+
+          return item * 10
+        })
         .run()
     ).to.equal([ 10, 20, 30 ])
+
+    const elapsed = Date.now() - start
+    expect(elapsed > 100 && elapsed < 200).to.be.true() // functions should run in sequence
+  })
+
+  it('flatMap', async () => {
+    const start = Date.now()
+
+    expect(
+      await Collect([1, 2, 3])
+        .flatMap(async item => {
+          await pause(50)
+
+          return [item, item]
+        })
+        .run()
+    ).to.equal([1, 1, 2, 2, 3, 3])
+
+    const elapsed = Date.now() - start
+    expect(elapsed < 100).to.be.true() // map should run in parallel
+  })
+
+  it('filter', async () => {
+    const start = Date.now()
+
+    expect(
+      await Collect([1, 2, 3]).filter(async (item) => {
+        await pause(50)
+
+        return item > 1
+      }).run()
+    ).to.equal([ 2, 3 ])
+
+    const elapsed = Date.now() - start
+    expect(elapsed < 100).to.be.true()
+  })
+
+  it('reduce', async () => {
+    expect(
+      await Collect([1, 2, 3]).reduce(async (carry, item) => {
+        await pause(50)
+
+        return carry + item
+      }, 0)
+    ).to.equal(6)
   })
 
   it('find', async () => {
+    const start = Date.now()
+
     expect(
       await Collect([1, 2, 3]).find(item => item === 2)
     ).to.equal(2)
+
+    const elapsed = Date.now() - start
+    expect(elapsed < 100).to.be.true()
 
     expect(
       await Collect([1, 2, 3]).find(item => item === 10)
@@ -44,9 +111,14 @@ describe('Chained Collection', () => {
   })
 
   it('every', async () => {
+    const start = Date.now()
+
     expect(
       await Collect([1, 2, 3]).every(item => item === 2)
     ).to.be.false()
+
+    const elapsed = Date.now() - start
+    expect(elapsed < 100).to.be.true()
 
     expect(
       await Collect([1, 2, 3]).every(item => item < 10)
@@ -54,9 +126,14 @@ describe('Chained Collection', () => {
   })
 
   it('some', async () => {
+    const start = Date.now()
+
     expect(
       await Collect([1, 2, 3]).some(item => item > 5)
     ).to.be.false()
+
+    const elapsed = Date.now() - start
+    expect(elapsed < 100).to.be.true()
 
     expect(
       await Collect([1, 2, 3]).some(item => item < 10)
@@ -64,6 +141,15 @@ describe('Chained Collection', () => {
   })
 
   it('forEach', async () => {
+    const start = Date.now()
+
+    await Collect([ 1, 2, 3, 4 ]).forEach(async (item) => {
+      await pause(item * 10)
+    })
+
+    const elapsed = Date.now() - start
+    expect(elapsed < 100).to.be.true()
+
     const callback = Sinon.spy()
 
     await Collect([1, 2, 3]).forEach(callback)
@@ -73,6 +159,12 @@ describe('Chained Collection', () => {
     expect(callback.calledWith(2)).to.be.true()
     expect(callback.calledWith(3)).to.be.true()
     expect(callback.calledWith(4)).to.be.false()
+  })
+
+  it('collapse', async () => {
+    expect(
+      await Collect([[1], [{}, 5, {}], ['xoxo']]).collapse().run()
+    ).to.equal([1, {}, 5, {}, 'xoxo'])
   })
 
   it('throws', async () => {
