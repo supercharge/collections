@@ -36,7 +36,7 @@
     "url": "git+https://github.com/superchargejs/collections.git"
   },
   "scripts": {
-    "lint": "eslint --fix",
+    "lint": "eslint .",
     "test": "lab --assert @hapi/code --leaks --coverage --lint --reporter console --output stdout --reporter html --output ./coverage/coverage.html"
   }
 }
