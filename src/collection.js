@@ -9,46 +9,6 @@ class Collection {
     this._items = array
   }
 
-  flatMap (callback) {
-    return this._enqueue('flatMap', callback)
-  }
-
-  map (callback) {
-    return this._enqueue('map', callback)
-  }
-
-  mapSeries (callback) {
-    return this._enqueue('mapSeries', callback)
-  }
-
-  filter (callback) {
-    return this._enqueue('filter', callback)
-  }
-
-  reduce (reducer, initial) {
-    return this.run(
-      this._enqueue('reduce', reducer, initial)
-    )
-  }
-
-  reduceRight (reducer, initial) {
-    return this.run(
-      this._enqueue('reduceRight', reducer, initial)
-    )
-  }
-
-  find (callback) {
-    return this.run(
-      this._enqueue('find', callback)
-    )
-  }
-
-  forEach (callback) {
-    return this.run(
-      this._enqueue('forEach', callback)
-    )
-  }
-
   collapse (callback) {
     return this._enqueue('collapse', callback)
   }
@@ -60,6 +20,46 @@ class Collection {
   every (callback) {
     return this.run(
       this._enqueue('every', callback)
+    )
+  }
+
+  filter (callback) {
+    return this._enqueue('filter', callback)
+  }
+
+  find (callback) {
+    return this.run(
+      this._enqueue('find', callback)
+    )
+  }
+
+  flatMap (callback) {
+    return this._enqueue('flatMap', callback)
+  }
+
+  forEach (callback) {
+    return this.run(
+      this._enqueue('forEach', callback)
+    )
+  }
+
+  map (callback) {
+    return this._enqueue('map', callback)
+  }
+
+  mapSeries (callback) {
+    return this._enqueue('mapSeries', callback)
+  }
+
+  reduce (reducer, initial) {
+    return this.run(
+      this._enqueue('reduce', reducer, initial)
+    )
+  }
+
+  reduceRight (reducer, initial) {
+    return this.run(
+      this._enqueue('reduceRight', reducer, initial)
     )
   }
 
