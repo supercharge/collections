@@ -53,6 +53,10 @@ class Collection {
     return this._enqueue('collapse', callback)
   }
 
+  compact () {
+    return this._enqueue('compact')
+  }
+
   every (callback) {
     return this.run(
       this._enqueue('every', callback)

@@ -181,8 +181,18 @@ describe('Chained Collection', () => {
 
   it('collapse', async () => {
     expect(
-      await Collect([[1], [{}, 'Marcus', true], [22]]).collapse().run()
+      await Collect([[1], [{}, 'Marcus', true], [22]])
+        .collapse()
+        .run()
     ).to.equal([1, {}, 'Marcus', true, 22])
+  })
+
+  it('compact', async () => {
+    expect(
+      await Collect([0, null, undefined, 1, false, 2, '', 3, NaN])
+        .compact()
+        .run()
+    ).to.equal([1, 2, 3])
   })
 
   it('throws', async () => {

@@ -2,6 +2,7 @@
 
 module.exports = {
   collapse: require('./collapse'),
+  compact: require('./compact'),
   every: require('./every'),
   filter: require('./filter'),
   find: require('./find'),
