@@ -7,8 +7,8 @@
   <br/>
   <p>
     <a href="#installation"><strong>Installation</strong></a> ·
-    <a href="#usage"><strong>Usage</strong></a> ·
-    <a href="#Docs"><strong>Docs</strong></a>
+    <a href="#Docs"><strong>Docs</strong></a> ·
+    <a href="#usage"><strong>Usage</strong></a>
   </p>
   <br/>
   <br/>
@@ -28,6 +28,10 @@
 ```
 npm i @supercharge/collections
 ```
+
+
+## Docs
+Find all the [details and available methods in the extensive Supercharge docs](https://superchargejs.com/docs/master/collections).
 
 
 ## Usage
@@ -63,10 +67,6 @@ await Collect([ 1, 2, 3 ])
 
 // result: 600
 ```
-
-
-## Docs
-Find all the [details and available methods in the extensive Supercharge docs](https://superchargejs.com/docs/master/collections).
 
 
 ## Contributing
