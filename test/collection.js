@@ -105,7 +105,7 @@ describe('Chained Collection', () => {
     ).to.equal('54321')
 
     expect(
-      await Collect([[1], [2], [3], [4], [5]]).reduceRight(async (carry, item) => {
+      await Collect([1, 2, 3, 4, 5]).reduceRight(async (carry, item) => {
         await pause(50)
 
         return carry.concat(item)
