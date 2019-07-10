@@ -49,14 +49,14 @@ await Collect([ 1, 2, 3, 4, 5 ])
     return timeout
   })
   .filter(timeout => timeout > 200)
-  .run()
+  .all()
 
 // result: [ 300, 400, 500 ]
 ```
 
-**Notice:** if the result of your collection pipeline is an array, you must end the call chain with the `.run()` method. The `.run()` tells the library to start processing and not wait for additional methods in the chain.
+**Notice:** when chaining methods like `map` or `filter`, you'll receive a collection instance in return. You must actively end the call chain using the `.all()` method to process the collection pipeline and retrieve the final result.
 
-For methods that return a definitive value (not an array), you can directly await the result:
+Yu can directly await the result for methods returning a definite value:
 
 ```js
 await Collect([ 1, 2, 3 ])

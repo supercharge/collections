@@ -10,11 +10,17 @@ const { describe, it } = (exports.lab = Lab.script())
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 describe('Chained Collection', () => {
+  it('returns an empty array when used without data', async () => {
+    expect(
+      await Collect().all()
+    ).to.equal([])
+  })
+
   it('processes a collection pipeline', async () => {
     const result = await Collect([1, 2, 3])
       .map(item => item)
       .filter(item => item > 1)
-      .run()
+      .all()
 
     expect(result).to.equal([2, 3])
   })
@@ -29,7 +35,7 @@ describe('Chained Collection', () => {
 
           return item * 10
         })
-        .run()
+        .all()
     ).to.equal([ 10, 20, 30 ])
 
     const elapsed = Date.now() - start
@@ -46,7 +52,7 @@ describe('Chained Collection', () => {
 
           return item * 10
         })
-        .run()
+        .all()
     ).to.equal([ 10, 20, 30 ])
 
     const elapsed = Date.now() - start
@@ -63,7 +69,7 @@ describe('Chained Collection', () => {
 
           return [item, item]
         })
-        .run()
+        .all()
     ).to.equal([1, 1, 2, 2, 3, 3])
 
     const elapsed = Date.now() - start
@@ -78,7 +84,7 @@ describe('Chained Collection', () => {
         await pause(50)
 
         return item > 1
-      }).run()
+      }).all()
     ).to.equal([ 2, 3 ])
 
     const elapsed = Date.now() - start
@@ -183,7 +189,7 @@ describe('Chained Collection', () => {
     expect(
       await Collect([[1], [{}, 'Marcus', true], [22]])
         .collapse()
-        .run()
+        .all()
     ).to.equal([1, {}, 'Marcus', true, 22])
   })
 
@@ -191,7 +197,7 @@ describe('Chained Collection', () => {
     expect(
       await Collect([0, null, undefined, 1, false, 2, '', 3, NaN])
         .compact()
-        .run()
+        .all()
     ).to.equal([1, 2, 3])
   })
 

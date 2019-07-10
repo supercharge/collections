@@ -4,9 +4,9 @@ const Methods = require('./methods')
 const Queue = require('@supercharge/queue-datastructure')
 
 class Collection {
-  constructor (array) {
-    this._callQueue = new Queue()
-    this._items = array
+  constructor (items = []) {
+    this._callChain = new Queue()
+    this._items = items
   }
 
   collapse (callback) {
@@ -18,7 +18,7 @@ class Collection {
   }
 
   every (callback) {
-    return this.run(
+    return this.all(
       this._enqueue('every', callback)
     )
   }
@@ -28,7 +28,7 @@ class Collection {
   }
 
   find (callback) {
-    return this.run(
+    return this.all(
       this._enqueue('find', callback)
     )
   }
@@ -38,7 +38,7 @@ class Collection {
   }
 
   forEach (callback) {
-    return this.run(
+    return this.all(
       this._enqueue('forEach', callback)
     )
   }
@@ -52,36 +52,36 @@ class Collection {
   }
 
   reduce (reducer, initial) {
-    return this.run(
+    return this.all(
       this._enqueue('reduce', reducer, initial)
     )
   }
 
   reduceRight (reducer, initial) {
-    return this.run(
+    return this.all(
       this._enqueue('reduceRight', reducer, initial)
     )
   }
 
   some (callback) {
-    return this.run(
+    return this.all(
       this._enqueue('some', callback)
     )
   }
 
   _enqueue (method, callback, initial) {
-    this._callQueue.enqueue({ method: Methods[method], callback, initial })
+    this._callChain.enqueue({ method: Methods[method], callback, initial })
 
     return this
   }
 
-  async run () {
-    while (this._callQueue.isNotEmpty()) {
+  async all () {
+    while (this._callChain.isNotEmpty()) {
       try {
-        const { method, callback, initial } = this._callQueue.dequeue()
+        const { method, callback, initial } = this._callChain.dequeue()
         this._items = await method(this._items, callback, initial)
       } catch (error) {
-        this._callQueue.clear()
+        this._callChain.clear()
         throw error
       }
     }
