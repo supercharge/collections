@@ -26,7 +26,7 @@ async function run () {
       return timeout
     })
     .filter(timeout => timeout > 500)
-    .run()
+    .all()
 
   console.log(`Result: ${result}`)
 }
