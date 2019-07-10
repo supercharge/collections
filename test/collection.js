@@ -181,8 +181,8 @@ describe('Chained Collection', () => {
 
   it('collapse', async () => {
     expect(
-      await Collect([[1], [{}, 5, {}], ['xoxo']]).collapse().run()
-    ).to.equal([1, {}, 5, {}, 'xoxo'])
+      await Collect([[1], [{}, 'Marcus', true], [22]]).collapse().run()
+    ).to.equal([1, {}, 'Marcus', true, 22])
   })
 
   it('throws', async () => {
