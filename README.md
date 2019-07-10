@@ -70,6 +70,7 @@ Find all the [details and available methods in the extensive Supercharge docs](h
 
 
 ## Contributing
+Do you miss a collection function? We very much appreciate your contribution! Please send in a pull request 😊
 
 1.  Create a fork
 2.  Create your feature branch: `git checkout -b my-feature`
