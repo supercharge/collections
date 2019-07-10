@@ -65,8 +65,8 @@ class Collection {
     )
   }
 
-  _enqueue (method, callback, additional) {
-    this._callQueue.enqueue({ method: Methods[method], callback, additional })
+  _enqueue (method, callback, initial) {
+    this._callQueue.enqueue({ method: Methods[method], callback, initial })
 
     return this
   }
@@ -74,8 +74,8 @@ class Collection {
   async run () {
     while (this._callQueue.isNotEmpty()) {
       try {
-        const { method, callback, additional } = this._callQueue.dequeue()
-        this._items = await method(this._items, callback, additional)
+        const { method, callback, initial } = this._callQueue.dequeue()
+        this._items = await method(this._items, callback, initial)
       } catch (error) {
         this._callQueue.clear()
         throw error
