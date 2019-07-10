@@ -10,5 +10,6 @@ module.exports = {
   map: require('./map'),
   mapSeries: require('./mapSeries'),
   reduce: require('./reduce'),
+  reduceRight: require('./reduceRight'),
   some: require('./some')
 }

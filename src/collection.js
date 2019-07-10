@@ -31,6 +31,12 @@ class Collection {
     )
   }
 
+  reduceRight (reducer, initial) {
+    return this.run(
+      this._enqueue('reduceRight', reducer, initial)
+    )
+  }
+
   find (callback) {
     return this.run(
       this._enqueue('find', callback)

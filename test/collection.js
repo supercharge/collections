@@ -95,6 +95,24 @@ describe('Chained Collection', () => {
     ).to.equal(6)
   })
 
+  it('reduceRight', async () => {
+    expect(
+      await Collect([1, 2, 3, 4, 5]).reduceRight(async (carry, item) => {
+        await pause(50)
+
+        return `${carry}${item}`
+      }, '')
+    ).to.equal('54321')
+
+    expect(
+      await Collect([[1], [2], [3], [4], [5]]).reduceRight(async (carry, item) => {
+        await pause(50)
+
+        return carry.concat(item)
+      }, [])
+    ).to.equal([5, 4, 3, 2, 1])
+  })
+
   it('find', async () => {
     const start = Date.now()
 
