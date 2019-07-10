@@ -11,7 +11,7 @@
  *
  * @returns {*} resulting accumulator value
  */
-module.exports = async function reduce (array, reducer, accumulator) {
+module.exports = async function reduceRight (array, reducer, accumulator) {
   let index = array.length
 
   while (index--) {
