@@ -5,6 +5,7 @@
   <br/>
   <br/>
   <h3>Supercharge Collections</h3>
+  <br/>
   <p>
     <strong><code>async/await-ready</code></strong> array & collection utilities for Node.js
   </p>
