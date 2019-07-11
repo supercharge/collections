@@ -17,7 +17,7 @@ async function wait (ms) {
 }
 
 async function run () {
-  const input = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ]
+  const input = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
   const result = await Collect(input)
     .map(item => item * 100)

@@ -36,7 +36,7 @@ describe('Chained Collection', () => {
           return item * 10
         })
         .all()
-    ).to.equal([ 10, 20, 30 ])
+    ).to.equal([10, 20, 30])
 
     const elapsed = Date.now() - start
     expect(elapsed < 100).to.be.true() // map should run in parallel
@@ -53,7 +53,7 @@ describe('Chained Collection', () => {
           return item * 10
         })
         .all()
-    ).to.equal([ 10, 20, 30 ])
+    ).to.equal([10, 20, 30])
 
     const elapsed = Date.now() - start
     expect(elapsed > 100 && elapsed < 200).to.be.true() // functions should run in sequence
@@ -85,7 +85,7 @@ describe('Chained Collection', () => {
 
         return item > 1
       }).all()
-    ).to.equal([ 2, 3 ])
+    ).to.equal([2, 3])
 
     const elapsed = Date.now() - start
     expect(elapsed < 100).to.be.true()
@@ -167,7 +167,7 @@ describe('Chained Collection', () => {
   it('forEach', async () => {
     const start = Date.now()
 
-    await Collect([ 1, 2, 3, 4 ]).forEach(async (item) => {
+    await Collect([1, 2, 3, 4]).forEach(async (item) => {
       await pause(item * 10)
     })
 
@@ -205,7 +205,7 @@ describe('Chained Collection', () => {
     const fn = () => { throw new Error() }
 
     expect(
-      Collect([ 1, 2, 3 ]).forEach(fn)
+      Collect([1, 2, 3]).forEach(fn)
     ).to.reject()
   })
 })
