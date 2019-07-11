@@ -2,6 +2,9 @@
 
 const Collection = require('./src/collection')
 
-module.exports = function collect (...args) {
-  return new Collection(...args)
+const collect = collection => {
+  return new Collection(collection)
 }
+
+module.exports = collect
+module.exports.default = collect
