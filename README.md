@@ -5,7 +5,7 @@
   <br/>
   <br/>
   <p>
-    <strong>Collections<strong>
+    <strong>Collections</strong>
   </p>
   <p>
     <strong><code>async/await-ready</code></strong> array & collection utilities for Node.js
