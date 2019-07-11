@@ -31,7 +31,7 @@ npm i @supercharge/collections
 
 
 ## Docs
-Find all the [details and available methods in the extensive Supercharge docs](https://superchargejs.com/docs/master/collections).
+Find all the [details and available methods in the extensive Supercharge docs](https://superchargejs.com/docs/collections).
 
 
 ## Usage
