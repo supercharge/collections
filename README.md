@@ -4,8 +4,7 @@
   </a>
   <br/>
   <br/>
-  <h3>Supercharge Collections</h3>
-  <br/>
+  <h3>Collections</h3>
   <p>
     <strong><code>async/await-ready</code></strong> array & collection utilities for Node.js
   </p>
