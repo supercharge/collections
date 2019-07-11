@@ -2,7 +2,7 @@
   <br/>
   <br/>
   <p>
-    async/await-ready array & collection utilities for Node.js
+    <strong><code>async/await-ready</code></strong> array & collection utilities for Node.js
   </p>
   <br/>
   <p>
