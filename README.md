@@ -1,6 +1,10 @@
 <div align="center">
+  <a href="https://superchargejs.com">
+    <img width="471" style="max-width:100%;" src="https://superchargejs.com/images/supercharge-text.svg" />
+  </a>
   <br/>
   <br/>
+  <h3>Supercharge Collections</h3>
   <p>
     <strong><code>async/await-ready</code></strong> array & collection utilities for Node.js
   </p>
