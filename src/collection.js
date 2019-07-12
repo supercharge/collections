@@ -6,7 +6,7 @@ const Queue = require('@supercharge/queue-datastructure')
 class Collection {
   constructor (items = []) {
     this._callChain = new Queue()
-    this._items = items
+    this._items = Array.isArray(items) ? items : [items]
   }
 
   /**

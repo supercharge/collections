@@ -16,6 +16,12 @@ describe('Chained Collection', () => {
     ).to.equal([])
   })
 
+  it('wraps the initial data in an array if not already array', async () => {
+    expect(
+      await Collect('Marcus').all()
+    ).to.equal(['Marcus'])
+  })
+
   it('processes a collection pipeline', async () => {
     const result = await Collect([1, 2, 3])
       .map(item => item)
