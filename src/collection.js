@@ -206,7 +206,7 @@ class Collection {
   }
 
   /**
-   * Returns number of items in the collection’s underlying array.
+   * Returns the number of items in the collection.
    *
    * @returns {Number}
    */
