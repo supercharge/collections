@@ -97,6 +97,23 @@ describe('Chained Collection', () => {
     expect(elapsed < 100).to.be.true()
   })
 
+  it('reject', async () => {
+    const start = Date.now()
+
+    expect(
+      await Collect([1, 2, 3, 4, 5])
+        .reject(async (item) => {
+          await pause(50)
+
+          return item % 2 === 1 // remove all odds
+        })
+        .all()
+    ).to.equal([2, 4])
+
+    const elapsed = Date.now() - start
+    expect(elapsed < 100).to.be.true()
+  })
+
   it('reduce', async () => {
     expect(
       await Collect([1, 2, 3]).reduce(async (carry, item) => {

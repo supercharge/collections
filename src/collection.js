@@ -180,6 +180,19 @@ class Collection {
   }
 
   /**
+   * Inverse of Array#filter(), **removing** all items satisfying the
+   * `callback` testing function. The callback should return `true`
+   * if an item should be removed from the resulting collection.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Collection}
+   */
+  reject (callback) {
+    return this._enqueue('reject', callback)
+  }
+
+  /**
    * Returns number of items in the collection’s underlying array.
    *
    * @returns {Number}
