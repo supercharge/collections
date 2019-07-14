@@ -5,9 +5,9 @@
 
 ### Added
 - `.size()` method
-- `.reject()` method
 - `.isEmpty()` method
 - `.isNotEmpty()` method
+- `.reject()` method (as an inverse method to `.filter()`)
 
 ### Updated
 - bump dependencies
