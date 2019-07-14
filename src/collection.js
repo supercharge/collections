@@ -161,6 +161,17 @@ class Collection {
   }
 
   /**
+   * Returns number of items in the collection’s underlying array.
+   *
+   * @returns {Number}
+   */
+  size () {
+    return this.all(
+      this._enqueue('size')
+    )
+  }
+
+  /**
    * Asynchronous version of `Array#some()`. This function
    * tests whether at least one element in the `array`
    * passes the check implemented by the `callback`.

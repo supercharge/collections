@@ -155,6 +155,16 @@ describe('Chained Collection', () => {
     ).to.be.true()
   })
 
+  it('size', async () => {
+    expect(
+      await Collect([1, 2, 3]).size()
+    ).to.equal(3)
+
+    expect(
+      await Collect([]).size()
+    ).to.equal(0)
+  })
+
   it('some', async () => {
     const start = Date.now()
 
