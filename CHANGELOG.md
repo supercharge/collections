@@ -8,6 +8,7 @@
 - `.isEmpty()` method
 - `.isNotEmpty()` method
 - `.reject()` method (as an inverse method to `.filter()`)
+- `.forEachSeries()` method (it was implemented for 1.0, but not exported 😅)
 
 ### Updated
 - bump dependencies
