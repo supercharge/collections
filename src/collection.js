@@ -45,12 +45,9 @@ class Collection {
   }
 
   /**
-   * Asynchronously filter the given `array` using the provided `callback`.
-   * At first, this function uses an async version of Array.map to run the
-   * `callback` on every item. This returns an array of boolean values,
-   * like `[ true, false, true ]`. The final filter results will be
-   * calculated based on the boolean results and only those items
-   * having a `true` result in the boolean array will survive.
+   * Asynchronous version of Array#filter(). The `callback`
+   * testing function should return `true` if an item
+   * should be included in the resulting collection.
    *
    * @param {Function} callback
    *
@@ -62,7 +59,7 @@ class Collection {
 
   /**
    * Asynchronous version of Array#find(). Returns the first
-   * item in the `array` that satisfies the `callback`
+   * item in the collection that satisfies the `callback`
    * testing function, `undefined` otherwise.
    *
    * @param {Function} callback
