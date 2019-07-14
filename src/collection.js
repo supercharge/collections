@@ -87,15 +87,28 @@ class Collection {
   }
 
   /**
-   * Asynchrounous version of Array#forEach(). It runs the given
-   * `callback` function on each `array` item. The callback
-   * receives the current array item as a parameter.
+   * Asynchrounous version of Array#forEach(), running the given
+   * `callback` function on each `array` item in parallel. The
+   * callback receives the current array item as a parameter.
    *
    * @param {Function} callback
    */
   forEach (callback) {
     return this.all(
       this._enqueue('forEach', callback)
+    )
+  }
+
+  /**
+   * Asynchrounous version of Array#forEach(), running the given
+   * `callback` function on each `array` item **in sequence**.
+   * The callback receives the current array item as a parameter.
+   *
+   * @param {Function} callback
+   */
+  forEachSeries (callback) {
+    return this.all(
+      this._enqueue('forEachSeries', callback)
     )
   }
 

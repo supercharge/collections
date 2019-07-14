@@ -8,6 +8,7 @@ module.exports = {
   find: require('./find'),
   flatMap: require('./flatMap'),
   forEach: require('./forEach'),
+  forEachSeries: require('./forEachSeries'),
   isEmpty: require('./isEmpty'),
   isNotEmpty: require('./isNotEmpty'),
   map: require('./map'),

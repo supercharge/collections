@@ -200,12 +200,13 @@ describe('Chained Collection', () => {
   it('forEach', async () => {
     const start = Date.now()
 
-    await Collect([1, 2, 3, 4]).forEach(async (item) => {
-      await pause(item * 10)
-    })
+    await Collect([1, 2, 3, 4])
+      .forEach(async item => {
+        await pause(item * 10)
+      })
 
     const elapsed = Date.now() - start
-    expect(elapsed < 100).to.be.true()
+    expect(elapsed < 50).to.be.true()
 
     const callback = Sinon.spy()
 
@@ -216,6 +217,27 @@ describe('Chained Collection', () => {
     expect(callback.calledWith(2)).to.be.true()
     expect(callback.calledWith(3)).to.be.true()
     expect(callback.calledWith(4)).to.be.false()
+  })
+
+  it('forEachSeries', async () => {
+    const start = Date.now()
+
+    await Collect([1, 2, 3, 4])
+      .forEachSeries(async item => {
+        await pause(item * 10)
+      })
+
+    const elapsed = Date.now() - start
+    expect(elapsed >= 100 && elapsed < 150).to.be.true() // functions should run in sequence
+
+    const callback = Sinon.spy()
+
+    await Collect([1, 2, 3]).forEachSeries(callback)
+
+    expect(callback.called).to.be.true()
+    expect(callback.calledWith(1)).to.be.true()
+    expect(callback.calledWith(2)).to.be.true()
+    expect(callback.calledWith(3)).to.be.true()
   })
 
   it('isEmpty', async () => {
