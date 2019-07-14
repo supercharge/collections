@@ -103,6 +103,28 @@ class Collection {
   }
 
   /**
+   * Returns `true` when the collection is empty, `false` otherwise.
+   *
+   * @returns {Boolean}
+   */
+  isEmpty () {
+    return this.all(
+      this._enqueue('isEmpty')
+    )
+  }
+
+  /**
+   * Returns `true` when the collection is not empty, `false` otherwise.
+   *
+   * @returns {Boolean}
+   */
+  isNotEmpty () {
+    return this.all(
+      this._enqueue('isNotEmpty')
+    )
+  }
+
+  /**
    * Asynchronous version of Array#map(), running all transformations
    * in parallel. It runs the given `callback` on each item of the
    * `array` and returns an array of transformed items.

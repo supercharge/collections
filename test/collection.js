@@ -201,6 +201,26 @@ describe('Chained Collection', () => {
     expect(callback.calledWith(4)).to.be.false()
   })
 
+  it('isEmpty', async () => {
+    expect(
+      await Collect().isEmpty()
+    ).to.be.true()
+
+    expect(
+      await Collect([1, 2, 3]).isEmpty()
+    ).to.be.false()
+  })
+
+  it('isNotEmpty', async () => {
+    expect(
+      await Collect().isNotEmpty()
+    ).to.be.false()
+
+    expect(
+      await Collect([1, 2, 3]).isNotEmpty()
+    ).to.be.true()
+  })
+
   it('collapse', async () => {
     expect(
       await Collect([[1], [{}, 'Marcus', true], [22]])
