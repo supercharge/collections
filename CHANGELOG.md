@@ -11,7 +11,7 @@
 - `.forEachSeries()` method (it was implemented for 1.0, but not exported 😅)
 
 ### Updated
-- bump dependencies
+- bump dev dependencies
 - refined docblocks for methods
 
 
