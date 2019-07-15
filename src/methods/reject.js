@@ -3,7 +3,9 @@
 const map = require('./map')
 
 /**
- * Text
+ * Inverse of Array#filter(), removing all items from the array that satisfy
+ * the `callback` testing function. The callback should return `true`
+ * if an item should be removed from the resulting collection.
  *
  * @param {Array} array
  * @param {Function} callback
