@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.1.0](https://github.com/superchargejs/collections/compare/v1.0.0...v1.1.0) - 2019-07-xx
+## [1.1.0](https://github.com/superchargejs/collections/compare/v1.0.0...v1.1.0) - 2019-07-15
 
 ### Added
 - `.size()` method
