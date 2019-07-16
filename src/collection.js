@@ -280,6 +280,13 @@ class Collection {
     return new Collection(chunk)
   }
 
+  splice ({ start, limit, inserts }) {
+    const flattend = Array.prototype.concat(...inserts)
+    this.items.splice(start, limit || this.items.length, ...flattend)
+
+    return new Collection(this.items)
+  }
+
   /**
    * Asynchronous version of `Array#some()`. This function
    * tests whether at least one element in the `array`

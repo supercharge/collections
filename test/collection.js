@@ -243,8 +243,6 @@ describe('Chained Collection', () => {
 
     // keeps order of collection pipeline
     const collection6 = Collect([1, 2, 3, 4, 5]).map(item => item * 10).filter(item => item > 10)
-    console.log(collection6)
-
     const chunk6 = collection6.splice(0, 1)
     expect(await collection6.all()).to.equal([30, 40, 50])
     expect(await chunk6.all()).to.equal([20])

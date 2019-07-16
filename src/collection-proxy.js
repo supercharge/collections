@@ -4,8 +4,8 @@ const Collection = require('./collection')
 const Queue = require('@supercharge/queue-datastructure')
 
 class CollectionProxy {
-  constructor (items = []) {
-    this._callChain = new Queue()
+  constructor (items = [], callChain) {
+    this._callChain = callChain ? new Queue(...callChain._queue) : new Queue()
     this._items = Array.isArray(items) ? items : [items]
   }
 
@@ -255,12 +255,18 @@ class CollectionProxy {
    * @returns {CollectionProxy}
    */
   splice (start, limit, ...inserts) {
-    const collection = new Collection(this._items).slice({ start, limit })
+    if (this._callChain.isNotEmpty()) {
+      const colection = new CollectionProxy(this._items, this._callChain)
+      colection._enqueue('slice', null, { start, limit })
 
-    const flattend = Array.prototype.concat(...inserts)
-    this._items.splice(start, limit || this._items.length, ...flattend)
+      this._enqueue('splice', null, { start, limit, inserts })
 
-    return collection
+      return colection
+    }
+
+    this._enqueue('splice', null, { start, limit, inserts })
+
+    return new Collection(this._items, this._callChain).slice({ start, limit })
   }
 
   /**
