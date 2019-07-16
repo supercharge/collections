@@ -1,6 +1,16 @@
 # Changelog
 
 
+## [1.2.0](https://github.com/superchargejs/collections/compare/v1.1.0...v1.2.0) - 2019-07-xx
+
+### Added
+- `.slice()` method
+- `.splice()` method
+
+### Updated
+- internal refactoring from individual files for each method to a single `Collections` class
+
+
 ## [1.1.0](https://github.com/superchargejs/collections/compare/v1.0.0...v1.1.0) - 2019-07-15
 
 ### Added
