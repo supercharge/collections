@@ -58,6 +58,19 @@ class CollectionProxy {
   }
 
   /**
+   * Asynchronous version of Array#filter(), running the (async) testing
+   * function **in series**. The `callback` should return `true`
+   * if an item should be included in the resulting collection.
+   *
+   * @param {Function} callback
+   *
+   * @returns {CollectionProxy}
+   */
+  filterSeries (callback) {
+    return this._enqueue('filterSeries', callback)
+  }
+
+  /**
    * Asynchronous version of Array#find(). Returns the first
    * item in the collection that satisfies the `callback`
    * testing function, `undefined` otherwise.

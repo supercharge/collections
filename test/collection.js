@@ -94,7 +94,24 @@ describe('Chained Collection', () => {
     ).to.equal([2, 3])
 
     const elapsed = Date.now() - start
-    expect(elapsed < 100).to.be.true()
+    expect(elapsed < 80).to.be.true()
+  })
+
+  it('filterSeries', async () => {
+    const start = Date.now()
+
+    expect(
+      await Collect([1, 2, 3])
+        .filterSeries(async (item) => {
+          await pause(50)
+
+          return item > 1
+        })
+        .all()
+    ).to.equal([2, 3])
+
+    const elapsed = Date.now() - start
+    expect(elapsed >= 150 && elapsed < 200).to.be.true() // filter should run in sequence
   })
 
   it('reject', async () => {
