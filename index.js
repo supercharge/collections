@@ -1,9 +1,9 @@
 'use strict'
 
-const Collection = require('./src/collection')
+const CollectionProxy = require('./src/collection-proxy')
 
 const collect = collection => {
-  return new Collection(collection)
+  return new CollectionProxy(collection)
 }
 
 module.exports = collect

@@ -24,11 +24,11 @@ describe('Chained Collection', () => {
 
   it('processes a collection pipeline', async () => {
     const result = await Collect([1, 2, 3])
-      .map(item => item)
-      .filter(item => item > 1)
+      .map(item => item * 2)
+      .filter(item => item > 2)
       .all()
 
-    expect(result).to.equal([2, 3])
+    expect(result).to.equal([4, 6])
   })
 
   it('map', async () => {
@@ -180,6 +180,49 @@ describe('Chained Collection', () => {
     expect(
       await Collect([]).size()
     ).to.equal(0)
+  })
+
+  it('slice', async () => {
+    const collection1 = await Collect([1, 2, 3, 4, 5, 6])
+    const chunk1 = await collection1.slice(3).all()
+    expect(await collection1.all()).to.equal([1, 2, 3, 4, 5, 6])
+    expect(chunk1).to.equal([4, 5, 6])
+
+    const collection2 = await Collect([1, 2, 3, 4, 5, 6])
+    const chunk2 = await collection2.slice(3, 2).all()
+    expect(await collection2.all()).to.equal([1, 2, 3, 4, 5, 6])
+    expect(chunk2).to.equal([4, 5])
+  })
+
+  it('splice', async () => {
+    const collection1 = Collect([1, 2, 3, 4, 5])
+    const chunk1 = await collection1.splice(2)
+    expect(await collection1.all()).to.equal([1, 2])
+    expect(await chunk1.all()).to.equal([3, 4, 5])
+
+    // splice with start and limit
+    const collection2 = Collect([1, 2, 3, 4, 5])
+    const chunk2 = collection2.splice(2, 2)
+    expect(await collection2.all()).to.equal([1, 2, 5])
+    expect(await chunk2.all()).to.equal([3, 4])
+
+    // inserts items
+    const collection3 = Collect([1, 2, 3, 4, 5])
+    const chunk3 = collection3.splice(2, 2, 8, 9)
+    expect(await collection3.all()).to.equal([1, 2, 8, 9, 5])
+    expect(await chunk3.all()).to.equal([3, 4])
+
+    // inserts items from an array
+    const collection4 = Collect([1, 2, 3, 4, 5])
+    const chunk4 = collection4.splice(2, 2, [10, 11])
+    expect(await collection4.all()).to.equal([1, 2, 10, 11, 5])
+    expect(await chunk4.all()).to.equal([3, 4])
+
+    // takes more items than available
+    const collection5 = Collect([1, 2, 3, 4, 5])
+    const chunk5 = collection5.splice(2, 10)
+    expect(await collection5.all()).to.equal([1, 2])
+    expect(await chunk5.all()).to.equal([3, 4, 5])
   })
 
   it('some', async () => {

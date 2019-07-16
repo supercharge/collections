@@ -1,29 +1,21 @@
 'use strict'
 
-class Collection {
-  constructor (items = []) {
-    this.items = items
-  }
+const Collection = require('./collection')
+const Queue = require('@supercharge/queue-datastructure')
 
-  /**
-   * Processes the collection pipeline and returns
-   * all items in the collection.
-   *
-   * @returns {Array}
-   */
-  async all () {
-    return this.items
+class CollectionProxy {
+  constructor (items = []) {
+    this._callChain = new Queue()
+    this._items = Array.isArray(items) ? items : [items]
   }
 
   /**
    * Collapse a collection of arrays into a single, flat collection.
    *
-   * @returns {Collection}
+   * @returns {CollectionProxy}
    */
   collapse () {
-    return new Collection(
-      [].concat(...this.items)
-    )
+    return this._enqueue('collapse')
   }
 
   /**
@@ -31,10 +23,10 @@ class Collection {
    * Falsey values are `null`, `undefined`, `''`,
    * `false`, `0`, `NaN`.
    *
-   * @returns {Collection}
+   * @returns {CollectionProxy}
    */
-  async compact () {
-    return this.filter(item => item)
+  compact () {
+    return this._enqueue('compact')
   }
 
   /**
@@ -46,11 +38,10 @@ class Collection {
    *
    * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
    */
-  async every (callback) {
-    const mapped = await this.map(callback)
-    const items = await mapped.all()
-
-    return items.every(value => value)
+  every (callback) {
+    return this.all(
+      this._enqueue('every', callback)
+    )
   }
 
   /**
@@ -60,15 +51,10 @@ class Collection {
    *
    * @param {Function} callback
    *
-   * @returns {Collection}
+   * @returns {CollectionProxy}
    */
-  async filter (callback) {
-    const mapped = await this.map(callback)
-    const items = await mapped.all()
-
-    return new Collection(
-      this.items.filter((_, i) => items[i])
-    )
+  filter (callback) {
+    return this._enqueue('filter', callback)
   }
 
   /**
@@ -80,11 +66,10 @@ class Collection {
    *
    * @returns {*} the found value
    */
-  async find (callback) {
-    const mapped = await this.map(callback)
-    const items = await mapped.all()
-
-    return this.items.find((_, i) => items[i])
+  find (callback) {
+    return this.all(
+      this._enqueue('find', callback)
+    )
   }
 
   /**
@@ -95,12 +80,10 @@ class Collection {
    *
    * @param {Function} callback
    *
-   * @returns {Collection}
+   * @returns {CollectionProxy}
    */
-  async flatMap (callback) {
-    const mapped = await this.map(callback)
-
-    return mapped.collapse()
+  flatMap (callback) {
+    return this._enqueue('flatMap', callback)
   }
 
   /**
@@ -110,8 +93,10 @@ class Collection {
    *
    * @param {Function} callback
    */
-  async forEach (callback) {
-    await this.map(callback)
+  forEach (callback) {
+    return this.all(
+      this._enqueue('forEach', callback)
+    )
   }
 
   /**
@@ -121,8 +106,10 @@ class Collection {
    *
    * @param {Function} callback
    */
-  async forEachSeries (callback) {
-    await this.mapSeries(callback)
+  forEachSeries (callback) {
+    return this.all(
+      this._enqueue('forEachSeries', callback)
+    )
   }
 
   /**
@@ -131,7 +118,9 @@ class Collection {
    * @returns {Boolean}
    */
   isEmpty () {
-    return this.items.length === 0
+    return this.all(
+      this._enqueue('isEmpty')
+    )
   }
 
   /**
@@ -140,7 +129,9 @@ class Collection {
    * @returns {Boolean}
    */
   isNotEmpty () {
-    return this.items.length > 0
+    return this.all(
+      this._enqueue('isNotEmpty')
+    )
   }
 
   /**
@@ -150,12 +141,10 @@ class Collection {
    *
    * @param {Function} callback
    *
-   * @returns {Collection}
+   * @returns {CollectionProxy}
    */
-  async map (callback) {
-    return new Collection(
-      await Promise.all(this.items.map(callback))
-    )
+  map (callback) {
+    return this._enqueue('map', callback)
   }
 
   /**
@@ -165,18 +154,10 @@ class Collection {
    *
    * @param {Function} callback
    *
-   * @returns {Collection}
+   * @returns {CollectionProxy}
    */
-  async mapSeries (callback) {
-    const results = []
-
-    for (const index in this.items) {
-      results.push(
-        await callback(this.items[index], index, this.items)
-      )
-    }
-
-    return new Collection(results)
+  mapSeries (callback) {
+    return this._enqueue('mapSeries', callback)
   }
 
   /**
@@ -189,12 +170,10 @@ class Collection {
    *
    * @returns {*} resulting accumulator value
    */
-  async reduce (reducer, accumulator) {
-    for (const index in this.items) {
-      accumulator = await reducer(accumulator, this.items[index], index, this.items)
-    }
-
-    return accumulator
+  reduce (reducer, initial) {
+    return this.all(
+      this._enqueue('reduce', reducer, initial)
+    )
   }
 
   /**
@@ -207,14 +186,10 @@ class Collection {
    *
    * @returns {*} resulting accumulator value
    */
-  async reduceRight (reducer, accumulator) {
-    let index = this.items.length
-
-    while (index--) {
-      accumulator = await reducer(accumulator, this.items[index], index, this.items)
-    }
-
-    return accumulator
+  reduceRight (reducer, initial) {
+    return this.all(
+      this._enqueue('reduceRight', reducer, initial)
+    )
   }
 
   /**
@@ -224,13 +199,10 @@ class Collection {
    *
    * @param {Function} callback
    *
-   * @returns {Collection}
+   * @returns {CollectionProxy}
    */
-  async reject (callback) {
-    const mapped = await this.map(callback)
-    const items = await mapped.all()
-
-    return this.items.filter((_, i) => !items[i])
+  reject (callback) {
+    return this._enqueue('reject', callback)
   }
 
   /**
@@ -239,7 +211,9 @@ class Collection {
    * @returns {Number}
    */
   size () {
-    return this.items.length
+    return this.all(
+      this._enqueue('size')
+    )
   }
 
   /**
@@ -250,16 +224,30 @@ class Collection {
    * @param {Number} start
    * @param {Number} limit
    *
-   * @returns {Collection}
+   * @returns {CollectionProxy}
    */
-  slice ({ start, limit }) {
-    const chunk = this.items.slice(start)
+  slice (start, limit = 0) {
+    return this._enqueue('slice', null, { start, limit })
+  }
 
-    if (limit) {
-      return new Collection(chunk.slice(0, limit))
-    }
+  /**
+   * Removes and returns a chunk of items beginning at the `start`
+   * index. You can `limit` the size of the slice. You may also
+   * replace the removed chunk with new items.
+   *
+   * @param {Number} start
+   * @param {Number} limit
+   * @param  {...Array} inserts
+   *
+   * @returns {CollectionProxy}
+   */
+  splice (start, limit, ...inserts) {
+    const collection = new Collection(this._items).slice({ start, limit })
 
-    return new Collection(chunk)
+    const flattend = Array.prototype.concat(...inserts)
+    this._items.splice(start, limit || this._items.length, ...flattend)
+
+    return collection
   }
 
   /**
@@ -271,12 +259,55 @@ class Collection {
    *
    * @returns {Boolean}
    */
-  async some (callback) {
-    const mapped = await this.map(callback)
-    const items = await mapped.all()
+  some (callback) {
+    return this.all(
+      this._enqueue('some', callback)
+    )
+  }
 
-    return items.some(value => value)
+  /**
+   * Enqueues an operation in the collection pipeline
+   * for processing at a later time.
+   *
+   * @param {String} method
+   * @param {Function} callback
+   * @param {*} data
+   *
+   * @returns {CollectionProxy}
+   */
+  _enqueue (method, callback, data) {
+    this._callChain.enqueue({ method, callback, data })
+
+    return this
+  }
+
+  /**
+   * Processes the collection pipeline and returns
+   * all items in the collection.
+   *
+   * @returns {Array}
+   */
+  async all () {
+    let collection = new Collection(this._items)
+
+    while (this._callChain.isNotEmpty()) {
+      try {
+        const { method, callback, data } = this._callChain.dequeue()
+        collection = await (
+          callback ? collection[method](callback, data) : collection[method](data)
+        )
+      } catch (error) {
+        this._callChain.clear()
+        throw error
+      }
+    }
+
+    if (collection instanceof Collection) {
+      return collection.all()
+    }
+
+    return collection
   }
 }
 
-module.exports = Collection
+module.exports = CollectionProxy
