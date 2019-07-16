@@ -72,7 +72,7 @@ class Collection {
   }
 
   /**
-   * Asynchronous version of Array#filter(), running (async) testing
+   * Asynchronous version of Array#filter(), running the (async) testing
    * function **in series**. The `callback` should return `true`
    * if an item should be included in the resulting collection.
    *
