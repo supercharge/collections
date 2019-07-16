@@ -72,6 +72,24 @@ class Collection {
   }
 
   /**
+   * Asynchronous version of Array#filter(), running (async) testing
+   * function **in series**. The `callback` should return `true`
+   * if an item should be included in the resulting collection.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Collection}
+   */
+  async filterSeries (callback) {
+    const mapped = await this.mapSeries(callback)
+    const items = await mapped.all()
+
+    return new Collection(
+      this.items.filter((_, i) => items[i])
+    )
+  }
+
+  /**
    * Asynchronous version of Array#find(). Returns the first
    * item in the collection that satisfies the `callback`
    * testing function, `undefined` otherwise.
