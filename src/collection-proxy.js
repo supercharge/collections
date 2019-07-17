@@ -86,6 +86,21 @@ class CollectionProxy {
   }
 
   /**
+   * Asynchronous version of Array#find(), running the (async) testing
+   * function **in sequence**. Returns the first item in the
+   * collection that satisfying the check, `undefined` otherwise.
+   *
+   * @param {Function} callback
+   *
+   * @returns {*} the found value
+   */
+  findSeries (callback) {
+    return this.all(
+      this._enqueue('findSeries', callback)
+    )
+  }
+
+  /**
    * Asynchronous version of Array#flatMap(). It invokes the `callback`
    * on each collection item. The callback can modify and return the
    * item resulting in a new collection of modified items.
