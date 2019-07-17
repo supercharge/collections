@@ -219,6 +219,19 @@ class CollectionProxy {
   }
 
   /**
+   * Inverse of Array#filter(), **removing** all items satisfying the `callback`
+   * testing function. Processes each item in sequence. The callback should
+   * return `true` if an item should be removed from the resulting collection.
+   *
+   * @param {Function} callback
+   *
+   * @returns {CollectionProxy}
+   */
+  rejectSeries (callback) {
+    return this._enqueue('rejectSeries', callback)
+  }
+
+  /**
    * Returns the number of items in the collection.
    *
    * @returns {Number}

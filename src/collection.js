@@ -18,7 +18,7 @@ class Collection {
   /**
    * Collapse a collection of arrays into a single, flat collection.
    *
-   * @returns {Collection}
+   * @returns {Array}
    */
   collapse () {
     return [].concat(...this.items)
@@ -29,7 +29,7 @@ class Collection {
    * Falsey values are `null`, `undefined`, `''`,
    * `false`, `0`, `NaN`.
    *
-   * @returns {Collection}
+   * @returns {Array}
    */
   async compact () {
     return this.filter(item => item)
@@ -57,7 +57,7 @@ class Collection {
    *
    * @param {Function} callback
    *
-   * @returns {Collection}
+   * @returns {Array}
    */
   async filter (callback) {
     const mapped = await this.map(callback)
@@ -72,7 +72,7 @@ class Collection {
    *
    * @param {Function} callback
    *
-   * @returns {Collection}
+   * @returns {Array}
    */
   async filterSeries (callback) {
     const mapped = await this.mapSeries(callback)
@@ -103,7 +103,7 @@ class Collection {
    *
    * @param {Function} callback
    *
-   * @returns {Collection}
+   * @returns {Array}
    */
   async flatMap (callback) {
     this.items = await this.map(callback)
@@ -158,7 +158,7 @@ class Collection {
    *
    * @param {Function} callback
    *
-   * @returns {Collection}
+   * @returns {Array}
    */
   async map (callback) {
     return Promise.all(this.items.map(callback))
@@ -171,7 +171,7 @@ class Collection {
    *
    * @param {Function} callback
    *
-   * @returns {Collection}
+   * @returns {Array}
    */
   async mapSeries (callback) {
     const results = []
@@ -230,10 +230,25 @@ class Collection {
    *
    * @param {Function} callback
    *
-   * @returns {Collection}
+   * @returns {Array}
    */
   async reject (callback) {
     const mapped = await this.map(callback)
+
+    return this.items.filter((_, i) => !mapped[i])
+  }
+
+  /**
+   * Inverse of Array#filter(), **removing** all items satisfying the `callback`
+   * testing function. Processes each item in sequence. The callback should
+   * return `true` if an item should be removed from the resulting collection.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Array}
+   */
+  async rejectSeries (callback) {
+    const mapped = await this.mapSeries(callback)
 
     return this.items.filter((_, i) => !mapped[i])
   }
@@ -255,7 +270,7 @@ class Collection {
    * @param {Number} start
    * @param {Number} limit
    *
-   * @returns {Collection}
+   * @returns {Array}
    */
   slice ({ start, limit }) {
     const chunk = this.items.slice(start)

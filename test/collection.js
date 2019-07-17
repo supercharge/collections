@@ -131,6 +131,23 @@ describe('Chained Collection', () => {
     expect(elapsed < 100).to.be.true()
   })
 
+  it('rejectSeries', async () => {
+    const start = Date.now()
+
+    expect(
+      await Collect([1, 2, 3])
+        .rejectSeries(async (item) => {
+          await pause(50)
+
+          return item % 2 === 0 // remove all evens
+        })
+        .all()
+    ).to.equal([1, 3])
+
+    const elapsed = Date.now() - start
+    expect(elapsed >= 150 && elapsed < 200).to.be.true() // reject should run in sequence
+  })
+
   it('reduce', async () => {
     expect(
       await Collect([1, 2, 3]).reduce(async (carry, item) => {
