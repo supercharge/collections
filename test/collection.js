@@ -24,8 +24,8 @@ describe('Chained Collection', () => {
 
   it('processes a collection pipeline', async () => {
     const result = await Collect([1, 2, 3])
-      .map(item => item * 2)
-      .filter(item => item > 2)
+      .map(async item => item * 2)
+      .filter(async item => item > 2)
       .all()
 
     expect(result).to.equal([4, 6])
