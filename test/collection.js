@@ -191,6 +191,24 @@ describe('Chained Collection', () => {
     ).to.be.undefined()
   })
 
+  it('findSeries', async () => {
+    const start = Date.now()
+
+    expect(
+      await Collect([1, 2, 3]).findSeries(async item => {
+        await pause(50)
+        return item === 2
+      })
+    ).to.equal(2)
+
+    const elapsed = Date.now() - start
+    expect(elapsed >= 150 && elapsed < 200).to.be.true() // find should run in sequence
+
+    expect(
+      await Collect([1, 2, 3]).find(item => item === 10)
+    ).to.be.undefined()
+  })
+
   it('every', async () => {
     const start = Date.now()
 
