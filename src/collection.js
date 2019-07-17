@@ -67,7 +67,7 @@ class Collection {
 
   /**
    * Asynchronous version of Array#filter(), running the (async) testing
-   * function **in series**. The `callback` should return `true`
+   * function **in sequence**. The `callback` should return `true`
    * if an item should be included in the resulting collection.
    *
    * @param {Function} callback
@@ -91,6 +91,21 @@ class Collection {
    */
   async find (callback) {
     const mapped = await this.map(callback)
+
+    return this.items.find((_, i) => mapped[i])
+  }
+
+  /**
+   * Asynchronous version of Array#find(), running the (async) testing
+   * function **in sequence**. Returns the first item in the
+   * collection that satisfying the check, `undefined` otherwise.
+   *
+   * @param {Function} callback
+   *
+   * @returns {*} the found value
+   */
+  async findSeries (callback) {
+    const mapped = await this.mapSeries(callback)
 
     return this.items.find((_, i) => mapped[i])
   }
