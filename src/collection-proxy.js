@@ -239,7 +239,7 @@ class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  slice (start, limit = 0) {
+  slice (start, limit) {
     return this._enqueue('slice', null, { start, limit })
   }
 
