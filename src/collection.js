@@ -274,10 +274,17 @@ class Collection {
     const chunk = this.items.slice(start)
 
     if (limit) {
-      return new Collection(chunk.slice(0, limit))
+      return chunk.slice(0, limit)
     }
 
-    return new Collection(chunk)
+    return new Collection(chunk.slice(0))
+  }
+
+  splice ({ start, limit, inserts }) {
+    const flattend = Array.prototype.concat(...inserts)
+    this.items.splice(start, limit || this.items.length, ...flattend)
+
+    return new Collection(this.items.slice(0))
   }
 
   /**
