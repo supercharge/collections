@@ -21,9 +21,7 @@ class Collection {
    * @returns {Collection}
    */
   collapse () {
-    return new Collection(
-      [].concat(...this.items)
-    )
+    return [].concat(...this.items)
   }
 
   /**
@@ -48,9 +46,8 @@ class Collection {
    */
   async every (callback) {
     const mapped = await this.map(callback)
-    const items = await mapped.all()
 
-    return items.every(value => value)
+    return mapped.every(value => value)
   }
 
   /**
@@ -64,11 +61,8 @@ class Collection {
    */
   async filter (callback) {
     const mapped = await this.map(callback)
-    const items = await mapped.all()
 
-    return new Collection(
-      this.items.filter((_, i) => items[i])
-    )
+    return this.items.filter((_, i) => mapped[i])
   }
 
   /**
@@ -82,11 +76,8 @@ class Collection {
    */
   async filterSeries (callback) {
     const mapped = await this.mapSeries(callback)
-    const items = await mapped.all()
 
-    return new Collection(
-      this.items.filter((_, i) => items[i])
-    )
+    return this.items.filter((_, i) => mapped[i])
   }
 
   /**
@@ -100,9 +91,8 @@ class Collection {
    */
   async find (callback) {
     const mapped = await this.map(callback)
-    const items = await mapped.all()
 
-    return this.items.find((_, i) => items[i])
+    return this.items.find((_, i) => mapped[i])
   }
 
   /**
@@ -116,9 +106,9 @@ class Collection {
    * @returns {Collection}
    */
   async flatMap (callback) {
-    const mapped = await this.map(callback)
+    this.items = await this.map(callback)
 
-    return mapped.collapse()
+    return this.collapse()
   }
 
   /**
@@ -171,9 +161,7 @@ class Collection {
    * @returns {Collection}
    */
   async map (callback) {
-    return new Collection(
-      await Promise.all(this.items.map(callback))
-    )
+    return Promise.all(this.items.map(callback))
   }
 
   /**
@@ -194,7 +182,7 @@ class Collection {
       )
     }
 
-    return new Collection(results)
+    return results
   }
 
   /**
@@ -246,9 +234,8 @@ class Collection {
    */
   async reject (callback) {
     const mapped = await this.map(callback)
-    const items = await mapped.all()
 
-    return this.items.filter((_, i) => !items[i])
+    return this.items.filter((_, i) => !mapped[i])
   }
 
   /**
@@ -274,10 +261,10 @@ class Collection {
     const chunk = this.items.slice(start)
 
     if (limit) {
-      return new Collection(chunk.slice(0, limit))
+      return chunk.slice(0, limit)
     }
 
-    return new Collection(chunk)
+    return chunk
   }
 
   /**
@@ -291,9 +278,8 @@ class Collection {
    */
   async some (callback) {
     const mapped = await this.map(callback)
-    const items = await mapped.all()
 
-    return items.some(value => value)
+    return mapped.some(value => value)
   }
 }
 
