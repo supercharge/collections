@@ -293,6 +293,17 @@ class CollectionProxy {
   }
 
   /**
+   *
+   *
+   * @param {Function} callback
+   *
+   * @returns {CollectionProxy}
+   */
+  unique () {
+    return this._enqueue('unique')
+  }
+
+  /**
    * Enqueues an operation in the collection pipeline
    * for processing at a later time.
    *

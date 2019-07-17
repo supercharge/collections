@@ -303,6 +303,17 @@ class Collection {
 
     return mapped.some(value => value)
   }
+
+  /**
+   *
+   *
+   * @param {Function} callback
+   *
+   * @returns {CollectionProxy}
+   */
+  async unique () {
+    return Array.from(new Set(this.items))
+  }
 }
 
 module.exports = Collection
