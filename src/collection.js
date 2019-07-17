@@ -305,11 +305,9 @@ class Collection {
   }
 
   /**
+   * Returns all the unique items in the collection.
    *
-   *
-   * @param {Function} callback
-   *
-   * @returns {CollectionProxy}
+   * @returns {Array}
    */
   async unique () {
     return Array.from(new Set(this.items))

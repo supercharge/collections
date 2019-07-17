@@ -360,11 +360,12 @@ describe('Chained Collection', () => {
   })
 
   it('unique', async () => {
-    expect(
-      await Collect([1, 2, 2, 1, 3, 4, 4])
-        .unique()
-        .all()
-    ).to.equal([1, 2, 3, 4])
+    const items = [1, 2, 2, 1, 3, 4, 4]
+    const collection = await Collect(items)
+    const unique = collection.unique()
+
+    expect(await unique.all()).to.equal([1, 2, 3, 4])
+    expect(await collection.all()).to.equal(items)
   })
 
   it('throws', async () => {

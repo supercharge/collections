@@ -293,9 +293,7 @@ class CollectionProxy {
   }
 
   /**
-   *
-   *
-   * @param {Function} callback
+   * Returns all the unique items in the collection.
    *
    * @returns {CollectionProxy}
    */
