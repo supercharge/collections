@@ -5,8 +5,8 @@ const Queue = require('@supercharge/queue-datastructure')
 
 class CollectionProxy {
   constructor (items = [], callChain = []) {
-    this._callChain = new Queue(callChain)
-    this._items = Array.isArray(items) ? items : [items]
+    this.callChain = new Queue(callChain)
+    this.items = Array.isArray(items) ? items : [items]
   }
 
   /**
@@ -256,7 +256,7 @@ class CollectionProxy {
    */
   splice (start, limit, ...inserts) {
     const collection = new CollectionProxy(
-      this._items.slice(0), this._callChain.items()
+      this.items.slice(0), this.callChain.items()
     ).slice(start, limit)
 
     this._enqueue('splice', null, { start, limit, inserts })
@@ -290,7 +290,7 @@ class CollectionProxy {
    * @returns {CollectionProxy}
    */
   _enqueue (method, callback, data) {
-    this._callChain.enqueue({ method, callback, data })
+    this.callChain.enqueue({ method, callback, data })
 
     return this
   }
@@ -302,16 +302,16 @@ class CollectionProxy {
    * @returns {Array}
    */
   async all () {
-    let collection = new Collection(this._items)
+    let collection = new Collection(this.items)
 
-    while (this._callChain.isNotEmpty()) {
+    while (this.callChain.isNotEmpty()) {
       try {
-        const { method, callback, data } = this._callChain.dequeue()
+        const { method, callback, data } = this.callChain.dequeue()
         collection = await (
           callback ? collection[method](callback, data) : collection[method](data)
         )
       } catch (error) {
-        this._callChain.clear()
+        this.callChain.clear()
         throw error
       }
     }
