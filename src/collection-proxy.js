@@ -318,11 +318,13 @@ class CollectionProxy {
   }
 
   takeAndRemove (amount) {
-    if (amount < 0) {
-      return this.splice(amount, -amount)
-    }
+    const collection = new CollectionProxy(this.items.slice(0), this.callChain.items())
 
-    return this.splice(0, amount)
+    this._enqueue('takeAndRemove', null, amount)
+
+    return amount < 0
+      ? collection.splice(amount)
+      : collection.splice(0, amount)
   }
 
   /**

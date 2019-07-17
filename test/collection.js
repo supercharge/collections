@@ -397,6 +397,8 @@ describe('Chained Collection', () => {
     expect(await collection.all()).to.equal([3, 4, 5, 6])
     expect(await firstTwo.all()).to.equal([1, 2])
 
+    console.log('--------------------------------')
+
     const collection2 = await Collect([1, 2, 3, 4, 5, 6])
     const lastTwo = collection2.takeAndRemove(-2)
     console.log(JSON.stringify(collection2))
