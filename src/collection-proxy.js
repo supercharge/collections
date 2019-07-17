@@ -250,23 +250,18 @@ class CollectionProxy {
    *
    * @param {Number} start
    * @param {Number} limit
-   * @param  {...Array} inserts
+   * @param  {...*} inserts
    *
    * @returns {CollectionProxy}
    */
   splice (start, limit, ...inserts) {
-    if (this._callChain.isNotEmpty()) {
-      const colection = new CollectionProxy(this._items, this._callChain.items())
-      colection._enqueue('slice', null, { start, limit })
-
-      this._enqueue('splice', null, { start, limit, inserts })
-
-      return colection
-    }
+    const collection = new CollectionProxy(
+      this._items.slice(0), this._callChain.items()
+    ).slice(start, limit)
 
     this._enqueue('splice', null, { start, limit, inserts })
 
-    return new Collection(this._items, this._callChain).slice({ start, limit })
+    return collection
   }
 
   /**
