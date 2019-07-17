@@ -292,6 +292,24 @@ class CollectionProxy {
     )
   }
 
+  take (amount) {
+    const collection = new CollectionProxy(this.items.slice(0), this.callChain.items())
+
+    if (amount < 0) {
+      return collection.slice(amount)
+    }
+
+    return collection.slice(0, amount)
+  }
+
+  takeAndRemove (amount) {
+    if (amount < 0) {
+      return this.splice(amount, -amount)
+    }
+
+    return this.splice(0, amount)
+  }
+
   /**
    * Returns all the unique items in the collection.
    *

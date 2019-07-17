@@ -359,6 +359,34 @@ describe('Chained Collection', () => {
     ).to.equal([1, 2, 3])
   })
 
+  it('take', async () => {
+    const items = [1, 2, 3, 4, 5, 6]
+    const collection = await Collect(items)
+
+    const firstTwo = collection.take(2)
+    expect(await collection.all()).to.equal(items)
+    expect(await firstTwo.all()).to.equal([1, 2])
+
+    const lastTwo = collection.take(-2)
+    expect(await collection.all()).to.equal(items)
+    expect(await lastTwo.all()).to.equal([5, 6])
+  })
+
+  it('takeAndRemove', async () => {
+    const collection = await Collect([1, 2, 3, 4, 5, 6])
+
+    const firstTwo = collection.takeAndRemove(2)
+    expect(await collection.all()).to.equal([3, 4, 5, 6])
+    expect(await firstTwo.all()).to.equal([1, 2])
+
+    const collection2 = await Collect([1, 2, 3, 4, 5, 6])
+    const lastTwo = collection2.takeAndRemove(-2)
+    console.log(JSON.stringify(collection2))
+
+    expect(await lastTwo.all()).to.equal([5, 6])
+    expect(await collection.all()).to.equal([1, 2, 3, 4])
+  })
+
   it('unique', async () => {
     const items = [1, 2, 2, 1, 3, 4, 4]
     const collection = await Collect(items)
