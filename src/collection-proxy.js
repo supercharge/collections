@@ -310,6 +310,10 @@ class CollectionProxy {
         collection = await (
           callback ? collection[method](callback, data) : collection[method](data)
         )
+
+        if (collection instanceof Array) {
+          collection = new Collection(collection)
+        }
       } catch (error) {
         this.callChain.clear()
         throw error
