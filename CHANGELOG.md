@@ -11,7 +11,7 @@
 - `.filterSeries()` method
 - `.rejectSeries()` method
 - `.take()` method
-- `.takeAndremove()` method
+- `.takeAndRemove()` method
 
 ### Updated
 - internal refactoring from individual files for each method to a single `Collections` class
