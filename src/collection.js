@@ -297,7 +297,7 @@ class Collection {
 
   /**
    * Returns a chunk of items beginning at the `start`
-   * index without removing them from the collectin.
+   * index without removing them from the collection.
    * You can `limit` the size of the slice.
    *
    * @param {Number} start
@@ -315,6 +315,17 @@ class Collection {
     return chunk.slice(0)
   }
 
+  /**
+  * Removes and returns a chunk of items beginning at the `start`
+  * index from the collection. You can `limit` the size of the
+  * slice and replace the removed items with `inserts`.
+  *
+  * @param {Number} start
+  * @param {Number} limit
+  * @param {*} inserts
+  *
+  * @returns {Array}
+  */
   splice ({ start, limit, inserts }) {
     const flattend = Array.prototype.concat(...inserts)
     this.items.splice(start, limit || this.items.length, ...flattend)
