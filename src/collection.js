@@ -338,6 +338,20 @@ class Collection {
   }
 
   /**
+   * Take and remove `limit` items from the
+   * beginning or end of the collection.
+   *
+   * @param {Integer} limit
+   *
+   * @returns {CollectionProxy}
+   */
+  takeAndRemove (limit) {
+    return limit < 0
+      ? this.items.splice(0, this.size() + limit)
+      : this.items.splice(limit)
+  }
+
+  /**
    * Returns all the unique items in the collection.
    *
    * @returns {Array}
