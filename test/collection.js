@@ -31,6 +31,38 @@ describe('Chained Collection', () => {
     expect(result).to.equal([4, 6])
   })
 
+  it('chunk', async () => {
+    expect(
+      await Collect([1, 2, 3, 4, 5, 6, 7, 8])
+        .chunk(3)
+        .all()
+    ).to.equal([[1, 2, 3], [4, 5, 6], [7, 8]])
+
+    expect(
+      await Collect([1, 2, 3, 4, 5, 6, 7, 8])
+        .map(item => item * 10)
+        .filter(item => item > 50)
+        .chunk(2)
+        .all()
+    ).to.equal([[60, 70], [80]])
+  })
+
+  it('collapse', async () => {
+    expect(
+      await Collect([[1], [{}, 'Marcus', true], [22]])
+        .collapse()
+        .all()
+    ).to.equal([1, {}, 'Marcus', true, 22])
+  })
+
+  it('compact', async () => {
+    expect(
+      await Collect([0, null, undefined, 1, false, 2, '', 3, NaN])
+        .compact()
+        .all()
+    ).to.equal([1, 2, 3])
+  })
+
   it('map', async () => {
     const start = Date.now()
 
@@ -359,22 +391,6 @@ describe('Chained Collection', () => {
     expect(
       await Collect([1, 2, 3]).isNotEmpty()
     ).to.be.true()
-  })
-
-  it('collapse', async () => {
-    expect(
-      await Collect([[1], [{}, 'Marcus', true], [22]])
-        .collapse()
-        .all()
-    ).to.equal([1, {}, 'Marcus', true, 22])
-  })
-
-  it('compact', async () => {
-    expect(
-      await Collect([0, null, undefined, 1, false, 2, '', 3, NaN])
-        .compact()
-        .all()
-    ).to.equal([1, 2, 3])
   })
 
   it('throws', async () => {
