@@ -27,7 +27,9 @@ class Collection {
     const chunks = []
 
     while (this.size()) {
-      chunks.push(this.items.splice(0, size))
+      chunks.push(
+        this.items.splice(0, size)
+      )
     }
 
     return chunks
