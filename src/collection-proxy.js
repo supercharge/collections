@@ -10,6 +10,18 @@ class CollectionProxy {
   }
 
   /**
+   * Breaks the collection into multiple, smaller collections
+   * of the given `size`.
+   *
+   * @param {Number} size
+   *
+   * @returns {CollectionProxy}
+   */
+  chunk (size) {
+    return this._enqueue('chunk', null, size)
+  }
+
+  /**
    * Collapse a collection of arrays into a single, flat collection.
    *
    * @returns {CollectionProxy}

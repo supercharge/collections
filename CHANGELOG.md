@@ -4,6 +4,7 @@
 ## [1.2.0](https://github.com/superchargejs/collections/compare/v1.1.0...v1.2.0) - 2019-07-xx
 
 ### Added
+- `.chunk()` method
 - `.slice()` method
 - `.splice()` method
 - `.findSeries()` method
@@ -12,6 +13,8 @@
 
 ### Updated
 - internal refactoring from individual files for each method to a single `Collections` class
+- added NPM script to list all tests (`npm run list-tests`)
+- added NPM script to run a single test (`npm run test single <id>`: get the ID from the list of tests)
 
 
 ## [1.1.0](https://github.com/superchargejs/collections/compare/v1.0.0...v1.1.0) - 2019-07-15

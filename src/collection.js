@@ -16,6 +16,24 @@ class Collection {
   }
 
   /**
+   * Breaks the collection into multiple, smaller collections
+   * of the given `size`.
+   *
+   * @param {Number} size
+   *
+   * @returns {Array}
+   */
+  chunk (size) {
+    const chunks = []
+
+    while (this.size()) {
+      chunks.push(this.items.splice(0, size))
+    }
+
+    return chunks
+  }
+
+  /**
    * Collapse a collection of arrays into a single, flat collection.
    *
    * @returns {Array}
