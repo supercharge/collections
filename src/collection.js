@@ -337,16 +337,18 @@ class Collection {
     return mapped.some(value => value)
   }
 
-  takeAndRemove (amount) {
-    console.log(amount)
-    console.log(amount < 0)
-    console.log(this.items)
-
-    if (amount < 0) {
-      return this.items.splice(0, this.items.length + amount)
-    }
-
-    return this.splice({ start: 0, limit: amount, inserts: [] })
+  /**
+   * Take and remove `limit` items from the
+   * beginning or end of the collection.
+   *
+   * @param {Integer} limit
+   *
+   * @returns {CollectionProxy}
+   */
+  takeAndRemove (limit) {
+    return limit < 0
+      ? this.items.splice(0, this.size() + limit)
+      : this.items.splice(limit)
   }
 
   /**

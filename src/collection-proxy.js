@@ -13,7 +13,7 @@ class CollectionProxy {
    * Breaks the collection into multiple, smaller collections
    * of the given `size`.
    *
-   * @param {Number} size
+   * @param {Integer} size
    *
    * @returns {CollectionProxy}
    */
@@ -261,7 +261,7 @@ class CollectionProxy {
   /**
    * Returns the number of items in the collection.
    *
-   * @returns {Number}
+   * @returns {Integer}
    */
   size () {
     return this.all(
@@ -274,8 +274,8 @@ class CollectionProxy {
    * index without removing them from the collectin.
    * You can `limit` the size of the slice.
    *
-   * @param {Number} start
-   * @param {Number} limit
+   * @param {Integer} start
+   * @param {Integer} limit
    *
    * @returns {CollectionProxy}
    */
@@ -288,8 +288,8 @@ class CollectionProxy {
    * index. You can `limit` the size of the slice. You may also
    * replace the removed chunk with new items.
    *
-   * @param {Number} start
-   * @param {Number} limit
+   * @param {Integer} start
+   * @param {Integer} limit
    * @param  {...*} inserts
    *
    * @returns {CollectionProxy}
@@ -319,24 +319,36 @@ class CollectionProxy {
     )
   }
 
-  take (amount) {
+  /**
+   * Take `limit` items from the beginning
+   * or end of the collection.
+   *
+   * @param {Integer} limit
+   *
+   * @returns {CollectionProxy}
+   */
+  take (limit) {
     const collection = new CollectionProxy(this.items.slice(0), this.callChain.items())
 
-    if (amount < 0) {
-      return collection.slice(amount)
-    }
-
-    return collection.slice(0, amount)
+    return limit < 0
+      ? collection.slice(limit)
+      : collection.slice(0, limit)
   }
 
-  takeAndRemove (amount) {
-    const collection = new CollectionProxy(this.items.slice(0), this.callChain.items())
+  /**
+   * Take and remove `limit` items from the
+   * beginning or end of the collection.
+   *
+   * @param {Integer} limit
+   *
+   * @returns {CollectionProxy}
+   */
+  takeAndRemove (limit) {
+    const collection = this.take(limit)
 
-    this._enqueue('takeAndRemove', null, amount)
+    this._enqueue('takeAndRemove', null, limit)
 
-    return amount < 0
-      ? collection.splice(amount)
-      : collection.splice(0, amount)
+    return collection
   }
 
   /**
