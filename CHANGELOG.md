@@ -10,6 +10,8 @@
 - `.findSeries()` method
 - `.filterSeries()` method
 - `.rejectSeries()` method
+- `.take()` method
+- `.takeAndremove()` method
 
 ### Updated
 - internal refactoring from individual files for each method to a single `Collections` class
