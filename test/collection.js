@@ -404,6 +404,13 @@ describe('Chained Collection', () => {
     const lastTwo = collection.take(-2)
     expect(await collection.all()).to.equal(items)
     expect(await lastTwo.all()).to.equal([5, 6])
+
+    const pipeline = await Collect([1, 2, 3, 4, 5, 6])
+      .map(item => item * 10)
+      .filter(item => item > 20)
+    const all = pipeline.take(30)
+    expect(await pipeline.all()).to.equal([30, 40, 50, 60])
+    expect(await all.all()).to.equal([30, 40, 50, 60])
   })
 
   it('takeAndRemove', async () => {
@@ -416,6 +423,13 @@ describe('Chained Collection', () => {
     const lastTwo = collection2.takeAndRemove(-2)
     expect(await lastTwo.all()).to.equal([5, 6])
     expect(await collection2.all()).to.equal([1, 2, 3, 4])
+
+    const pipeline = await Collect([1, 2, 3, 4, 5, 6])
+      .map(item => item * 10)
+      .filter(item => item > 20)
+    const all = pipeline.takeAndRemove(30)
+    expect(await pipeline.all()).to.equal([])
+    expect(await all.all()).to.equal([30, 40, 50, 60])
   })
 
   it('unique', async () => {
