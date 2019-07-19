@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.0](https://github.com/superchargejs/collections/compare/v1.1.0...v1.2.0) - 2019-07-xx
+## [1.2.0](https://github.com/superchargejs/collections/compare/v1.1.0...v1.2.0) - 2019-07-19
 
 ### Added
 - `.chunk()` method
