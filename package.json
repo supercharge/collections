@@ -25,9 +25,19 @@
   },
   "homepage": "https://github.com/superchargejs/collections",
   "keywords": [
+    "async/await",
+    "async",
+    "await",
+    "arrays",
+    "iteration",
+    "map",
+    "filter",
+    "reduce",
+    "forEach",
+    "chainable",
+    "collection",
     "supercharge",
-    "superchargejs",
-    "collections"
+    "superchargejs"
   ],
   "license": "MIT",
   "main": "index.js",
@@ -42,7 +52,7 @@
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
     "list-tests": "lab --assert @hapi/code --dry --verbose",
-    "test-single": "lab --assert @hapi/code --leaks --lint --id",
-    "test": "lab --assert @hapi/code --leaks --coverage --lint --reporter console --output stdout --reporter html --output ./coverage/coverage.html"
+    "test": "lab --assert @hapi/code --leaks --coverage --lint --reporter console --output stdout --reporter html --output ./coverage/coverage.html",
+    "test-single": "lab --assert @hapi/code --leaks --lint --id"
   }
 }
