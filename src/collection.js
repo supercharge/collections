@@ -225,7 +225,7 @@ class Collection {
    *
    * @param  {*} items
    *
-   * @returns {CollectionProxy}
+   * @returns {Collection}
    */
   push (items) {
     this.items.push(...items)
@@ -378,7 +378,7 @@ class Collection {
    *
    * @param {Integer} limit
    *
-   * @returns {CollectionProxy}
+   * @returns {Collection}
    */
   takeAndRemove (limit) {
     return limit < 0
