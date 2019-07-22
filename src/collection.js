@@ -55,6 +55,10 @@ class Collection {
     return this.filter(item => item)
   }
 
+  concat (items) {
+    return this.items.concat(...items)
+  }
+
   /**
    * Asynchrounous version of Array#every(). Checks whether
    * the `callback` returns `true` for all items in the

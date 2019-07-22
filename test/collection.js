@@ -475,6 +475,23 @@ describe('Chained Collection', () => {
     expect(await pipeline.all()).to.equal([])
   })
 
+  it('concat', async () => {
+    const collection = Collect([1, 2, 3])
+    const concat = await collection.concat([4, 5])
+    expect(await collection.all()).to.equal([1, 2, 3])
+    expect(await concat.all()).to.equal([1, 2, 3, 4, 5])
+
+    const collection1 = Collect([1, 2, 3])
+    const concat1 = await collection1.concat(4, 5)
+    expect(await collection1.all()).to.equal([1, 2, 3])
+    expect(await concat1.all()).to.equal([1, 2, 3, 4, 5])
+
+    const pipeline = Collect([1, 2, 3]).map(item => item * 2).filter(item => item > 5)
+    const pipedConcat = await pipeline.concat([10, 20])
+    expect(await pipeline.all()).to.equal([6])
+    expect(await pipedConcat.all()).to.equal([6, 10, 20])
+  })
+
   it('throws', async () => {
     const fn = () => { throw new Error() }
 

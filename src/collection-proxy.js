@@ -42,6 +42,21 @@ class CollectionProxy {
   }
 
   /**
+   * Creates a new collection containing the
+   * concatenated items of the original
+   * collection with the new `items`.
+   *
+   * @param {*} items
+   *
+   * @returns {CollectionProxy}
+   */
+  concat (...items) {
+    return new CollectionProxy(
+      this.items.slice(0), this.callChain.items()
+    )._enqueue('concat', null, items)
+  }
+
+  /**
    * Asynchrounous version of Array#every(). Checks whether
    * the `callback` returns `true` for all items in the
    * array. Runs all checks in parallel.
@@ -354,7 +369,9 @@ class CollectionProxy {
    * @returns {CollectionProxy}
    */
   take (limit) {
-    const collection = new CollectionProxy(this.items.slice(0), this.callChain.items())
+    const collection = new CollectionProxy(
+      this.items.slice(0), this.callChain.items()
+    )
 
     return limit < 0
       ? collection.slice(limit)
