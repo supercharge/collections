@@ -453,6 +453,14 @@ describe('Chained Collection', () => {
         .push(4, 5, 6)
         .all()
     ).to.equal([1, 2, 3, 4, 5, 6])
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(item => item * 2)
+        .filter(item => item > 5)
+        .push(10, 20, 30)
+        .all()
+    ).to.equal([6, 10, 20, 30])
   })
 
   it('throws', async () => {
