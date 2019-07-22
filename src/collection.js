@@ -221,6 +221,19 @@ class Collection {
   }
 
   /**
+   * Add one or more items to the end of the colleciton.
+   *
+   * @param  {*} items
+   *
+   * @returns {CollectionProxy}
+   */
+  push (items) {
+    this.items.push(...items)
+
+    return this
+  }
+
+  /**
    * Asynchronous version of Array#reduce(). It invokes the `reducer`
    * function sequentially on each `array` item. The reducer
    * transforms an accumulator value based on each item.

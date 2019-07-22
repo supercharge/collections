@@ -441,6 +441,20 @@ describe('Chained Collection', () => {
     expect(await collection.all()).to.equal(items)
   })
 
+  it('push', async () => {
+    expect(
+      await Collect([1, 2, 3])
+        .push(4)
+        .all()
+    ).to.equal([1, 2, 3, 4])
+
+    expect(
+      await Collect([1, 2, 3])
+        .push(4, 5, 6)
+        .all()
+    ).to.equal([1, 2, 3, 4, 5, 6])
+  })
+
   it('throws', async () => {
     const fn = () => { throw new Error() }
 
