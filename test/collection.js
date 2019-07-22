@@ -463,6 +463,18 @@ describe('Chained Collection', () => {
     ).to.equal([6, 10, 20, 30])
   })
 
+  it('shift', async () => {
+    const collection = Collect([1, 2, 3])
+    const first = await collection.shift()
+    expect(first).to.equal(1)
+    expect(await collection.all()).to.equal([2, 3])
+
+    const pipeline = Collect([1, 2, 3]).map(item => item * 2).filter(item => item > 5)
+    const six = await pipeline.shift()
+    expect(six).to.equal(6)
+    expect(await pipeline.all()).to.equal([])
+  })
+
   it('throws', async () => {
     const fn = () => { throw new Error() }
 

@@ -270,6 +270,21 @@ class CollectionProxy {
   }
 
   /**
+   * Removes and returns the first item from the collection.
+   *
+   * @returns {*}
+   */
+  shift () {
+    const collection = new CollectionProxy(
+      this.items.slice(0), this.callChain.items()
+    )
+
+    this.splice(0, 1)
+
+    return collection._enqueue('shift').all()
+  }
+
+  /**
    * Returns the number of items in the collection.
    *
    * @returns {Integer}

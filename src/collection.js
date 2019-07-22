@@ -302,6 +302,15 @@ class Collection {
   }
 
   /**
+   * Removes and returns the first item from the collection.
+   *
+   * @returns {*}
+   */
+  shift () {
+    return this.items.shift()
+  }
+
+  /**
    * Returns the number of items in the collection.
    *
    * @returns {Number}
