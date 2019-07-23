@@ -72,6 +72,21 @@ class CollectionProxy {
   }
 
   /**
+   * Asynchronous version of `Array#every()`, running the (async) testing function
+   * **in sequence**. Returns `true` if all items in the collection pass the
+   * check implemented by the `callback`, otherwise `false`.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
+   */
+  everySeries (callback) {
+    return this.all(
+      this._enqueue('everySeries', callback)
+    )
+  }
+
+  /**
    * Asynchronous version of Array#filter(). The `callback`
    * testing function should return `true` if an item
    * should be included in the resulting collection.

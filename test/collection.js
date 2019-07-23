@@ -256,6 +256,25 @@ describe('Chained Collection', () => {
     ).to.be.true()
   })
 
+  it('everySeries', async () => {
+    const start = Date.now()
+
+    expect(
+      await Collect([1, 2, 3]).everySeries(async item => {
+        await pause(50)
+
+        return item > 5
+      })
+    ).to.be.false()
+
+    const elapsed = Date.now() - start
+    expect(elapsed >= 150 && elapsed < 200).to.be.true()
+
+    expect(
+      await Collect([1, 2, 3]).map(item => item * 10).everySeries(item => item > 5)
+    ).to.be.true()
+  })
+
   it('size', async () => {
     expect(
       await Collect([1, 2, 3]).size()

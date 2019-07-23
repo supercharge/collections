@@ -74,6 +74,12 @@ class Collection {
     return mapped.every(value => value)
   }
 
+  async everySeries (callback) {
+    const mapped = await this.mapSeries(callback)
+
+    return mapped.every(value => value)
+  }
+
   /**
    * Asynchronous version of Array#filter(). The `callback`
    * testing function should return `true` if an item
