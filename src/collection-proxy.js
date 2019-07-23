@@ -231,14 +231,16 @@ class CollectionProxy {
   }
 
   /**
-   * Add one or more items to the end of the colleciton.
+   * Add one or more items to the end of the collection.
    *
    * @param  {*} items
    *
    * @returns {CollectionProxy}
    */
   push (...items) {
-    return this._enqueue('push', null, items)
+    return new CollectionProxy(
+      this.items.slice(0), this.callChain.items()
+    )._enqueue('push', null, items)
   }
 
   /**
