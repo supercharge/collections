@@ -361,6 +361,21 @@ class CollectionProxy {
   }
 
   /**
+   * Asynchronous version of `Array#some()`, running the (async) testing function
+   * **in sequence**. Returns `true` if at least one element in the collection
+   * passes the check implemented by the `callback`, otherwise `false`.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Boolean}
+   */
+  someSeries (callback) {
+    return this.all(
+      this._enqueue('someSeries', callback)
+    )
+  }
+
+  /**
    * Take `limit` items from the beginning
    * or end of the collection.
    *

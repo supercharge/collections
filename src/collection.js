@@ -377,6 +377,21 @@ class Collection {
   }
 
   /**
+   * Asynchronous version of `Array#some()`, running the (async) testing function
+   * **in sequence**. Returns `true` if at least one element in the collection
+   * passes the check implemented by the `callback`, otherwise `false`.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Boolean}
+   */
+  async someSeries (callback) {
+    const mapped = await this.mapSeries(callback)
+
+    return mapped.some(value => value)
+  }
+
+  /**
    * Take and remove `limit` items from the
    * beginning or end of the collection.
    *
