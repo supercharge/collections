@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.4.0](https://github.com/superchargejs/collections/compare/v1.3.0...v1.4.0) - 2019-07-xx
+## [1.4.0](https://github.com/superchargejs/collections/compare/v1.3.0...v1.4.0) - 2019-07-24
 
 ### Added
 - `.someSeries()` method
