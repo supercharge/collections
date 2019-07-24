@@ -32,11 +32,14 @@ describe('Chained Collection', () => {
   })
 
   it('chunk', async () => {
+    const input = [1, 2, 3, 4, 5, 6, 7, 8]
+
     expect(
-      await Collect([1, 2, 3, 4, 5, 6, 7, 8])
+      await Collect(input)
         .chunk(3)
         .all()
     ).to.equal([[1, 2, 3], [4, 5, 6], [7, 8]])
+    expect(input).to.equal([1, 2, 3, 4, 5, 6, 7, 8])
 
     expect(
       await Collect([1, 2, 3, 4, 5, 6, 7, 8])

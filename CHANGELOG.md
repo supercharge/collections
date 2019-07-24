@@ -7,6 +7,9 @@
 - `.someSeries()` method
 - `.everySeries()` method
 
+### Updated
+- clone the array passed to the collection to remove the reference. This ensures that collection operations won't affect the original array's data
+
 
 ## [1.3.0](https://github.com/superchargejs/collections/compare/v1.2.1...v1.3.0) - 2019-07-23
 

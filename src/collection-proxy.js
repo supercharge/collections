@@ -6,7 +6,9 @@ const Queue = require('@supercharge/queue-datastructure')
 class CollectionProxy {
   constructor (items = [], callChain = []) {
     this.callChain = new Queue(callChain)
-    this.items = Array.isArray(items) ? items : [items]
+    this.items = Array.isArray(items)
+      ? [].concat(...items)
+      : [].concat(items)
   }
 
   /**
