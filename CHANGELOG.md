@@ -1,10 +1,10 @@
 # Changelog
 
 
-## [1.5.0](https://github.com/superchargejs/collections/compare/v1.3.0...v1.4.0) - 2019-07-xx
+## [1.4.1](https://github.com/superchargejs/collections/compare/v1.4.0...v1.4.1) - 2019-07-25
 
 ### Fixed
-- Initializing the Collection with an array won't flatten the array
+- Initializing the Collection won't automatically flatten the given array
 
 
 ## [1.4.0](https://github.com/superchargejs/collections/compare/v1.3.0...v1.4.0) - 2019-07-24
