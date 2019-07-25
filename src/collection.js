@@ -55,6 +55,15 @@ class Collection {
     return this.filter(item => item)
   }
 
+  /**
+   * Creates a new collection containing the
+   * concatenated items of the original
+   * collection with the new `items`.
+   *
+   * @param {*} items
+   *
+   * @returns {Array}
+   */
   concat (items) {
     return this.items.concat(...items)
   }
@@ -74,6 +83,15 @@ class Collection {
     return mapped.every(value => value)
   }
 
+  /**
+   * Asynchronous version of `Array#every()`, running the (async) testing function
+   * **in sequence**. Returns `true` if all items in the collection pass the
+   * check implemented by the `callback`, otherwise `false`.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
+   */
   async everySeries (callback) {
     const mapped = await this.mapSeries(callback)
 
