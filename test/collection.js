@@ -50,6 +50,18 @@ describe('Chained Collection', () => {
     ).to.equal([[60, 70], [80]])
   })
 
+  it('clone', async () => {
+    const collection = Collect([1, 2, 3])
+    const shallow = collection.clone()
+    expect(collection === shallow).to.be.false()
+    expect(collection[0] === shallow[0]).to.be.true()
+
+    const objects = Collect([{ name: 'Marcus' }])
+    const clone = collection.clone()
+    expect(objects === clone).to.be.false()
+    expect(objects[0] === clone[0]).to.be.true()
+  })
+
   it('collapse', async () => {
     expect(
       await Collect([[1], [{}, 'Marcus', true], [22]])

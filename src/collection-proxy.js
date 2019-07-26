@@ -22,6 +22,17 @@ class CollectionProxy {
   }
 
   /**
+   * Creates a shallow clone of the collection.
+   *
+   * @returns {CollectionProxy}
+   */
+  clone () {
+    return new CollectionProxy(
+      this.items.slice(0), this.callChain.items()
+    )
+  }
+
+  /**
    * Collapse a collection of arrays into a single, flat collection.
    *
    * @returns {CollectionProxy}
@@ -51,9 +62,7 @@ class CollectionProxy {
    * @returns {CollectionProxy}
    */
   concat (...items) {
-    return new CollectionProxy(
-      this.items.slice(0), this.callChain.items()
-    )._enqueue('concat', null, items)
+    return this.clone()._enqueue('concat', null, items)
   }
 
   /**
@@ -238,9 +247,7 @@ class CollectionProxy {
    * @returns {CollectionProxy}
    */
   push (...items) {
-    return new CollectionProxy(
-      this.items.slice(0), this.callChain.items()
-    )._enqueue('push', null, items)
+    return this.clone()._enqueue('push', null, items)
   }
 
   /**
