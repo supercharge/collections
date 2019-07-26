@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.5.0](https://github.com/superchargejs/collections/compare/v1.4.1...v1.5.0) - 2019-07-xx
+
+### Added
+- `.clone()` method
+
+
 ## [1.4.1](https://github.com/superchargejs/collections/compare/v1.4.0...v1.4.1) - 2019-07-25
 
 ### Fixed
