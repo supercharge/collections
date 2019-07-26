@@ -28,7 +28,7 @@ class CollectionProxy {
    */
   clone () {
     return new CollectionProxy(
-      this.items.slice(0), this.callChain.items()
+      this.items, this.callChain.items()
     )
   }
 
@@ -314,9 +314,7 @@ class CollectionProxy {
    * @returns {*}
    */
   shift () {
-    const collection = new CollectionProxy(
-      this.items.slice(0), this.callChain.items()
-    )
+    const collection = this.clone()
 
     this.splice(0, 1)
 
@@ -360,9 +358,7 @@ class CollectionProxy {
    * @returns {CollectionProxy}
    */
   splice (start, limit, ...inserts) {
-    const collection = new CollectionProxy(
-      this.items.slice(0), this.callChain.items()
-    ).slice(start, limit)
+    const collection = this.clone().slice(start, limit)
 
     this._enqueue('splice', null, { start, limit, inserts })
 
@@ -408,9 +404,7 @@ class CollectionProxy {
    * @returns {CollectionProxy}
    */
   take (limit) {
-    const collection = new CollectionProxy(
-      this.items.slice(0), this.callChain.items()
-    )
+    const collection = this.clone()
 
     return limit < 0
       ? collection.slice(limit)
