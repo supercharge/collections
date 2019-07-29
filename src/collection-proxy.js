@@ -247,7 +247,7 @@ class CollectionProxy {
    * @returns {CollectionProxy}
    */
   push (...items) {
-    return this.clone()._enqueue('push', null, items)
+    return this._enqueue('push', null, items)
   }
 
   /**
@@ -434,6 +434,15 @@ class CollectionProxy {
    */
   unique () {
     return this._enqueue('unique')
+  }
+
+  /**
+   * Add one or more items to the beginning of the collection.
+   *
+   * @returns {*}
+   */
+  unshift (...items) {
+    return this._enqueue('unshift', null, items)
   }
 
   /**

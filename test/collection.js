@@ -545,6 +545,22 @@ describe('Chained Collection', () => {
     expect(await pipedConcat.all()).to.equal([6, 10, 20])
   })
 
+  it('unshift', async () => {
+    expect(
+      await Collect([1, 2, 3])
+        .unshift(4, 5)
+        .all()
+    ).to.equal([4, 5, 1, 2, 3])
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(item => item * 2)
+        .filter(item => item > 5)
+        .unshift(10, 20, 30)
+        .all()
+    ).to.equal([10, 20, 30, 6])
+  })
+
   it('throws', async () => {
     const fn = () => { throw new Error() }
 

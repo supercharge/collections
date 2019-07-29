@@ -437,6 +437,17 @@ class Collection {
   async unique () {
     return Array.from(new Set(this.items))
   }
+
+  /**
+   * Add one or more items to the beginning of the collection.
+   *
+   * @returns {Collection}
+   */
+  async unshift (items) {
+    this.items.unshift(...items)
+
+    return this
+  }
 }
 
 module.exports = Collection
