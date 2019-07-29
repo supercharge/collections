@@ -5,6 +5,7 @@
 
 ### Added
 - `.clone()` method
+- `.unshift()` method
 
 
 ## [1.4.1](https://github.com/superchargejs/collections/compare/v1.4.0...v1.4.1) - 2019-07-25
