@@ -62,7 +62,7 @@ await Collect([ 1, 2, 3, 4, 5 ])
 
 **Notice:** when chaining methods like `map` or `filter`, you'll receive a collection instance in return. You must actively end the call chain using the `.all()` method to process the collection pipeline and retrieve the final result.
 
-Yu can directly await the result for methods returning a definite value:
+You can directly await the result for methods returning a definite value:
 
 ```js
 await Collect([ 1, 2, 3 ])
