@@ -1,9 +1,11 @@
 # Changelog
 
 
-## [1.5.0](https://github.com/superchargejs/collections/compare/v1.4.1...v1.5.0) - 2019-07-xx
+## [1.5.0](https://github.com/superchargejs/collections/compare/v1.4.1...v1.5.0) - 2019-09-23
 
 ### Added
+- `.has()` method
+- `.first()` method
 - `.clone()` method
 - `.unshift()` method
 
