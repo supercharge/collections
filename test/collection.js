@@ -561,6 +561,50 @@ describe('Chained Collection', () => {
     ).to.equal([10, 20, 30, 6])
   })
 
+  it('first', async () => {
+    expect(
+      await Collect([1, 2, 3]).first()
+    ).to.equal(1)
+
+    expect(
+      Collect([1, 2, 3]).first(1)
+    ).to.reject(Error) // only callback functions are allowed
+
+    expect(
+      await Collect([
+        { id: 1, name: '1' },
+        { id: 2, name: '2' },
+        { id: 1, name: '3' }
+      ]).first(item => {
+        return item.id === 1
+      })
+    ).to.equal({ id: 1, name: '1' })
+
+    expect(
+      await Collect([{ id: 1, name: '1' }]).first(item => {
+        return item.name === 'Marcus'
+      })
+    ).to.equal(undefined)
+
+    expect(
+      await Collect([1, 2, 3]).has(item => item === 4)
+    ).to.equal(false)
+  })
+
+  it('has', async () => {
+    expect(
+      await Collect([1, 2, 3]).has(item => item === 2)
+    ).to.equal(true)
+
+    expect(
+      await Collect([1, 2, 3]).has(3)
+    ).to.equal(true)
+
+    expect(
+      await Collect([1, 2, 3]).has(item => item === 4)
+    ).to.equal(false)
+  })
+
   it('throws', async () => {
     const fn = () => { throw new Error() }
 

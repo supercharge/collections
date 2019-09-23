@@ -152,6 +152,21 @@ class CollectionProxy {
   }
 
   /**
+   * Alias for Array#find. Returns the first item in
+   * the collection that satisfies the `callback`
+   * testing function, `undefined` otherwise.
+   *
+   * @param {Function} callback
+   *
+   * @returns {*} the found value
+   */
+  first (callback) {
+    return this.all(
+      this._enqueue('first', callback)
+    )
+  }
+
+  /**
    * Asynchronous version of Array#flatMap(). It invokes the `callback`
    * on each collection item. The callback can modify and return the
    * item resulting in a new collection of modified items.
@@ -188,6 +203,20 @@ class CollectionProxy {
   forEachSeries (callback) {
     return this.all(
       this._enqueue('forEachSeries', callback)
+    )
+  }
+
+  /**
+   * Returns `true` when the collection satisfies the given
+   * `callback` testing function, `false` otherwise.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Boolean}
+   */
+  has (callback) {
+    return this.all(
+      this._enqueue('has', callback)
     )
   }
 

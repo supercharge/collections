@@ -159,6 +159,25 @@ class Collection {
   }
 
   /**
+   * Alias for "find".
+   *
+   * @param {Function} callback
+   *
+   * @returns {*} the found value
+   */
+  async first (callback) {
+    if (!callback) {
+      return this.items[0]
+    }
+
+    if (typeof callback === 'function') {
+      return this.find(callback)
+    }
+
+    throw new Error(`Collection.first() accepts only a callback function as an argument, received ${typeof callback}`)
+  }
+
+  /**
    * Asynchronous version of Array#flatMap(). It invokes the `callback`
    * on each collection item. The callback can modify and return the
    * item resulting in a new collection of modified items.
@@ -194,6 +213,22 @@ class Collection {
    */
   async forEachSeries (callback) {
     await this.mapSeries(callback)
+  }
+
+  /**
+   * Returns `true` when the collection satisfies the given
+   * `callback` testing function, `false` otherwise.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Boolean}
+   */
+  async has (callback) {
+    const item = typeof callback === 'function'
+      ? await this.find(callback)
+      : await this.find(item => item === callback)
+
+    return !!item
   }
 
   /**
