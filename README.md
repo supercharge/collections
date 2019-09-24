@@ -46,18 +46,23 @@ The package exports a function accepting an array as a parameter. From there, yo
 The package is async/await-ready and supports async functions for most of the methods.
 
 ```js
+const User = require('models/user')
 const Collect = require('@supercharge/collections')
 
-await Collect([ 1, 2, 3, 4, 5 ])
-  .map(item => item * 100)
-  .map(async timeout => {
-    await new Promise(resolve => setTimeout(resolve, ms))
-    return timeout
+await Collect(
+    await User.all()
+  )
+  .filter(async user => {
+    return user.notSubscribedToNewsletter()
   })
-  .filter(timeout => timeout > 200)
+  .map(async user => {
+    await user.subscribeToNewsletter()
+    
+    return user
+  })
   .all()
 
-// result: [ 300, 400, 500 ]
+// result: [ <list of newly-subscribed users> ]
 ```
 
 **Notice:** when chaining methods like `map` or `filter`, you'll receive a collection instance in return. You must actively end the call chain using the `.all()` method to process the collection pipeline and retrieve the final result.
