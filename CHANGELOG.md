@@ -1,10 +1,11 @@
 # Changelog
 
 
-## [1.5.1](https://github.com/superchargejs/collections/compare/v1.5.0...v1.5.1) - 2019-09-xx
+## [1.5.1](https://github.com/superchargejs/collections/compare/v1.5.0...v1.5.1) - 2019-09-24
 
 ### Updated
 - bump dependencies
+- refine examples in Readme
 
 
 ## [1.5.0](https://github.com/superchargejs/collections/compare/v1.4.1...v1.5.0) - 2019-09-23
