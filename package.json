@@ -7,7 +7,7 @@
     "url": "https://github.com/superchargejs/collections/issues"
   },
   "dependencies": {
-    "@supercharge/queue-datastructure": "~1.1.0"
+    "@supercharge/queue-datastructure": "~1.1.1"
   },
   "devDependencies": {
     "@hapi/code": "~6.0.0",
