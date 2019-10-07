@@ -483,6 +483,15 @@ class Collection {
 
     return this
   }
+
+  /**
+   * Returns the sum of all collection items.
+   *
+   * @returns {Number}
+   */
+  sum () {
+    return this.items.reduce((acc, elem) => (acc + +elem))
+  }
 }
 
 module.exports = Collection
