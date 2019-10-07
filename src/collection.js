@@ -232,6 +232,17 @@ class Collection {
   }
 
   /**
+   * Creates an array of unique values that are included in both given array
+   *
+   * @param {Array} items
+   *
+   * @returns {Array}
+   */
+  intersect (items) {
+    return [...new Set(this.items.filter(value => items.includes(value)))]
+  }
+
+  /**
    * Returns `true` when the collection is empty, `false` otherwise.
    *
    * @returns {Boolean}
@@ -451,6 +462,19 @@ class Collection {
   }
 
   /**
+   * Returns the sum of all collection items.
+   *
+   * @returns {Number} resulting sum of collection items
+   */
+  async sum () {
+    const reducer = async (carry, item) => {
+      return carry + item
+    }
+
+    return this.reduce(reducer, 0)
+  }
+
+  /**
    * Take and remove `limit` items from the
    * beginning or end of the collection.
    *
@@ -465,12 +489,32 @@ class Collection {
   }
 
   /**
+   * Returns JSON representation of collection
+   *
+   * @returns {String}
+   */
+  toJSON () {
+    return JSON.stringify(this.items)
+  }
+
+  /**
    * Returns all the unique items in the collection.
    *
    * @returns {Array}
    */
   async unique () {
     return Array.from(new Set(this.items))
+  }
+
+  /**
+   * Creates an array of unique values, in order, from all given arrays.
+   *
+   * @param {Array} items
+   *
+   * @returns {Array}
+   */
+  async union (items) {
+    return [...new Set([...this.items, ...items])]
   }
 
   /**

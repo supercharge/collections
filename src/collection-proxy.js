@@ -221,6 +221,17 @@ class CollectionProxy {
   }
 
   /**
+   * Creates an array of unique values that are included in both given array
+   *
+   * @param {Array} items
+   *
+   * @returns {Array}
+   */
+  intersect (items) {
+    return this._enqueue('intersect', null, items)
+  }
+
+  /**
    * Returns `true` when the collection is empty, `false` otherwise.
    *
    * @returns {Boolean}
@@ -425,6 +436,17 @@ class CollectionProxy {
   }
 
   /**
+   * Returns the sum of all collection items.
+   *
+   * @returns {Number} resulting sum of collection items
+   */
+  sum () {
+    return this.all(
+      this._enqueue('sum')
+    )
+  }
+
+  /**
    * Take `limit` items from the beginning
    * or end of the collection.
    *
@@ -457,12 +479,34 @@ class CollectionProxy {
   }
 
   /**
+   * Returns JSON representation of collection
+   *
+   * @returns {String}
+   */
+  toJSON () {
+    return this.all(
+      this._enqueue('toJSON')
+    )
+  }
+
+  /**
    * Returns all the unique items in the collection.
    *
    * @returns {CollectionProxy}
    */
   unique () {
     return this._enqueue('unique')
+  }
+
+  /**
+   * Creates an array of unique values, in order, from all given arrays.
+   *
+   * @param {Array} items
+   *
+   * @returns {CollectionProxy}
+   */
+  union (items) {
+    return this._enqueue('union', null, items)
   }
 
   /**

@@ -383,6 +383,12 @@ describe('Chained Collection', () => {
     ).to.be.true()
   })
 
+  it('sum', async () => {
+    expect(
+      await Collect([1, 2, 3]).sum()
+    ).to.equal(6)
+  })
+
   it('forEach', async () => {
     const start = Date.now()
 
@@ -424,6 +430,14 @@ describe('Chained Collection', () => {
     expect(callback.calledWith(1)).to.be.true()
     expect(callback.calledWith(2)).to.be.true()
     expect(callback.calledWith(3)).to.be.true()
+  })
+
+  it('intersect', async () => {
+    const items = [1, 2, 3, 3]
+    const collection = await Collect(items)
+    const intersect = collection.intersect([2, 3, 4, 5])
+    expect(await intersect.all()).to.equal([2, 3])
+    expect(await collection.all()).to.equal(items)
   })
 
   it('isEmpty', async () => {
@@ -485,12 +499,31 @@ describe('Chained Collection', () => {
     expect(await all.all()).to.equal([30, 40, 50, 60])
   })
 
+  it('toJSON', async () => {
+    expect(
+      await Collect([11, 22, 33, 44, 55, 66]).toJSON()
+    ).to.be.equal('[11,22,33,44,55,66]')
+
+    expect(
+      await Collect([{ test: 'value1', test2: 2 }]).toJSON()
+    ).to.be.equal('[{"test":"value1","test2":2}]')
+  })
+
   it('unique', async () => {
     const items = [1, 2, 2, 1, 3, 4, 4]
     const collection = await Collect(items)
     const unique = collection.unique()
 
     expect(await unique.all()).to.equal([1, 2, 3, 4])
+    expect(await collection.all()).to.equal(items)
+  })
+
+  it('union', async () => {
+    const items = [1, 2, 3]
+    const collection = await Collect(items)
+    const union = collection.union([2, 3, 4, 5])
+
+    expect(await union.all()).to.equal([1, 2, 3, 4, 5])
     expect(await collection.all()).to.equal(items)
   })
 
