@@ -383,6 +383,12 @@ describe('Chained Collection', () => {
     ).to.be.true()
   })
 
+  it('sum', async () => {
+    expect(
+      await Collect([1, 2, 3]).sum()
+    ).to.equal(6)
+  })
+
   it('forEach', async () => {
     const start = Date.now()
 
