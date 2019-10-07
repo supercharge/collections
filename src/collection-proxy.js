@@ -222,6 +222,7 @@ class CollectionProxy {
 
   /**
    * Creates an array of unique values that are included in both given array
+   *
    * @param {Array} items
    *
    * @returns {Array}
