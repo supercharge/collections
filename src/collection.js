@@ -232,6 +232,16 @@ class Collection {
   }
 
   /**
+   * Creates an array of unique values that are included in both given array
+   * @param {Array} items
+   *
+   * @returns {Array}
+   */
+  intersect (items) {
+    return [...new Set(this.items.filter(value => items.includes(value)))]
+  }
+
+  /**
    * Returns `true` when the collection is empty, `false` otherwise.
    *
    * @returns {Boolean}
