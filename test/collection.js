@@ -485,6 +485,16 @@ describe('Chained Collection', () => {
     expect(await all.all()).to.equal([30, 40, 50, 60])
   })
 
+  it('toJSON', async () => {
+    expect(
+      await Collect([11, 22, 33, 44, 55, 66]).toJSON()
+    ).to.be.equal('[11,22,33,44,55,66]')
+
+    expect(
+      await Collect([{ test: 'value1', test2: 2 }]).toJSON()
+    ).to.be.equal('[{"test":"value1","test2":2}]')
+  })
+
   it('unique', async () => {
     const items = [1, 2, 2, 1, 3, 4, 4]
     const collection = await Collect(items)

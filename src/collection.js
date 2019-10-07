@@ -465,6 +465,15 @@ class Collection {
   }
 
   /**
+   * Returns JSON representation of collection
+   *
+   * @returns {String}
+   */
+  toJSON () {
+    return JSON.stringify(this.items)
+  }
+
+  /**
    * Returns all the unique items in the collection.
    *
    * @returns {Array}
