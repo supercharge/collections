@@ -475,6 +475,17 @@ class CollectionProxy {
   }
 
   /**
+   * Returns the max value in the collection.
+   *
+   * @returns {Number}
+   */
+   max () {
+    return this.all(
+      this._enqueue('max')
+    )
+  }
+
+  /**
    * Enqueues an operation in the collection pipeline
    * for processing at a later time.
    *

@@ -544,6 +544,16 @@ describe('Chained Collection', () => {
     expect(await pipeline.all()).to.equal([6])
     expect(await pipedConcat.all()).to.equal([6, 10, 20])
   })
+  
+  it('max', async () => {
+    expect(
+      await Collect([1, 20, 3, 4]).max()
+    ).to.equal(20)
+
+    expect(
+      await Collect([1, '20', 3, 4]).max()
+    ).to.equal(20)
+  })
 
   it('unshift', async () => {
     expect(

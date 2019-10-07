@@ -483,6 +483,15 @@ class Collection {
 
     return this
   }
+
+  /**
+   * Returns the max value in the collection.
+   *
+   * @returns {Number}
+   */
+  async max () {
+   return this.items.reduce((acc, elem) => (acc > elem ? acc : +elem ), 0)
+  }
 }
 
 module.exports = Collection
