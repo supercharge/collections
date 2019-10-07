@@ -468,6 +468,17 @@ class CollectionProxy {
   }
 
   /**
+   * Returns JSON representation of collection
+   *
+   * @returns {String}
+   */
+  toJSON () {
+    return this.all(
+      this._enqueue('toJSON')
+    )
+  }
+
+  /**
    * Returns all the unique items in the collection.
    *
    * @returns {CollectionProxy}
