@@ -432,6 +432,14 @@ describe('Chained Collection', () => {
     expect(callback.calledWith(3)).to.be.true()
   })
 
+  it('intersect', async () => {
+    const items = [1, 2, 3, 3]
+    const collection = await Collect(items)
+    const intersect = collection.intersect([2, 3, 4, 5])
+    expect(await intersect.all()).to.equal([2, 3])
+    expect(await collection.all()).to.equal(items)
+  })
+
   it('isEmpty', async () => {
     expect(
       await Collect().isEmpty()

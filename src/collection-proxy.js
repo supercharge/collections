@@ -221,6 +221,17 @@ class CollectionProxy {
   }
 
   /**
+   * Creates an array of unique values that are included in both given array
+   *
+   * @param {Array} items
+   *
+   * @returns {Array}
+   */
+  intersect (items) {
+    return this._enqueue('intersect', null, items)
+  }
+
+  /**
    * Returns `true` when the collection is empty, `false` otherwise.
    *
    * @returns {Boolean}
