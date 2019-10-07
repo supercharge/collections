@@ -494,6 +494,15 @@ describe('Chained Collection', () => {
     expect(await collection.all()).to.equal(items)
   })
 
+  it('union', async () => {
+    const items = [1, 2, 3]
+    const collection = await Collect(items)
+    const union = collection.union([2, 3, 4, 5])
+
+    expect(await union.all()).to.equal([1, 2, 3, 4, 5])
+    expect(await collection.all()).to.equal(items)
+  })
+
   it('push', async () => {
     expect(
       await Collect([1, 2, 3])
