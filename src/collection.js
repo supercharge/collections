@@ -487,6 +487,17 @@ class Collection {
   }
 
   /**
+   * Creates an array of unique values, in order, from all given arrays.
+   *
+   * @param {Array} items
+   *
+   * @returns {Array}
+   */
+  async union (items) {
+    return [...new Set([...this.items, ...items])]
+  }
+
+  /**
    * Add one or more items to the beginning of the collection.
    *
    * @returns {Collection}

@@ -477,6 +477,17 @@ class CollectionProxy {
   }
 
   /**
+   * Creates an array of unique values, in order, from all given arrays.
+   *
+   * @param {Array} items
+   *
+   * @returns {CollectionProxy}
+   */
+  union (items) {
+    return this._enqueue('union', null, items)
+  }
+
+  /**
    * Add one or more items to the beginning of the collection.
    *
    * @returns {*}
