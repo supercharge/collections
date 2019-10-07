@@ -535,7 +535,8 @@ class Collection {
    * */
   async avg () {
     const sum = this.items.reduce((total, num) => { return total + num }, 0)
-    return sum / this.items.length
+
+    return sum / this.size
   }
 }
 
