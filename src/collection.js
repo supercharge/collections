@@ -483,6 +483,16 @@ class Collection {
 
     return this
   }
+
+  /**
+   *Returns the average of all collection items
+   *
+   * @returns {Number}
+   * */
+  async avg () {
+    const sum = this.items.reduce((total, num) => { return total + num }, 0)
+    return sum / this.items.length
+  }
 }
 
 module.exports = Collection

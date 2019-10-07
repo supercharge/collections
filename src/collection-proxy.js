@@ -475,6 +475,17 @@ class CollectionProxy {
   }
 
   /**
+ *Returns the average of all collection items
+  *
+  * @returns {Number}
+  * */
+  avg (callback) {
+    return this.all(
+      this._enqueue('avg', callback)
+    )
+  }
+
+  /**
    * Enqueues an operation in the collection pipeline
    * for processing at a later time.
    *
