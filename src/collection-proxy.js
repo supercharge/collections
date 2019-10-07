@@ -362,6 +362,17 @@ class CollectionProxy {
   }
 
   /**
+   * Returns the max value in the collection.
+   *
+   * @returns {Integer}
+   */
+  max () {
+    return this.all(
+      this._enqueue('size')
+    )
+  }
+
+  /**
    * Returns a chunk of items beginning at the `start`
    * index without removing them from the collectin.
    * You can `limit` the size of the slice.

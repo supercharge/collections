@@ -383,7 +383,7 @@ class Collection {
   }
 
   /**
-   * Returns the max number in the collection.
+   * Returns the max value in the collection.
    *
    * @returns {Number}
    */
