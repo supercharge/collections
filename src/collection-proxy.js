@@ -519,13 +519,13 @@ class CollectionProxy {
   }
 
   /**
- *Returns the average of all collection items
+  * Returns the average of all collection items
   *
   * @returns {Number}
   * */
-  avg (callback) {
+  avg () {
     return this.all(
-      this._enqueue('avg', callback)
+      this._enqueue('avg')
     )
   }
 

@@ -529,7 +529,7 @@ class Collection {
   }
 
   /**
-   *Returns the average of all collection items
+   * Returns the average of all collection items
    *
    * @returns {Number}
    * */
