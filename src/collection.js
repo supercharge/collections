@@ -383,6 +383,15 @@ class Collection {
   }
 
   /**
+   * Returns the max number in the collection.
+   *
+   * @returns {Number}
+   */
+  max() {
+    return [...this.items].sort((a, b) => a - b)[this.size() - 1]
+  }
+
+  /**
    * Returns a chunk of items beginning at the `start`
    * index without removing them from the collection.
    * You can `limit` the size of the slice.
