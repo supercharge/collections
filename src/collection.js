@@ -451,6 +451,19 @@ class Collection {
   }
 
   /**
+   * Returns the sum of all collection items.
+   *
+   * @returns {Number} resulting sum of collection items
+   */
+  async sum () {
+    const reducer = async (carry, item) => {
+      return carry + item
+    }
+
+    return this.reduce(reducer, 0)
+  }
+
+  /**
    * Take and remove `limit` items from the
    * beginning or end of the collection.
    *

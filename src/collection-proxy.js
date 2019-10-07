@@ -425,6 +425,17 @@ class CollectionProxy {
   }
 
   /**
+   * Returns the sum of all collection items.
+   *
+   * @returns {Number} resulting sum of collection items
+   */
+  sum () {
+    return this.all(
+      this._enqueue('sum')
+    )
+  }
+
+  /**
    * Take `limit` items from the beginning
    * or end of the collection.
    *
