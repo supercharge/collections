@@ -673,4 +673,14 @@ describe('Chained Collection', () => {
       await Collect([1, 2, 3, 2, 1]).reverse().all()
     ).to.equal([1, 2, 3, 2, 1])
   })
+    
+  it('avg', async () => {
+    expect(
+      await Collect([1, 2, 3]).avg()
+    ).to.equal(2)
+
+    expect(
+      await Collect([4, 1]).avg()
+    ).to.equal(2.5)
+  })
 })
