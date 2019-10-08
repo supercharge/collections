@@ -534,7 +534,7 @@ class Collection {
    * @returns {Number}
    * */
   async avg () {
-    return this.sum() / this.size
+    return this.sum() / this.size()
   }
 }
 

@@ -518,11 +518,11 @@ class CollectionProxy {
     return this._enqueue('unshift', null, items)
   }
 
-  /**
+ /**
   * Returns the average of all collection items
   *
   * @returns {Number}
-  * */
+  */
   avg () {
     return this.all(
       this._enqueue('avg')
