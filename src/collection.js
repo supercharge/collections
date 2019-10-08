@@ -446,7 +446,8 @@ class Collection {
   * @returns {Array}
   */
   reverse () {
-    this.items = this.items.reverse()
+    this.items.reverse()
+
     return this.items
   }
 

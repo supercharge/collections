@@ -668,5 +668,9 @@ describe('Chained Collection', () => {
     expect(
       await Collect([]).reverse().all()
     ).to.equal([])
+
+    expect(
+      await Collect([1, 2, 3, 2, 1]).reverse().all()
+    ).to.equal([1, 2, 3, 2, 1])
   })
 })
