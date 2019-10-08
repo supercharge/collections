@@ -13,7 +13,7 @@ class CollectionProxy {
    * Breaks the collection into multiple, smaller collections
    * of the given `size`.
    *
-   * @param {Integer} size
+   * @param {Number} size
    *
    * @returns {CollectionProxy}
    */
@@ -364,7 +364,7 @@ class CollectionProxy {
   /**
    * Returns the number of items in the collection.
    *
-   * @returns {Integer}
+   * @returns {Number}
    */
   size () {
     return this.all(
@@ -375,7 +375,7 @@ class CollectionProxy {
   /**
    * Returns the max value in the collection.
    *
-   * @returns {Integer}
+   * @returns {Number}
    */
   max () {
     return this.all(
@@ -388,8 +388,8 @@ class CollectionProxy {
    * index without removing them from the collectin.
    * You can `limit` the size of the slice.
    *
-   * @param {Integer} start
-   * @param {Integer} limit
+   * @param {Number} start
+   * @param {Number} limit
    *
    * @returns {CollectionProxy}
    */
@@ -402,8 +402,8 @@ class CollectionProxy {
    * index. You can `limit` the size of the slice. You may also
    * replace the removed chunk with new items.
    *
-   * @param {Integer} start
-   * @param {Integer} limit
+   * @param {Number} start
+   * @param {Number} limit
    * @param  {...*} inserts
    *
    * @returns {CollectionProxy}
@@ -461,7 +461,7 @@ class CollectionProxy {
    * Take `limit` items from the beginning
    * or end of the collection.
    *
-   * @param {Integer} limit
+   * @param {Number} limit
    *
    * @returns {CollectionProxy}
    */
@@ -477,7 +477,7 @@ class CollectionProxy {
    * Take and remove `limit` items from the
    * beginning or end of the collection.
    *
-   * @param {Integer} limit
+   * @param {Number} limit
    *
    * @returns {CollectionProxy}
    */
