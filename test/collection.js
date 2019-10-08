@@ -672,8 +672,18 @@ describe('Chained Collection', () => {
     expect(
       await Collect([1, 2, 3, 2, 1]).reverse().all()
     ).to.equal([1, 2, 3, 2, 1])
+
+    const items = [1, 2, 3]
+    const collection = Collect(items)
+
+    expect(
+      await collection.reverse().all()
+    ).to.equal([3, 2, 1])
+    expect(
+      await collection.reverse().all()
+    ).to.equal([1, 2, 3])
   })
-    
+
   it('avg', async () => {
     expect(
       await Collect([1, 2, 3]).avg()
