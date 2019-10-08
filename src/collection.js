@@ -495,6 +495,23 @@ class Collection {
   }
 
   /**
+   * Returns median of the current collection
+   *
+   * @param {Function} comparator
+   *
+   * @returns {Collection}
+   */
+  async median () {
+    const arr = Array.from(this.items.sort())
+    const mid = Math.floor(arr.length / 2)
+    if (arr.length % 2 !== 0) {
+      return arr[mid]
+    } else {
+      return (arr[mid] + arr[(mid - 1)]) / 2
+    }
+  }
+
+  /**
    * Returns the sum of all collection items.
    *
    * @returns {Number} resulting sum of collection items
