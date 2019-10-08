@@ -368,7 +368,7 @@ class CollectionProxy {
    */
   max () {
     return this.all(
-      this._enqueue('size')
+      this._enqueue('max')
     )
   }
 
