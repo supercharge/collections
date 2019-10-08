@@ -417,7 +417,7 @@ class CollectionProxy {
   }
 
   /**
-  * Returns reversed version of original collection
+  * Returns reversed version of the original collection
   *
   * @returns {Array}
   */
