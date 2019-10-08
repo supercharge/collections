@@ -552,6 +552,17 @@ class CollectionProxy {
   }
 
   /**
+   * Returns the min value in the collection.
+   *
+   * @returns {Number}
+   */
+  min () {
+    return this.all(
+      this._enqueue('min')
+    )
+  }
+
+  /**
    * Returns the average of all collection items
    *
    * @returns {Number}

@@ -626,6 +626,20 @@ describe('Chained Collection', () => {
     ).to.equal([10, 20, 30, 6])
   })
 
+  it('min', async () => {
+    expect(
+      await Collect([10, 2, 3, 4]).min()
+    ).to.equal(2)
+
+    expect(
+      await Collect([10, '2', 3, 4]).min()
+    ).to.equal(2)
+
+    expect(
+      await Collect([10, 2, -1, 4]).min()
+    ).to.equal(-1)
+  })
+
   it('first', async () => {
     expect(
       await Collect([1, 2, 3]).first()

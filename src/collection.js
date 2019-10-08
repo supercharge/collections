@@ -562,6 +562,15 @@ class Collection {
   }
 
   /**
+   * Returns the min value in the collection.
+   *
+   * @returns {Number}
+   */
+  async min () {
+    return this.items.reduce((acc, elem) => (acc < elem ? acc : +elem))
+  }
+
+  /**
    * Returns the average of all collection items
    *
    * @returns {Number}
