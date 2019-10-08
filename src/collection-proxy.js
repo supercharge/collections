@@ -530,6 +530,15 @@ class CollectionProxy {
   }
 
   /**
+   * Sorts the collection
+   *
+   * @returns {*}
+   */
+  sort () {
+    return this._enqueue('sort')
+  }
+
+  /**
    * Enqueues an operation in the collection pipeline
    * for processing at a later time.
    *

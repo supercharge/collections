@@ -536,6 +536,15 @@ class Collection {
 
     return this
   }
+
+  /**
+   * Sort the current collections
+   *
+   */
+  async sort () {
+    this.items.sort()
+    return this
+  }
 }
 
 module.exports = Collection

@@ -655,4 +655,12 @@ describe('Chained Collection', () => {
       Collect([1, 2, 3]).forEach(fn)
     ).to.reject()
   })
+
+  it('sort', async () => {
+    expect(
+      await Collect([3, 2, 1])
+        .sort()
+        .all()
+    ).to.equal([1, 2, 3])
+  })
 })
