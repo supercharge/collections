@@ -479,6 +479,7 @@ class Collection {
    */
   async sort (comparator) {
     this.items = [...this.items.sort(comparator)]
+
     return this
   }
 
