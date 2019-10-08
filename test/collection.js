@@ -311,13 +311,26 @@ describe('Chained Collection', () => {
   })
 
   it('diff', async () => {
+    const items = [1, 2, 3]
+    const collection = Collect([1, 2, 3])
+
     expect(
-      await Collect([1, 2, 3]).diff([2, 3, 4, 5]).all()
+      await collection.diff([2, 3, 4, 5]).all()
     ).to.equal([1])
+    expect(
+      await collection.all()
+    ).to.equal(items)
 
     expect(
       await Collect([1, 2, 3]).diff([1, 3, 5, 7]).all()
     ).to.equal([2])
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(item => item * 2)
+        .diff([1, 3, 5, 7])
+        .all()
+    ).to.equal([2, 4, 6])
   })
 
   it('slice', async () => {
