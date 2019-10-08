@@ -1,6 +1,24 @@
 # Changelog
 
 
+## [1.6.0](https://github.com/superchargejs/collections/compare/v1.5.1...v1.6.0) - 2019-xx-xx
+
+### Added
+- `.sum()` method
+- `.avg()` method
+- `.min()` method
+- `.max()` method
+- `.sort()` method
+- `.diff()` method
+- `.union()` method
+- `.intersect()` method
+- `.toJSON()` method
+- `.reverse()` method
+
+### Updated
+- bump dependencies
+
+
 ## [1.5.1](https://github.com/superchargejs/collections/compare/v1.5.0...v1.5.1) - 2019-09-24
 
 ### Updated
