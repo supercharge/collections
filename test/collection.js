@@ -310,6 +310,16 @@ describe('Chained Collection', () => {
     ).to.equal(55)
   })
 
+  it('min', async () => {
+    expect(
+      await Collect([1, 11, 57]).min()
+    ).to.equal(1)
+
+    expect(
+      await Collect([2, 16, 64]).min()
+    ).to.equal(2)
+  })
+
   it('slice', async () => {
     const collection1 = await Collect([1, 2, 3, 4, 5, 6])
     const chunk1 = await collection1.slice(3).all()

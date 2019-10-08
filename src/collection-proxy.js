@@ -384,6 +384,17 @@ class CollectionProxy {
   }
 
   /**
+   * Returns the min value in the collection.
+   *
+   * @returns {Number}
+   */
+  min () {
+    return this.all(
+      this._enqueue('min')
+    )
+  }
+
+  /**
    * Returns a chunk of items beginning at the `start`
    * index without removing them from the collectin.
    * You can `limit` the size of the slice.

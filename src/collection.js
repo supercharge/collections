@@ -403,6 +403,15 @@ class Collection {
   }
 
   /**
+   * Returns the min value in the collection.
+   *
+   * @returns {Number}
+   */
+  min () {
+    return Math.min(...this.items)
+  }
+
+  /**
    * Returns a chunk of items beginning at the `start`
    * index without removing them from the collection.
    * You can `limit` the size of the slice.
