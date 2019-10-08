@@ -300,6 +300,26 @@ describe('Chained Collection', () => {
     ).to.equal(0)
   })
 
+  it('max', async () => {
+    expect(
+      await Collect([10, 20, 2, 1]).max()
+    ).to.equal(20)
+
+    expect(
+      await Collect([55, 5, 10]).max()
+    ).to.equal(55)
+  })
+
+  it('diff', async () => {
+    expect(
+      await Collect([1, 2, 3]).diff([2, 3, 4, 5]).all()
+    ).to.equal([1])
+
+    expect(
+      await Collect([1, 2, 3]).diff([1, 3, 5, 7]).all()
+    ).to.equal([2])
+  })
+
   it('slice', async () => {
     const collection1 = await Collect([1, 2, 3, 4, 5, 6])
     const chunk1 = await collection1.slice(3).all()
@@ -383,6 +403,12 @@ describe('Chained Collection', () => {
     ).to.be.true()
   })
 
+  it('sum', async () => {
+    expect(
+      await Collect([1, 2, 3]).sum()
+    ).to.equal(6)
+  })
+
   it('forEach', async () => {
     const start = Date.now()
 
@@ -424,6 +450,14 @@ describe('Chained Collection', () => {
     expect(callback.calledWith(1)).to.be.true()
     expect(callback.calledWith(2)).to.be.true()
     expect(callback.calledWith(3)).to.be.true()
+  })
+
+  it('intersect', async () => {
+    const items = [1, 2, 3, 3]
+    const collection = await Collect(items)
+    const intersect = collection.intersect([2, 3, 4, 5])
+    expect(await intersect.all()).to.equal([2, 3])
+    expect(await collection.all()).to.equal(items)
   })
 
   it('isEmpty', async () => {
@@ -485,12 +519,31 @@ describe('Chained Collection', () => {
     expect(await all.all()).to.equal([30, 40, 50, 60])
   })
 
+  it('toJSON', async () => {
+    expect(
+      await Collect([11, 22, 33, 44, 55, 66]).toJSON()
+    ).to.be.equal('[11,22,33,44,55,66]')
+
+    expect(
+      await Collect([{ test: 'value1', test2: 2 }]).toJSON()
+    ).to.be.equal('[{"test":"value1","test2":2}]')
+  })
+
   it('unique', async () => {
     const items = [1, 2, 2, 1, 3, 4, 4]
     const collection = await Collect(items)
     const unique = collection.unique()
 
     expect(await unique.all()).to.equal([1, 2, 3, 4])
+    expect(await collection.all()).to.equal(items)
+  })
+
+  it('union', async () => {
+    const items = [1, 2, 3]
+    const collection = await Collect(items)
+    const union = collection.union([2, 3, 4, 5])
+
+    expect(await union.all()).to.equal([1, 2, 3, 4, 5])
     expect(await collection.all()).to.equal(items)
   })
 
@@ -623,5 +676,15 @@ describe('Chained Collection', () => {
     expect(
       Collect([1, 2, 3]).forEach(fn)
     ).to.reject()
+  })
+
+  it('avg', async () => {
+    expect(
+      await Collect([1, 2, 3]).avg()
+    ).to.equal(2)
+
+    expect(
+      await Collect([4, 1]).avg()
+    ).to.equal(2.5)
   })
 })

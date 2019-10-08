@@ -232,6 +232,17 @@ class Collection {
   }
 
   /**
+   * Creates an array of unique values that are included in both given array
+   *
+   * @param {Array} items
+   *
+   * @returns {Array}
+   */
+  intersect (items) {
+    return [...new Set(this.items.filter(value => items.includes(value)))]
+  }
+
+  /**
    * Returns `true` when the collection is empty, `false` otherwise.
    *
    * @returns {Boolean}
@@ -383,6 +394,26 @@ class Collection {
   }
 
   /**
+   * Returns the max value in the collection.
+   *
+   * @returns {Number}
+   */
+  max () {
+    return Math.max(...this.items)
+  }
+
+  /**
+   * Removes all values from the collection that are present in the given array.
+   *
+   * @param {*} items
+   *
+   * @returns {CollectionProxy}
+   */
+  diff ({ items }) {
+    return this.items.filter(x => !items.includes(x))
+  }
+
+  /**
    * Returns a chunk of items beginning at the `start`
    * index without removing them from the collection.
    * You can `limit` the size of the slice.
@@ -451,6 +482,19 @@ class Collection {
   }
 
   /**
+   * Returns the sum of all collection items.
+   *
+   * @returns {Number} resulting sum of collection items
+   */
+  async sum () {
+    const reducer = async (carry, item) => {
+      return carry + item
+    }
+
+    return this.reduce(reducer, 0)
+  }
+
+  /**
    * Take and remove `limit` items from the
    * beginning or end of the collection.
    *
@@ -465,12 +509,32 @@ class Collection {
   }
 
   /**
+   * Returns JSON representation of collection
+   *
+   * @returns {String}
+   */
+  toJSON () {
+    return JSON.stringify(this.items)
+  }
+
+  /**
    * Returns all the unique items in the collection.
    *
    * @returns {Array}
    */
   async unique () {
     return Array.from(new Set(this.items))
+  }
+
+  /**
+   * Creates an array of unique values, in order, from all given arrays.
+   *
+   * @param {Array} items
+   *
+   * @returns {Array}
+   */
+  async union (items) {
+    return [...new Set([...this.items, ...items])]
   }
 
   /**
@@ -504,6 +568,15 @@ class Collection {
     }
 
     return isEven ? medianOnEvenSize() : medianOnOddSize()
+  }
+
+  /**
+   * Returns the average of all collection items
+   *
+   * @returns {Number}
+   * */
+  async avg () {
+    return await this.sum() / this.size()
   }
 }
 
