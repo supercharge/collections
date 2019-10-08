@@ -471,6 +471,18 @@ class Collection {
   }
 
   /**
+   * Returns a sorted list of all collection items, with an optional comparator
+   *
+   * @param {Function} comparator
+   *
+   * @returns {Collection}
+   */
+  async sort (comparator) {
+    this.items = [...this.items.sort(comparator)]
+    return this
+  }
+
+  /**
    * Returns the sum of all collection items.
    *
    * @returns {Number} resulting sum of collection items

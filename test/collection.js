@@ -588,6 +588,18 @@ describe('Chained Collection', () => {
     expect(await pipedConcat.all()).to.equal([6, 10, 20])
   })
 
+  it('sort', async () => {
+    const collection = Collect([3, 2, 1])
+    const sorted = await collection.sort()
+    expect(await collection.all()).to.equal([3, 2, 1])
+    expect(await sorted.all()).to.equal([1, 2, 3])
+
+    const collection1 = Collect([1, 2, 3])
+    const sorted1 = await collection1.sort((a, b) => b - a)
+    expect(await collection1.all()).to.equal([1, 2, 3])
+    expect(await sorted1.all()).to.equal([3, 2, 1])
+  })
+
   it('unshift', async () => {
     expect(
       await Collect([1, 2, 3])
