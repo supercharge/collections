@@ -428,7 +428,8 @@ class CollectionProxy {
   }
 
   /**
-  * Returns reversed version of the original collection
+  * Returns a reversed collection. The first item becomes the last one,
+  * the second item becomes the second to last, and so on.
   *
   * @returns {CollectionProxy}
   */
