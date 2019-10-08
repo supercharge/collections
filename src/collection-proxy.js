@@ -475,6 +475,17 @@ class CollectionProxy {
   }
 
   /**
+   * Returns the min value in the collection.
+   *
+   * @returns {Number}
+   */
+   min () {
+    return this.all(
+      this._enqueue('min')
+    )
+  }
+
+  /**
    * Enqueues an operation in the collection pipeline
    * for processing at a later time.
    *

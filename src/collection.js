@@ -483,6 +483,15 @@ class Collection {
 
     return this
   }
+
+  /**
+   * Returns the min value in the collection.
+   *
+   * @returns {Number}
+   */
+  async min () {
+   return this.items.reduce((acc, elem) => (acc < elem ? acc : +elem ))
+  }
 }
 
 module.exports = Collection
