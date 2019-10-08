@@ -475,6 +475,17 @@ class CollectionProxy {
   }
 
   /**
+   * Returns the median value of the collection.
+   *
+   * @returns {Number}
+   */
+  median () {
+    return this.all(
+      this._enqueue('median')
+    )
+  }
+
+  /**
    * Enqueues an operation in the collection pipeline
    * for processing at a later time.
    *

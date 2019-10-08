@@ -561,6 +561,18 @@ describe('Chained Collection', () => {
     ).to.equal([10, 20, 30, 6])
   })
 
+  it('median', async () => {
+    expect(
+      await Collect([4, 1, 37, 2, 1])
+        .median()
+    ).to.equal(2)
+
+    expect(
+      await Collect([1, 2, 3, 4, 5, 6])
+        .median()
+    ).to.equal(3.5)
+  })
+
   it('first', async () => {
     expect(
       await Collect([1, 2, 3]).first()
