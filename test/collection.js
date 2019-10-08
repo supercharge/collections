@@ -308,6 +308,12 @@ describe('Chained Collection', () => {
     expect(
       await Collect([55, 5, 10]).max()
     ).to.equal(55)
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(item => item * 2)
+        .max()
+    ).to.equal(6)
   })
 
   it('diff', async () => {
@@ -420,6 +426,13 @@ describe('Chained Collection', () => {
     expect(
       await Collect([1, 2, 3]).sum()
     ).to.equal(6)
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(item => item * 2)
+        .intersect([4, 6])
+        .sum()
+    ).to.equal(10)
   })
 
   it('forEach', async () => {
@@ -471,6 +484,13 @@ describe('Chained Collection', () => {
     const intersect = collection.intersect([2, 3, 4, 5])
     expect(await intersect.all()).to.equal([2, 3])
     expect(await collection.all()).to.equal(items)
+
+    expect(
+      await collection
+        .map(item => item * 2)
+        .intersect([4, 5, 6])
+        .all()
+    ).to.equal([4, 6])
   })
 
   it('isEmpty', async () => {
@@ -556,8 +576,14 @@ describe('Chained Collection', () => {
     const collection = await Collect(items)
     const union = collection.union([2, 3, 4, 5])
 
-    expect(await union.all()).to.equal([1, 2, 3, 4, 5])
     expect(await collection.all()).to.equal(items)
+    expect(await union.all()).to.equal([1, 2, 3, 4, 5])
+
+    expect(
+      await collection
+        .map(item => item * 2)
+        .union([10, 20])
+        .all()).to.equal([2, 4, 6, 10, 20])
   })
 
   it('push', async () => {
@@ -617,6 +643,13 @@ describe('Chained Collection', () => {
     expect(await collection.all()).to.equal([3, 2, 1])
     expect(await sorted.all()).to.equal([1, 2, 3])
 
+    expect(
+      await collection
+        .map(item => item * 2)
+        .sort()
+        .all()
+    ).to.equal([2, 4, 6])
+
     const collection1 = Collect([1, 2, 3])
     const sorted1 = await collection1.sort((a, b) => b - a)
     expect(await collection1.all()).to.equal([1, 2, 3])
@@ -651,6 +684,12 @@ describe('Chained Collection', () => {
     expect(
       await Collect([10, 2, -1, 4]).min()
     ).to.equal(-1)
+
+    expect(
+      await Collect([10, 2, -1, 4])
+        .map(item => item * 2)
+        .min()
+    ).to.equal(-2)
   })
 
   it('first', async () => {
@@ -713,5 +752,11 @@ describe('Chained Collection', () => {
     expect(
       await Collect([4, 1]).avg()
     ).to.equal(2.5)
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(item => item * 2)
+        .avg()
+    ).to.equal(4)
   })
 })
