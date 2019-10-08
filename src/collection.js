@@ -387,7 +387,7 @@ class Collection {
    *
    * @returns {Number}
    */
-  max() {
+  max () {
     return [...this.items].sort((a, b) => a - b)[this.size() - 1]
   }
 
