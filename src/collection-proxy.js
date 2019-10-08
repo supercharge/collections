@@ -13,7 +13,7 @@ class CollectionProxy {
    * Breaks the collection into multiple, smaller collections
    * of the given `size`.
    *
-   * @param {Integer} size
+   * @param {Number} size
    *
    * @returns {CollectionProxy}
    */
@@ -221,6 +221,17 @@ class CollectionProxy {
   }
 
   /**
+   * Creates an array of unique values that are included in both given array
+   *
+   * @param {Array} items
+   *
+   * @returns {Array}
+   */
+  intersect (items) {
+    return this._enqueue('intersect', null, items)
+  }
+
+  /**
    * Returns `true` when the collection is empty, `false` otherwise.
    *
    * @returns {Boolean}
@@ -353,7 +364,7 @@ class CollectionProxy {
   /**
    * Returns the number of items in the collection.
    *
-   * @returns {Integer}
+   * @returns {Number}
    */
   size () {
     return this.all(
@@ -362,12 +373,34 @@ class CollectionProxy {
   }
 
   /**
+   * Returns the max value in the collection.
+   *
+   * @returns {Number}
+   */
+  max () {
+    return this.all(
+      this._enqueue('max')
+    )
+  }
+
+  /**
+   * Removes all values from the collection that are present in the given array.
+   *
+   * @param {*} items
+   *
+   * @returns {CollectionProxy}
+   */
+  diff (items) {
+    return this._enqueue('diff', null, { items })
+  }
+
+  /**
    * Returns a chunk of items beginning at the `start`
    * index without removing them from the collectin.
    * You can `limit` the size of the slice.
    *
-   * @param {Integer} start
-   * @param {Integer} limit
+   * @param {Number} start
+   * @param {Number} limit
    *
    * @returns {CollectionProxy}
    */
@@ -380,8 +413,8 @@ class CollectionProxy {
    * index. You can `limit` the size of the slice. You may also
    * replace the removed chunk with new items.
    *
-   * @param {Integer} start
-   * @param {Integer} limit
+   * @param {Number} start
+   * @param {Number} limit
    * @param  {...*} inserts
    *
    * @returns {CollectionProxy}
@@ -425,10 +458,21 @@ class CollectionProxy {
   }
 
   /**
+   * Returns the sum of all collection items.
+   *
+   * @returns {Number} resulting sum of collection items
+   */
+  sum () {
+    return this.all(
+      this._enqueue('sum')
+    )
+  }
+
+  /**
    * Take `limit` items from the beginning
    * or end of the collection.
    *
-   * @param {Integer} limit
+   * @param {Number} limit
    *
    * @returns {CollectionProxy}
    */
@@ -444,7 +488,7 @@ class CollectionProxy {
    * Take and remove `limit` items from the
    * beginning or end of the collection.
    *
-   * @param {Integer} limit
+   * @param {Number} limit
    *
    * @returns {CollectionProxy}
    */
@@ -457,12 +501,34 @@ class CollectionProxy {
   }
 
   /**
+   * Returns JSON representation of collection
+   *
+   * @returns {String}
+   */
+  toJSON () {
+    return this.all(
+      this._enqueue('toJSON')
+    )
+  }
+
+  /**
    * Returns all the unique items in the collection.
    *
    * @returns {CollectionProxy}
    */
   unique () {
     return this._enqueue('unique')
+  }
+
+  /**
+   * Creates an array of unique values, in order, from all given arrays.
+   *
+   * @param {Array} items
+   *
+   * @returns {CollectionProxy}
+   */
+  union (items) {
+    return this._enqueue('union', null, items)
   }
 
   /**
@@ -482,6 +548,17 @@ class CollectionProxy {
   min () {
     return this.all(
       this._enqueue('min')
+    )
+  }
+
+  /**
+   * Returns the average of all collection items
+   *
+   * @returns {Number}
+   */
+  avg () {
+    return this.all(
+      this._enqueue('avg')
     )
   }
 
