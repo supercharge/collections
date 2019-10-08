@@ -490,7 +490,7 @@ class Collection {
    * @returns {Number}
    */
   async min () {
-    return this.items.reduce((acc,elem) => (acc < elem ? acc : +elem))
+    return this.items.reduce((acc, elem) => (acc < elem ? acc : +elem))
   }
 }
 
