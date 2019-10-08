@@ -539,7 +539,7 @@ class CollectionProxy {
    * @returns {CollectionProxy}
    */
   union (items) {
-    return this._enqueue('union', null, items)
+    return this.concat(items).unique()
   }
 
   /**

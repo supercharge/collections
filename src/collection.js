@@ -394,6 +394,15 @@ class Collection {
   }
 
   /**
+   * Returns the min value in the collection.
+   *
+   * @returns {Number}
+   */
+  async min () {
+    return Math.min(...this.items)
+  }
+
+  /**
    * Returns the max value in the collection.
    *
    * @returns {Number}
@@ -410,7 +419,7 @@ class Collection {
    * @returns {CollectionProxy}
    */
   diff ({ items }) {
-    return this.items.filter(x => !items.includes(x))
+    return this.items.filter(item => !items.includes(item))
   }
 
   /**
@@ -482,7 +491,7 @@ class Collection {
   }
 
   /**
-   * Returns a sorted list of all collection items, with an optional comparator
+   * Returns a sorted list of all collection items, with an optional comparator.
    *
    * @param {Function} comparator
    *
@@ -500,11 +509,9 @@ class Collection {
    * @returns {Number} resulting sum of collection items
    */
   async sum () {
-    const reducer = async (carry, item) => {
+    return this.reduce((carry, item) => {
       return carry + item
-    }
-
-    return this.reduce(reducer, 0)
+    }, 0)
   }
 
   /**
@@ -540,17 +547,6 @@ class Collection {
   }
 
   /**
-   * Creates an array of unique values, in order, from all given arrays.
-   *
-   * @param {Array} items
-   *
-   * @returns {Array}
-   */
-  async union (items) {
-    return [...new Set([...this.items, ...items])]
-  }
-
-  /**
    * Add one or more items to the beginning of the collection.
    *
    * @returns {Collection}
@@ -559,15 +555,6 @@ class Collection {
     this.items.unshift(...items)
 
     return this
-  }
-
-  /**
-   * Returns the min value in the collection.
-   *
-   * @returns {Number}
-   */
-  async min () {
-    return this.items.reduce((acc, elem) => (acc < elem ? acc : +elem))
   }
 
   /**
