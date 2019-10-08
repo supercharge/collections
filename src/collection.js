@@ -490,14 +490,14 @@ class Collection {
    * @returns {Number}
    */
   async median () {
-    const itemsLength = this.items.size();
+    const itemsLength = this.size();
     const isEven = itemsLength % 2 == 0;
 
     const medianOnEvenSize = () => this.items.reduce((acc, elem) => (acc + elem)) / itemsLength;
 
     const medianOnOddSize = () => {
       // TODO: 
-      // - change to 'this.items.sort()' when such method will be implemented
+      // - change to 'this.sort()' when such method will be implemented
       const sortedItems = [...this.items].sort((a, b) => a - b);
       const medianIdx = Math.floor(itemsLength / 2);
       return sortedItems[medianIdx];
