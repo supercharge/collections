@@ -479,7 +479,7 @@ class CollectionProxy {
    *
    * @returns {Number}
    */
-   min () {
+  min () {
     return this.all(
       this._enqueue('min')
     )
