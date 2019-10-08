@@ -441,6 +441,16 @@ class Collection {
   }
 
   /**
+  * Returns reversed version of original collection
+  *
+  * @returns {Array}
+  */
+  reverse () {
+    this.items = this.items.reverse()
+    return this.items
+  }
+
+  /**
    * Asynchronous version of `Array#some()`. This function
    * tests whether at least one element in the `array`
    * passes the check implemented by the `callback`.

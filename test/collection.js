@@ -655,4 +655,18 @@ describe('Chained Collection', () => {
       Collect([1, 2, 3]).forEach(fn)
     ).to.reject()
   })
+
+  it('reverse', async () => {
+    expect(
+      await Collect([1, 2, 3]).reverse().all()
+    ).to.equal([3, 2, 1])
+
+    expect(
+      await Collect([1]).reverse().all()
+    ).to.equal([1])
+
+    expect(
+      await Collect([]).reverse().all()
+    ).to.equal([])
+  })
 })

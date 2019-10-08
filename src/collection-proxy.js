@@ -417,6 +417,16 @@ class CollectionProxy {
   }
 
   /**
+  * Returnes reversed version of original collection
+  *
+  * @returns {Array}
+  */
+  reverse () {
+    this._enqueue('reverse')
+    return this
+  }
+
+  /**
    * Asynchronous version of `Array#some()`. This function
    * tests whether at least one element in the `array`
    * passes the check implemented by the `callback`.
