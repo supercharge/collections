@@ -403,6 +403,17 @@ class Collection {
   }
 
   /**
+   * Removes all values from the collection that are present in the given array.
+   *
+   * @param {*} items
+   *
+   * @returns {CollectionProxy}
+   */
+  diff ({ items }) {
+    return this.items.filter(x => !items.includes(x))
+  }
+
+  /**
    * Returns a chunk of items beginning at the `start`
    * index without removing them from the collection.
    * You can `limit` the size of the slice.

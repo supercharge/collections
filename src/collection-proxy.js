@@ -384,6 +384,17 @@ class CollectionProxy {
   }
 
   /**
+   * Removes all values from the collection that are present in the given array.
+   *
+   * @param {*} items
+   *
+   * @returns {CollectionProxy}
+   */
+  diff (items) {
+    return this._enqueue('diff', null, { items })
+  }
+
+  /**
    * Returns a chunk of items beginning at the `start`
    * index without removing them from the collectin.
    * You can `limit` the size of the slice.
