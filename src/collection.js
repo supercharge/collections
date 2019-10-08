@@ -546,6 +546,15 @@ class Collection {
 
     return this
   }
+
+  /**
+   * Returns the average of all collection items
+   *
+   * @returns {Number}
+   * */
+  async avg () {
+    return await this.sum() / this.size()
+  }
 }
 
 module.exports = Collection
