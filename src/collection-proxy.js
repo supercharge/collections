@@ -386,7 +386,7 @@ class CollectionProxy {
   /**
    * Removes all values from the collection that are present in the given array.
    *
-   * @param {Number} items
+   * @param {*} items
    *
    * @returns {CollectionProxy}
    */
