@@ -680,7 +680,7 @@ describe('Chained Collection', () => {
       await collection.reverse().all()
     ).to.equal([3, 2, 1])
     expect(
-      await collection.reverse().all()
+      await collection.all()
     ).to.equal([1, 2, 3])
   })
 

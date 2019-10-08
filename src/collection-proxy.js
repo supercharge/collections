@@ -422,9 +422,7 @@ class CollectionProxy {
   * @returns {Array}
   */
   reverse () {
-    this._enqueue('reverse')
-
-    return this
+    return this.clone()._enqueue('reverse')
   }
 
   /**
