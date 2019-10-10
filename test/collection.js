@@ -513,6 +513,20 @@ describe('Chained Collection', () => {
     ).to.be.true()
   })
 
+  it('join', async () => {
+    expect(
+      await Collect([1, 2, 3]).join()
+    ).to.equal('1,2,3')
+
+    expect(
+      await Collect([1, 2, 3]).join('')
+    ).to.equal('123')
+
+    expect(
+      await Collect([1, 2, 3]).join('-')
+    ).to.equal('1-2-3')
+  })
+
   it('take', async () => {
     const items = [1, 2, 3, 4, 5, 6]
     const collection = await Collect(items)
