@@ -261,6 +261,15 @@ class Collection {
   }
 
   /**
+   * Returns a new string by concatenating all of the elements in an array.
+   *
+   * @returns {String}
+   */
+  join (separator) {
+    return this.items.join(separator)
+  }
+
+  /**
    * Asynchronous version of Array#map(), running all transformations
    * in parallel. It runs the given `callback` on each item of the
    * `array` and returns an array of transformed items.
