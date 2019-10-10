@@ -524,6 +524,22 @@ class Collection {
   }
 
   /**
+   * Returns median of the current collection
+   *
+   * @param {}
+   *
+   * @returns {Number}
+   */
+  async median () {
+    await this.sort()
+    const mid = Math.floor(this.size() / 2)
+
+    return this.size() % 2 !== 0
+      ? this.items[mid]
+      : (this.items[mid] + this.items[(mid - 1)]) / 2
+  }
+
+  /**
    * Returns the sum of all collection items.
    *
    * @returns {Number} resulting sum of collection items
