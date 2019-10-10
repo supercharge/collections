@@ -8,6 +8,7 @@
 - `.avg()` method
 - `.min()` method
 - `.max()` method
+- `.join()` method
 - `.sort()` method
 - `.diff()` method
 - `.union()` method
