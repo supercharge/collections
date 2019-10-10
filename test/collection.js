@@ -525,6 +525,12 @@ describe('Chained Collection', () => {
     expect(
       await Collect([1, 2, 3]).join('-')
     ).to.equal('1-2-3')
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(item => item * 2)
+        .join('-.-')
+    ).to.equal('2-.-4-.-6')
   })
 
   it('take', async () => {
