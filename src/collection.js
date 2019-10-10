@@ -502,11 +502,12 @@ class Collection {
    * @returns {Number}
    */
   async median () {
-    const arr = (await this.sort()).items
-    const mid = Math.floor(arr.length / 2)
-    return arr.length % 2 !== 0
-      ? arr[mid]
-      : (arr[mid] + arr[(mid - 1)]) / 2
+    await this.sort()
+    const mid = Math.floor(this.size() / 2)
+
+    return this.size() % 2 !== 0
+      ? this.items[mid]
+      : (this.items[mid] + this.items[(mid - 1)]) / 2
   }
 
   /**
