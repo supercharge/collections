@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.6.0](https://github.com/superchargejs/collections/compare/v1.5.1...v1.6.0) - 2019-xx-xx
+## [1.6.0](https://github.com/superchargejs/collections/compare/v1.5.1...v1.6.0) - 2019-10-10
 
 ### Added
 - `.sum()` method
