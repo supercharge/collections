@@ -531,7 +531,8 @@ class Collection {
    * @returns {Number}
    */
   async median () {
-    await this.sort()
+    await this.sort((a, b) => a - b)
+
     const mid = Math.floor(this.size() / 2)
 
     return this.size() % 2 !== 0

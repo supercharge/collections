@@ -820,5 +820,11 @@ describe('Chained Collection', () => {
     expect(
       await Collect([1, 2]).median()
     ).to.equal(1.5)
+
+    expect(
+      await Collect([1, 4, 12, 2, 3, 47])
+        .map(item => item * 2) // 2, 8, 24, 4, 6, 94
+        .median() // 2, 4, 6, 8, 24, 94
+    ).to.equal(7)
   })
 })
