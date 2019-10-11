@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.7.0](https://github.com/superchargejs/collections/compare/v1.6.0...v1.7.0) - 2019-10-xx
+
+### Added
+- `.median()` method
+
+
 ## [1.6.0](https://github.com/superchargejs/collections/compare/v1.5.1...v1.6.0) - 2019-10-10
 
 ### Added
