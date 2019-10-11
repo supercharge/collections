@@ -239,7 +239,9 @@ class Collection {
    * @returns {Array}
    */
   intersect (items) {
-    return [...new Set(this.items.filter(value => items.includes(value)))]
+    return [...new Set(
+      this.items.filter(value => items.includes(value))
+    )]
   }
 
   /**
@@ -407,7 +409,7 @@ class Collection {
    *
    * @returns {Number}
    */
-  async min () {
+  min () {
     return Math.min(...this.items)
   }
 
@@ -518,9 +520,7 @@ class Collection {
    * @returns {Collection}
    */
   async sort (comparator) {
-    this.items = [...this.items.sort(comparator)]
-
-    return this
+    return [...this.items.sort(comparator)]
   }
 
   /**
