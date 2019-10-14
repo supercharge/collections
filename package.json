@@ -10,7 +10,7 @@
     "@supercharge/queue-datastructure": "~1.1.1"
   },
   "devDependencies": {
-    "@hapi/code": "~6.0.0",
+    "@hapi/code": "~7.0.0",
     "@hapi/lab": "~21.0.0",
     "eslint": "~6.5.1",
     "eslint-config-standard": "~14.1.0",
