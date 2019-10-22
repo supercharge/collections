@@ -580,7 +580,9 @@ class Collection {
    * @returns {Array}
    */
   async unique () {
-    return Array.from(new Set(this.items))
+    return Array.from(
+      new Set(this.items)
+    )
   }
 
   /**
