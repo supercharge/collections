@@ -628,6 +628,23 @@ describe('Chained Collection', () => {
     ).to.equal([6, 10, 20, 30])
   })
 
+  it('pop', async () => {
+    expect(
+      await Collect([1, 2, 3])
+        .pop()
+    ).to.equal(3)
+
+    const collection = Collect([])
+    const elem1 = await collection.pop()
+    expect(elem1).to.equal(undefined)
+    expect(await collection.all()).to.equal([])
+
+    const pipeline = Collect([1, 2, 3, 4, 5]).map(item => item * 2).filter(item => item > 5)
+    const elem2 = await pipeline.pop()
+    expect(elem2).to.equal(10)
+    expect(await pipeline.all()).to.equal([6, 8])
+  })
+
   it('shift', async () => {
     const collection = Collect([1, 2, 3])
     const first = await collection.shift()

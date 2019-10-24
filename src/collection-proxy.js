@@ -317,6 +317,21 @@ class CollectionProxy {
   }
 
   /**
+   * Removes and returns the last item from the collection
+   *
+   * @param {}
+   *
+   * @returns {Number}
+   */
+  pop () {
+    const collection = this.clone()
+
+    this.splice(-1, 1)
+
+    return collection._enqueue('pop').all()
+  }
+
+  /**
    * Asynchronous version of Array#reduce(). It invokes the `reducer`
    * function sequentially on each `array` item. The reducer
    * transforms an accumulator value based on each item.
