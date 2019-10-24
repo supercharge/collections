@@ -653,6 +653,12 @@ class CollectionProxy {
     return collection
   }
   
+  /**
+   * Returns the returns the last item in the collection. It does not remove the item from the collection.
+   *
+   * @returns {Number}
+   * */
+  
   async last () {		
     const collection = new Collection(this.items)		
     return collection.slice(-1)	
