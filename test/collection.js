@@ -828,3 +828,9 @@ describe('Chained Collection', () => {
     ).to.equal(7)
   })
 })
+
+it('pop', async () => {
+  expect(
+    await Collect([1, 2, 3]).pop()
+  ).to.equal([1,2])
+})
