@@ -177,6 +177,18 @@ class Collection {
     throw new Error(`Collection.first() accepts only a callback function as an argument, received ${typeof callback}`)
   }
 
+  async last(callback) {
+    if(!callback) {
+      return this.items[this.items.length - 1]
+    } 
+
+    if (typeof callback === 'function') {
+      return callback(this.items[this.items.length - 1])
+    }
+    
+    throw new Error(`Collection.last() accepts only a callback function as an argument, received ${typeof callback}`)
+  }
+
   /**
    * Asynchronous version of Array#flatMap(). It invokes the `callback`
    * on each collection item. The callback can modify and return the

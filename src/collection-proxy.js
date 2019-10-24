@@ -166,6 +166,12 @@ class CollectionProxy {
     )
   }
 
+  last(callback) {
+    return this.all(
+      this._enqueue('last', callback)
+    )
+  }
+
   /**
    * Asynchronous version of Array#flatMap(). It invokes the `callback`
    * on each collection item. The callback can modify and return the
