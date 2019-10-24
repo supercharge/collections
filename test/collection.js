@@ -828,3 +828,29 @@ describe('Chained Collection', () => {
     ).to.equal(7)
   })
 })
+
+it('last', async () => {
+  expect(
+    await Collect([1, 2, 3]).last()
+  ).to.equal(3)
+
+  expect(
+    Collect([1, 2, 3]).last(1)
+  ).to.reject(Error) // only callback functions are allowed
+
+  expect(
+    await Collect([
+      { id: 1, name: '1' },
+      { id: 2, name: '2' },
+      { id: 1, name: '3' }
+    ]).last(item => {
+      return item
+    })
+  ).to.equal({ id: 1, name: '3' })
+
+  expect(
+    await Collect([{ id: 1, name: '1' }]).last(item => {
+      return item.name === 'Marcus'
+    })
+  ).to.equal(false)
+})
