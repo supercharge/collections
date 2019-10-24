@@ -287,6 +287,7 @@ class Collection {
 
     if (typeof callback === 'function') {
       const mapped = await this.filter(callback)
+
       return mapped[mapped.length - 1]
     }
 
