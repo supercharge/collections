@@ -265,6 +265,21 @@ class CollectionProxy {
   }
 
   /**
+   * Returns the last item in the collection
+   * that satisfies the `callback` testing
+   * function, `undefined` otherwise.
+   *
+   * @param {Function} callback
+   *
+   * @returns {*} the found value
+   */
+  last (callback) {
+    return this.all(
+      this._enqueue('last', callback)
+    )
+  }
+
+  /**
    * Asynchronous version of Array#map(), running all transformations
    * in parallel. It runs the given `callback` on each item of the
    * `array` and returns an array of transformed items.

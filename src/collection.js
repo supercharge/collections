@@ -272,6 +272,29 @@ class Collection {
   }
 
   /**
+   * Returns the last item in the collection
+   * that satisfies the `callback` testing
+   * function, `undefined` otherwise.
+   *
+   * @param {Function} callback
+   *
+   * @returns {*} the found value
+   */
+  async last (callback) {
+    if (!callback) {
+      return this.items[this.items.length - 1]
+    }
+
+    if (typeof callback === 'function') {
+      const mapped = await this.filter(callback)
+
+      return mapped[mapped.length - 1]
+    }
+
+    throw new Error(`Collection.last() accepts only a callback function as an argument, received ${typeof callback}`)
+  }
+
+  /**
    * Asynchronous version of Array#map(), running all transformations
    * in parallel. It runs the given `callback` on each item of the
    * `array` and returns an array of transformed items.
