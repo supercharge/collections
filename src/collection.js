@@ -178,9 +178,8 @@ class Collection {
   }
 
   async pop() {
-    let a = [...this.items];
-    a.splice(a.length - 1, 1);
-    return a;
+    this.items.splice(this.items.length - 1, 1);
+    return this.items;
   }
 
   /**
