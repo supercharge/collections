@@ -630,31 +630,30 @@ describe('Chained Collection', () => {
 
   it('pop', async () => {
     expect(
-      await Collect([1, 2, 3])
-        .pop()
+      await Collect([1, 2, 3]).pop()
     ).to.equal(3)
 
     const collection = Collect([])
-    const elem1 = await collection.pop()
-    expect(elem1).to.equal(undefined)
+    const undef = await collection.pop()
+    expect(undef).to.equal(undefined)
     expect(await collection.all()).to.equal([])
 
     const pipeline = Collect([1, 2, 3, 4, 5]).map(item => item * 2).filter(item => item > 5)
-    const elem2 = await pipeline.pop()
-    expect(elem2).to.equal(10)
+    const ten = await pipeline.pop()
+    expect(ten).to.equal(10)
     expect(await pipeline.all()).to.equal([6, 8])
   })
 
   it('shift', async () => {
     const collection = Collect([1, 2, 3])
-    const first = await collection.shift()
-    expect(first).to.equal(1)
+    const one = await collection.shift()
+    expect(one).to.equal(1)
     expect(await collection.all()).to.equal([2, 3])
 
-    const pipeline = Collect([1, 2, 3]).map(item => item * 2).filter(item => item > 5)
+    const pipeline = Collect([1, 2, 3, 4, 5]).map(item => item * 2).filter(item => item > 5)
     const six = await pipeline.shift()
     expect(six).to.equal(6)
-    expect(await pipeline.all()).to.equal([])
+    expect(await pipeline.all()).to.equal([8, 10])
   })
 
   it('concat', async () => {
