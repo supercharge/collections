@@ -852,5 +852,13 @@ describe('Chained Collection', () => {
         return item.name === 'Marcus'
       })
     ).to.equal(undefined)
+
+    const items = [1, 2, 3]
+    expect(
+      await Collect(items)
+        .map(item => item * 10)
+        .last()
+    ).to.equal(30)
+    expect(items).to.equal([1, 2, 3])
   })
 })
