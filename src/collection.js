@@ -342,6 +342,17 @@ class Collection {
   }
 
   /**
+   * Removes and returns the last item from the collection
+   *
+   * @param {}
+   *
+   * @returns {Number}
+   */
+  pop () {
+    return this.items.pop()
+  }
+
+  /**
    * Asynchronous version of Array#reduce(). It invokes the `reducer`
    * function sequentially on each `array` item. The reducer
    * transforms an accumulator value based on each item.
