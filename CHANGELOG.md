@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.8.0](https://github.com/superchargejs/collections/compare/v1.7.0...v1.8.0) - 2019-10-24
+
+### Added
+- `.last()` method
+
+
 ## [1.7.0](https://github.com/superchargejs/collections/compare/v1.6.0...v1.7.0) - 2019-10-11
 
 ### Added
