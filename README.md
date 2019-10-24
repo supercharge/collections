@@ -58,7 +58,7 @@ await Collect(
   })
   .map(async user => {
     await user.subscribeToNewsletter()
-    
+
     return user
   })
   .all()
@@ -68,7 +68,7 @@ await Collect(
 
 **Notice:** when chaining methods like `map` or `filter`, you'll receive a collection instance in return. You must actively end the call chain using the `.all()` method to process the collection pipeline and retrieve the final result.
 
-You can directly await the result for methods returning a definite value:
+You can directly await the result for methods returning a definite value. The function returns a new instance of the collection without altering the original input array:
 
 ```js
 await Collect([ 1, 2, 3 ])
