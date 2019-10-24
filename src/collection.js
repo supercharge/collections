@@ -177,6 +177,12 @@ class Collection {
     throw new Error(`Collection.first() accepts only a callback function as an argument, received ${typeof callback}`)
   }
 
+  async pop() {
+    let a = [...this.items];
+    a.splice(a.length - 1, 1);
+    return a;
+  }
+
   /**
    * Asynchronous version of Array#flatMap(). It invokes the `callback`
    * on each collection item. The callback can modify and return the
