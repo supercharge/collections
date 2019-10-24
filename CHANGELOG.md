@@ -6,6 +6,9 @@
 ### Added
 - `.last()` method
 
+### Updated
+- bump deps
+
 
 ## [1.7.0](https://github.com/superchargejs/collections/compare/v1.6.0...v1.7.0) - 2019-10-11
 
