@@ -827,4 +827,30 @@ describe('Chained Collection', () => {
         .median() // 2, 4, 6, 8, 24, 94
     ).to.equal(7)
   })
+
+  it('last', async () => {
+    expect(
+      await Collect([1, 2, 3]).last()
+    ).to.equal(3)
+
+    expect(
+      Collect([1, 2, 3]).last(1)
+    ).to.reject(Error) // only callback functions are allowed
+
+    expect(
+      await Collect([
+        { id: 1, name: '1' },
+        { id: 2, name: '2' },
+        { id: 1, name: '3' }
+      ]).last(item => {
+        return item.id === 1
+      })
+    ).to.equal({ id: 1, name: '3' })
+
+    expect(
+      await Collect([{ id: 1, name: '1' }]).last(item => {
+        return item.name === 'Marcus'
+      })
+    ).to.equal(undefined)
+  })
 })
