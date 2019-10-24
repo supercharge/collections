@@ -652,6 +652,11 @@ class CollectionProxy {
 
     return collection
   }
+  
+  async last () {		
+    const collection = new Collection(this.items)		
+    return collection.slice(-1)	
+  }
 }
 
 module.exports = CollectionProxy
