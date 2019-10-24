@@ -604,6 +604,10 @@ class Collection {
   async avg () {
     return await this.sum() / this.size()
   }
+
+  async pop () {
+    return this.items.pop()
+  }
 }
 
 module.exports = Collection

@@ -827,4 +827,18 @@ describe('Chained Collection', () => {
         .median() // 2, 4, 6, 8, 24, 94
     ).to.equal(7)
   })
+
+  it('pop', async () => {
+    expect(
+      await Collect([1, 2, 3]).pop()
+    ).to.equal(3)
+
+    expect(
+      await Collect([1, 3, 2]).pop()
+    ).to.equal(2)
+
+    expect(
+      await Collect([1, 2]).pop()
+    ).to.equal(2)
+  })
 })

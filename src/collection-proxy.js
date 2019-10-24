@@ -652,6 +652,16 @@ class CollectionProxy {
 
     return collection
   }
+
+  /**
+   * Remove the last item of the collection
+   *
+   * @returns {Number}
+   * */
+  async pop () {
+    const collection = new Collection(this.items)
+    return collection.pop()
+  }
 }
 
 module.exports = CollectionProxy
