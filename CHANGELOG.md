@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.9.0](https://github.com/superchargejs/collections/compare/v1.8.0...v1.9.0) - 2019-10-26
+
+### Added
+- `.pop()` method
+
+
 ## [1.8.0](https://github.com/superchargejs/collections/compare/v1.7.0...v1.8.0) - 2019-10-24
 
 ### Added
