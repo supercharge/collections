@@ -50,7 +50,7 @@ The package is async/await-ready and supports async functions for most of the me
 const User = require('models/user')
 const Collect = require('@supercharge/collections')
 
-await Collect(
+const users = await Collect(
     await User.all()
   )
   .filter(async user => {
@@ -63,7 +63,7 @@ await Collect(
   })
   .all()
 
-// result: [ <list of newly-subscribed users> ]
+// users = [ <list of newly-subscribed users> ]
 ```
 
 **Notice:** when chaining methods like `map` or `filter`, you'll receive a collection instance in return. You must actively end the call chain using the `.all()` method to process the collection pipeline and retrieve the final result.
