@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.9.1](https://github.com/superchargejs/collections/compare/v1.9.0...v1.9.1) - 2019-11-xx
+
+### Removed
+- `.travis.yml` and moved to GitHub Actions for testing
+
+
 ## [1.9.0](https://github.com/superchargejs/collections/compare/v1.8.0...v1.9.0) - 2019-10-26
 
 ### Added

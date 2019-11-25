@@ -19,7 +19,6 @@
   <br/>
   <br/>
   <p>
-    <a href="https://travis-ci.com/superchargejs/collections"><img src="https://travis-ci.com/superchargejs/collections.svg?branch=master" alt="Build Status" data-canonical-src="https://travis-ci.com/superchargejs/collections.svg?branch=master" style="max-width:100%;"></a>
     <a href="https://www.npmjs.com/package/@supercharge/collections"><img src="https://img.shields.io/npm/v/@supercharge/collections.svg" alt="Latest Version"></a>
     <a href="https://www.npmjs.com/package/@supercharge/collections"><img src="https://img.shields.io/npm/dm/@supercharge/collections.svg" alt="Monthly downloads"></a>
   </p>
