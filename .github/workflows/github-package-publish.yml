@@ -1,4 +1,4 @@
-name: Node.js Package
+name: Publish in GitHub Package Registry
 
 on:
   release:
