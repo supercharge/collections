@@ -23,6 +23,10 @@
   "engines": {
     "node": ">=8"
   },
+  "files": [
+    "index.js",
+    "src"
+  ],
   "homepage": "https://github.com/superchargejs/collections",
   "keywords": [
     "async/await",
