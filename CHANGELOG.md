@@ -1,7 +1,10 @@
 # Changelog
 
 
-## [1.9.1](https://github.com/superchargejs/collections/compare/v1.9.0...v1.9.1) - 2019-11-xx
+## [1.9.1](https://github.com/superchargejs/collections/compare/v1.9.0...v1.9.1) - 2019-12-xx
+
+### Added
+- reduce package size by defining published `files` in `package.json`
 
 ### Removed
 - `.travis.yml` and moved to GitHub Actions for testing
