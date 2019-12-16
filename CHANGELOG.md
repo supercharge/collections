@@ -6,6 +6,10 @@
 ### Added
 - reduce package size by defining published `files` in `package.json`
 
+### Updated
+- bump deps
+- refine example in readme
+
 ### Removed
 - `.travis.yml` and moved to GitHub Actions for testing
 
