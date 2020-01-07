@@ -480,11 +480,7 @@ class Collection {
   slice ({ start, limit }) {
     const chunk = this.items.slice(start)
 
-    if (limit) {
-      return chunk.slice(0, limit)
-    }
-
-    return chunk.slice(0)
+    return chunk.slice(0, limit)
   }
 
   /**
