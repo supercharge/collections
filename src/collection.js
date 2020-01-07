@@ -634,6 +634,15 @@ class Collection {
   async avg () {
     return await this.sum() / this.size()
   }
+
+  /**
+   * Returns `true` when the collection contains duplicate items, `false` otherwise.
+   *
+   * @returns {Boolean}
+   */
+  async hasDuplicates () {
+    return (new Set(this.items)).size !== this.size()
+  }
 }
 
 module.exports = Collection

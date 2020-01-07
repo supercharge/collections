@@ -682,6 +682,17 @@ class CollectionProxy {
 
     return collection
   }
+
+  /**
+   * Returns `true` when the collection contains duplicate items, `false` otherwise.
+   *
+   * @returns {Boolean}
+   */
+  async hasDuplicates () {
+    return this.all(
+      this._enqueue('hasDuplicates')
+    )
+  }
 }
 
 module.exports = CollectionProxy
