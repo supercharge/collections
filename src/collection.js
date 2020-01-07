@@ -232,7 +232,7 @@ class Collection {
   }
 
   /**
-   * Creates an array of unique values that are included in both given array
+   * Creates an array of unique values that are included in both given array.
    *
    * @param {Array} items
    *
@@ -272,9 +272,8 @@ class Collection {
   }
 
   /**
-   * Returns the last item in the collection
-   * that satisfies the `callback` testing
-   * function, `undefined` otherwise.
+   * Returns the last item in the collection that satisfies
+   * the `callback` testing function, `undefined` otherwise.
    *
    * @param {Function} callback
    *
@@ -342,7 +341,7 @@ class Collection {
   }
 
   /**
-   * Removes and returns the last item from the collection
+   * Removes and returns the last item from the collection.
    *
    * @param {}
    *
@@ -502,7 +501,7 @@ class Collection {
   }
 
   /**
-  * Returns reversed version of original collection
+  * Returns reversed version of original collection.
   *
   * @returns {Array}
   */
@@ -554,7 +553,7 @@ class Collection {
   }
 
   /**
-   * Returns median of the current collection
+   * Returns median of the current collection.
    *
    * @param {}
    *
@@ -596,7 +595,7 @@ class Collection {
   }
 
   /**
-   * Returns JSON representation of collection
+   * Returns JSON representation of collection.
    *
    * @returns {String}
    */
@@ -627,7 +626,7 @@ class Collection {
   }
 
   /**
-   * Returns the average of all collection items
+   * Returns the average of all collection items.
    *
    * @returns {Number}
    * */
