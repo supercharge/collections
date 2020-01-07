@@ -549,7 +549,7 @@ class Collection {
    *
    * @returns {Collection}
    */
-  async sort (comparator) {
+  sort (comparator) {
     return [...this.items.sort(comparator)]
   }
 
@@ -560,8 +560,8 @@ class Collection {
    *
    * @returns {Number}
    */
-  async median () {
-    await this.sort((a, b) => a - b)
+  median () {
+    this.sort((a, b) => a - b)
 
     const mid = Math.floor(this.size() / 2)
 
@@ -609,7 +609,7 @@ class Collection {
    *
    * @returns {Array}
    */
-  async unique () {
+  unique () {
     return Array.from(
       new Set(this.items)
     )
@@ -620,7 +620,7 @@ class Collection {
    *
    * @returns {Collection}
    */
-  async unshift (items) {
+  unshift (items) {
     this.items.unshift(...items)
 
     return this
