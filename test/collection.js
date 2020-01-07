@@ -877,4 +877,14 @@ describe('Chained Collection', () => {
     ).to.equal(30)
     expect(items).to.equal([1, 2, 3])
   })
+
+  it('hasDuplicates', async () => {
+    expect(
+      await Collect([1, 1, 2]).hasDuplicates()
+    ).to.be.true()
+
+    expect(
+      await Collect([1, 2]).hasDuplicates()
+    ).to.be.false()
+  })
 })
