@@ -232,7 +232,7 @@ class Collection {
   }
 
   /**
-   * Creates an array of unique values that are included in both given array
+   * Creates an array of unique values that are included in both given array.
    *
    * @param {Array} items
    *
@@ -272,9 +272,8 @@ class Collection {
   }
 
   /**
-   * Returns the last item in the collection
-   * that satisfies the `callback` testing
-   * function, `undefined` otherwise.
+   * Returns the last item in the collection that satisfies
+   * the `callback` testing function, `undefined` otherwise.
    *
    * @param {Function} callback
    *
@@ -344,7 +343,7 @@ class Collection {
   }
 
   /**
-   * Removes and returns the last item from the collection
+   * Removes and returns the last item from the collection.
    *
    * @param {}
    *
@@ -504,7 +503,7 @@ class Collection {
   }
 
   /**
-  * Returns reversed version of original collection
+  * Returns reversed version of original collection.
   *
   * @returns {Array}
   */
@@ -551,19 +550,19 @@ class Collection {
    *
    * @returns {Collection}
    */
-  async sort (comparator) {
+  sort (comparator) {
     return [...this.items.sort(comparator)]
   }
 
   /**
-   * Returns median of the current collection
+   * Returns median of the current collection.
    *
    * @param {}
    *
    * @returns {Number}
    */
-  async median () {
-    await this.sort((a, b) => a - b)
+  median () {
+    this.sort((a, b) => a - b)
 
     const mid = Math.floor(this.size() / 2)
 
@@ -598,7 +597,7 @@ class Collection {
   }
 
   /**
-   * Returns JSON representation of collection
+   * Returns JSON representation of collection.
    *
    * @returns {String}
    */
@@ -611,7 +610,7 @@ class Collection {
    *
    * @returns {Array}
    */
-  async unique () {
+  unique () {
     return Array.from(
       new Set(this.items)
     )
@@ -622,14 +621,14 @@ class Collection {
    *
    * @returns {Collection}
    */
-  async unshift (items) {
+  unshift (items) {
     this.items.unshift(...items)
 
     return this
   }
 
   /**
-   * Returns the average of all collection items
+   * Returns the average of all collection items.
    *
    * @returns {Number}
    * */
@@ -646,6 +645,15 @@ class Collection {
     await this.forEach(callback)
 
     return this
+  }
+
+  /**
+   * Returns `true` when the collection contains duplicate items, `false` otherwise.
+   *
+   * @returns {Boolean}
+   */
+  async hasDuplicates () {
+    return (new Set(this.items)).size !== this.size()
   }
 }
 

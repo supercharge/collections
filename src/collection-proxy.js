@@ -636,6 +636,17 @@ class CollectionProxy {
   }
 
   /**
+   * Returns `true` when the collection contains duplicate items, `false` otherwise.
+   *
+   * @returns {Boolean}
+   */
+  async hasDuplicates () {
+    return this.all(
+      this._enqueue('hasDuplicates')
+    )
+  }
+
+  /**
    * Tap into the chain, run the given `callback` and retreive the original value.
    *
    * @returns {CollectionProxy}

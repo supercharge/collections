@@ -895,4 +895,20 @@ describe('Chained Collection', () => {
         .all()
     ).to.equal([6])
   })
+
+  it('hasDuplicates', async () => {
+    expect(
+      await Collect([1, 1, 2]).hasDuplicates()
+    ).to.be.true()
+
+    expect(
+      await Collect([1, 2]).hasDuplicates()
+    ).to.be.false()
+
+    expect(
+      await Collect([1, 1, 2])
+        .map(value => value * 2)
+        .hasDuplicates()
+    ).to.be.true()
+  })
 })

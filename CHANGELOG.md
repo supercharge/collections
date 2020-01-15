@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.9.1](https://github.com/superchargejs/collections/compare/v1.9.0...v1.9.1) - 2019-12-xx
+## [1.9.1](https://github.com/superchargejs/collections/compare/v1.9.0...v1.9.1) - 2020-01-07
 
 ### Added
 - reduce package size by defining published `files` in `package.json`
