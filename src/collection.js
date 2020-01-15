@@ -304,7 +304,9 @@ class Collection {
    * @returns {Array}
    */
   async map (callback) {
-    return Promise.all(this.items.map(callback))
+    return Promise.all(
+      this.items.map(callback)
+    )
   }
 
   /**
@@ -633,6 +635,17 @@ class Collection {
    * */
   async avg () {
     return await this.sum() / this.size()
+  }
+
+  /**
+   * Tap into the chain, run the given `callback` and retreive the original value.
+   *
+   * @returns {Number}
+   */
+  async tap (callback) {
+    await this.forEach(callback)
+
+    return this
   }
 }
 

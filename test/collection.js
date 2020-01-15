@@ -877,4 +877,22 @@ describe('Chained Collection', () => {
     ).to.equal(30)
     expect(items).to.equal([1, 2, 3])
   })
+
+  it('tap', async () => {
+    expect(
+      await Collect([1, 2, 3])
+        .tap(value => {
+          return value * 10
+        })
+        .all()
+    ).to.equal([1, 2, 3])
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(value => value * 2)
+        .tap(value => value * 10)
+        .filter(value => value > 4)
+        .all()
+    ).to.equal([6])
+  })
 })

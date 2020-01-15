@@ -636,6 +636,15 @@ class CollectionProxy {
   }
 
   /**
+   * Tap into the chain, run the given `callback` and retreive the original value.
+   *
+   * @returns {CollectionProxy}
+   */
+  tap (callback) {
+    return this._enqueue('tap', callback)
+  }
+
+  /**
    * Enqueues an operation in the collection pipeline
    * for processing at a later time.
    *
