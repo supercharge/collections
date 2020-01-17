@@ -1,7 +1,6 @@
 # Changelog
 
-
-## [1.10.0](https://github.com/superchargejs/collections/compare/v1.9.1...v1.10.0) - 2020-01-15
+## [1.10.0](https://github.com/superchargejs/collections/compare/v1.9.1...v1.10.0) - 2020-01-xx
 
 ### Added
 - `.tap()` method
