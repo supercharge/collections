@@ -1,6 +1,5 @@
 # Changelog
 
-
 ## [1.10.1](https://github.com/superchargejs/collections/compare/v1.10.0...v1.10.1) - 2020-01-xx
 
 ### Fixed
