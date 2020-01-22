@@ -22,6 +22,16 @@ describe('Chained Collection', () => {
     ).to.equal(['Marcus'])
   })
 
+  it('ensures an empty array when passing an empty value', async () => {
+    expect(
+      await Collect().all()
+    ).to.equal([])
+
+    expect(
+      await Collect(null).all()
+    ).to.equal([])
+  })
+
   it('processes a collection pipeline', async () => {
     const result = await Collect([1, 2, 3])
       .map(async item => item * 2)

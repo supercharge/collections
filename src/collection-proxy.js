@@ -4,8 +4,8 @@ const Collection = require('./collection')
 const Queue = require('@supercharge/queue-datastructure')
 
 class CollectionProxy {
-  constructor (items = [], callChain = []) {
-    this.items = [].concat(items)
+  constructor (items, callChain = []) {
+    this.items = [].concat(items || [])
     this.callChain = new Queue(callChain)
   }
 
