@@ -16,6 +16,15 @@ class Collection {
   }
 
   /**
+   * Returns the average of all collection items.
+   *
+   * @returns {Number}
+   * */
+  async avg () {
+    return await this.sum() / this.size()
+  }
+
+  /**
    * Breaks the collection into multiple, smaller collections
    * of the given `size`.
    *
@@ -66,6 +75,17 @@ class Collection {
    */
   concat (items) {
     return this.items.concat(...items)
+  }
+
+  /**
+   * Removes all values from the collection that are present in the given array.
+   *
+   * @param {*} items
+   *
+   * @returns {CollectionProxy}
+   */
+  diff ({ items }) {
+    return this.items.filter(item => !items.includes(item))
   }
 
   /**
@@ -232,6 +252,15 @@ class Collection {
   }
 
   /**
+   * Returns `true` when the collection contains duplicate items, `false` otherwise.
+   *
+   * @returns {Boolean}
+   */
+  async hasDuplicates () {
+    return (new Set(this.items)).size !== this.size()
+  }
+
+  /**
    * Creates an array of unique values that are included in both given array.
    *
    * @param {Array} items
@@ -330,6 +359,41 @@ class Collection {
   }
 
   /**
+   * Returns the max value in the collection.
+   *
+   * @returns {Number}
+   */
+  max () {
+    return Math.max(...this.items)
+  }
+
+  /**
+   * Returns median of the current collection.
+   *
+   * @param {}
+   *
+   * @returns {Number}
+   */
+  median () {
+    this.sort((a, b) => a - b)
+
+    const mid = Math.floor(this.size() / 2)
+
+    return this.size() % 2 !== 0
+      ? this.items[mid]
+      : (this.items[mid] + this.items[(mid - 1)]) / 2
+  }
+
+  /**
+   * Returns the min value in the collection.
+   *
+   * @returns {Number}
+   */
+  min () {
+    return Math.min(...this.items)
+  }
+
+  /**
    * Add one or more items to the end of the colleciton.
    *
    * @param  {*} items
@@ -422,6 +486,17 @@ class Collection {
   }
 
   /**
+  * Returns reversed version of original collection.
+  *
+  * @returns {Array}
+  */
+  reverse () {
+    this.items.reverse()
+
+    return this.items
+  }
+
+  /**
    * Removes and returns the first item from the collection.
    *
    * @returns {*}
@@ -437,35 +512,6 @@ class Collection {
    */
   size () {
     return this.items.length
-  }
-
-  /**
-   * Returns the min value in the collection.
-   *
-   * @returns {Number}
-   */
-  min () {
-    return Math.min(...this.items)
-  }
-
-  /**
-   * Returns the max value in the collection.
-   *
-   * @returns {Number}
-   */
-  max () {
-    return Math.max(...this.items)
-  }
-
-  /**
-   * Removes all values from the collection that are present in the given array.
-   *
-   * @param {*} items
-   *
-   * @returns {CollectionProxy}
-   */
-  diff ({ items }) {
-    return this.items.filter(item => !items.includes(item))
   }
 
   /**
@@ -500,17 +546,6 @@ class Collection {
     this.items.splice(start, limit || this.items.length, ...flattend)
 
     return this.items.slice(0)
-  }
-
-  /**
-  * Returns reversed version of original collection.
-  *
-  * @returns {Array}
-  */
-  reverse () {
-    this.items.reverse()
-
-    return this.items
   }
 
   /**
@@ -555,23 +590,6 @@ class Collection {
   }
 
   /**
-   * Returns median of the current collection.
-   *
-   * @param {}
-   *
-   * @returns {Number}
-   */
-  median () {
-    this.sort((a, b) => a - b)
-
-    const mid = Math.floor(this.size() / 2)
-
-    return this.size() % 2 !== 0
-      ? this.items[mid]
-      : (this.items[mid] + this.items[(mid - 1)]) / 2
-  }
-
-  /**
    * Returns the sum of all collection items.
    *
    * @returns {Number} resulting sum of collection items
@@ -594,6 +612,17 @@ class Collection {
     return limit < 0
       ? this.items.splice(0, this.size() + limit)
       : this.items.splice(limit)
+  }
+
+  /**
+   * Tap into the chain, run the given `callback` and retreive the original value.
+   *
+   * @returns {Number}
+   */
+  async tap (callback) {
+    await this.forEach(callback)
+
+    return this
   }
 
   /**
@@ -625,35 +654,6 @@ class Collection {
     this.items.unshift(...items)
 
     return this
-  }
-
-  /**
-   * Returns the average of all collection items.
-   *
-   * @returns {Number}
-   * */
-  async avg () {
-    return await this.sum() / this.size()
-  }
-
-  /**
-   * Tap into the chain, run the given `callback` and retreive the original value.
-   *
-   * @returns {Number}
-   */
-  async tap (callback) {
-    await this.forEach(callback)
-
-    return this
-  }
-
-  /**
-   * Returns `true` when the collection contains duplicate items, `false` otherwise.
-   *
-   * @returns {Boolean}
-   */
-  async hasDuplicates () {
-    return (new Set(this.items)).size !== this.size()
   }
 }
 

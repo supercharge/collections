@@ -10,6 +10,17 @@ class CollectionProxy {
   }
 
   /**
+   * Returns the average of all collection items
+   *
+   * @returns {Number}
+   */
+  async avg () {
+    return this.all(
+      this._enqueue('avg')
+    )
+  }
+
+  /**
    * Breaks the collection into multiple, smaller collections
    * of the given `size`.
    *
@@ -66,6 +77,17 @@ class CollectionProxy {
   }
 
   /**
+   * Removes all values from the collection that are present in the given array.
+   *
+   * @param {*} items
+   *
+   * @returns {CollectionProxy}
+   */
+  diff (items) {
+    return this._enqueue('diff', null, { items })
+  }
+
+  /**
    * Asynchrounous version of Array#every(). Checks whether
    * the `callback` returns `true` for all items in the
    * array. Runs all checks in parallel.
@@ -74,7 +96,7 @@ class CollectionProxy {
    *
    * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
    */
-  every (callback) {
+  async every (callback) {
     return this.all(
       this._enqueue('every', callback)
     )
@@ -89,7 +111,7 @@ class CollectionProxy {
    *
    * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
    */
-  everySeries (callback) {
+  async everySeries (callback) {
     return this.all(
       this._enqueue('everySeries', callback)
     )
@@ -130,7 +152,7 @@ class CollectionProxy {
    *
    * @returns {*} the found value
    */
-  find (callback) {
+  async find (callback) {
     return this.all(
       this._enqueue('find', callback)
     )
@@ -145,7 +167,7 @@ class CollectionProxy {
    *
    * @returns {*} the found value
    */
-  findSeries (callback) {
+  async findSeries (callback) {
     return this.all(
       this._enqueue('findSeries', callback)
     )
@@ -160,7 +182,7 @@ class CollectionProxy {
    *
    * @returns {*} the found value
    */
-  first (callback) {
+  async first (callback) {
     return this.all(
       this._enqueue('first', callback)
     )
@@ -187,7 +209,7 @@ class CollectionProxy {
    *
    * @param {Function} callback
    */
-  forEach (callback) {
+  async forEach (callback) {
     return this.all(
       this._enqueue('forEach', callback)
     )
@@ -200,7 +222,7 @@ class CollectionProxy {
    *
    * @param {Function} callback
    */
-  forEachSeries (callback) {
+  async forEachSeries (callback) {
     return this.all(
       this._enqueue('forEachSeries', callback)
     )
@@ -214,9 +236,20 @@ class CollectionProxy {
    *
    * @returns {Boolean}
    */
-  has (callback) {
+  async has (callback) {
     return this.all(
       this._enqueue('has', callback)
+    )
+  }
+
+  /**
+   * Returns `true` when the collection contains duplicate items, `false` otherwise.
+   *
+   * @returns {Boolean}
+   */
+  async hasDuplicates () {
+    return this.all(
+      this._enqueue('hasDuplicates')
     )
   }
 
@@ -236,7 +269,7 @@ class CollectionProxy {
    *
    * @returns {Boolean}
    */
-  isEmpty () {
+  async isEmpty () {
     return this.all(
       this._enqueue('isEmpty')
     )
@@ -247,7 +280,7 @@ class CollectionProxy {
    *
    * @returns {Boolean}
    */
-  isNotEmpty () {
+  async isNotEmpty () {
     return this.all(
       this._enqueue('isNotEmpty')
     )
@@ -258,7 +291,7 @@ class CollectionProxy {
    *
    * @returns {String}
    */
-  join (separator) {
+  async join (separator) {
     return this.all(
       this._enqueue('join', null, separator)
     )
@@ -273,7 +306,7 @@ class CollectionProxy {
    *
    * @returns {*} the found value
    */
-  last (callback) {
+  async last (callback) {
     return this.all(
       this._enqueue('last', callback)
     )
@@ -303,6 +336,39 @@ class CollectionProxy {
    */
   mapSeries (callback) {
     return this._enqueue('mapSeries', callback)
+  }
+
+  /**
+   * Returns the max value in the collection.
+   *
+   * @returns {Number}
+   */
+  async max () {
+    return this.all(
+      this._enqueue('max')
+    )
+  }
+
+  /**
+   * Returns median of the current collection
+   *
+   * @returns {Number}
+   */
+  async median () {
+    return this.all(
+      this._enqueue('median')
+    )
+  }
+
+  /**
+   * Returns the min value in the collection.
+   *
+   * @returns {Number}
+   */
+  async min () {
+    return this.all(
+      this._enqueue('min')
+    )
   }
 
   /**
@@ -341,7 +407,7 @@ class CollectionProxy {
    *
    * @returns {*} resulting accumulator value
    */
-  reduce (reducer, initial) {
+  async reduce (reducer, initial) {
     return this.all(
       this._enqueue('reduce', reducer, initial)
     )
@@ -357,7 +423,7 @@ class CollectionProxy {
    *
    * @returns {*} resulting accumulator value
    */
-  reduceRight (reducer, initial) {
+  async reduceRight (reducer, initial) {
     return this.all(
       this._enqueue('reduceRight', reducer, initial)
     )
@@ -390,6 +456,16 @@ class CollectionProxy {
   }
 
   /**
+  * Returns a reversed collection. The first item becomes the last one,
+  * the second item becomes the second to last, and so on.
+  *
+  * @returns {CollectionProxy}
+  */
+  reverse () {
+    return this.clone()._enqueue('reverse')
+  }
+
+  /**
    * Removes and returns the first item from the collection.
    *
    * @returns {*}
@@ -407,32 +483,10 @@ class CollectionProxy {
    *
    * @returns {Number}
    */
-  size () {
+  async size () {
     return this.all(
       this._enqueue('size')
     )
-  }
-
-  /**
-   * Returns the max value in the collection.
-   *
-   * @returns {Number}
-   */
-  max () {
-    return this.all(
-      this._enqueue('max')
-    )
-  }
-
-  /**
-   * Removes all values from the collection that are present in the given array.
-   *
-   * @param {*} items
-   *
-   * @returns {CollectionProxy}
-   */
-  diff (items) {
-    return this._enqueue('diff', null, { items })
   }
 
   /**
@@ -469,16 +523,6 @@ class CollectionProxy {
   }
 
   /**
-  * Returns a reversed collection. The first item becomes the last one,
-  * the second item becomes the second to last, and so on.
-  *
-  * @returns {CollectionProxy}
-  */
-  reverse () {
-    return this.clone()._enqueue('reverse')
-  }
-
-  /**
    * Asynchronous version of `Array#some()`. This function
    * tests whether at least one element in the `array`
    * passes the check implemented by the `callback`.
@@ -487,7 +531,7 @@ class CollectionProxy {
    *
    * @returns {Boolean}
    */
-  some (callback) {
+  async some (callback) {
     return this.all(
       this._enqueue('some', callback)
     )
@@ -502,7 +546,7 @@ class CollectionProxy {
    *
    * @returns {Boolean}
    */
-  someSeries (callback) {
+  async someSeries (callback) {
     return this.all(
       this._enqueue('someSeries', callback)
     )
@@ -524,7 +568,7 @@ class CollectionProxy {
    *
    * @returns {Number} resulting sum of collection items
    */
-  sum () {
+  async sum () {
     return this.all(
       this._enqueue('sum')
     )
@@ -563,23 +607,23 @@ class CollectionProxy {
   }
 
   /**
+   * Tap into the chain, run the given `callback` and retreive the original value.
+   *
+   * @returns {CollectionProxy}
+   */
+  tap (callback) {
+    return this._enqueue('tap', callback)
+  }
+
+  /**
    * Returns JSON representation of collection
    *
    * @returns {String}
    */
-  toJSON () {
+  async toJSON () {
     return this.all(
       this._enqueue('toJSON')
     )
-  }
-
-  /**
-   * Returns all the unique items in the collection.
-   *
-   * @returns {CollectionProxy}
-   */
-  unique () {
-    return this._enqueue('unique')
   }
 
   /**
@@ -594,65 +638,21 @@ class CollectionProxy {
   }
 
   /**
+   * Returns all the unique items in the collection.
+   *
+   * @returns {CollectionProxy}
+   */
+  unique () {
+    return this._enqueue('unique')
+  }
+
+  /**
    * Add one or more items to the beginning of the collection.
    *
    * @returns {*}
    */
   unshift (...items) {
     return this._enqueue('unshift', null, items)
-  }
-
-  /**
-   * Returns the min value in the collection.
-   *
-   * @returns {Number}
-   */
-  min () {
-    return this.all(
-      this._enqueue('min')
-    )
-  }
-
-  /**
-   * Returns the average of all collection items
-   *
-   * @returns {Number}
-   */
-  avg () {
-    return this.all(
-      this._enqueue('avg')
-    )
-  }
-
-  /**
-   * Returns median of the current collection
-   *
-   * @returns {Number}
-   */
-  median () {
-    return this.all(
-      this._enqueue('median')
-    )
-  }
-
-  /**
-   * Returns `true` when the collection contains duplicate items, `false` otherwise.
-   *
-   * @returns {Boolean}
-   */
-  async hasDuplicates () {
-    return this.all(
-      this._enqueue('hasDuplicates')
-    )
-  }
-
-  /**
-   * Tap into the chain, run the given `callback` and retreive the original value.
-   *
-   * @returns {CollectionProxy}
-   */
-  tap (callback) {
-    return this._enqueue('tap', callback)
   }
 
   /**
