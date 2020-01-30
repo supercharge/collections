@@ -293,7 +293,7 @@ describe('Chained Collection', () => {
     ).to.be.false()
 
     const elapsed = Date.now() - start
-    expect(elapsed >= 150 && elapsed < 200).to.be.true()
+    expect(elapsed >= 150).to.be.true()
 
     expect(
       await Collect([1, 2, 3]).map(item => item * 10).everySeries(item => item > 5)
