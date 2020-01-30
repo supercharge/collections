@@ -4,7 +4,7 @@
   "version": "1.10.0",
   "author": "Marcus Pöhls <marcus@futurestud.io>",
   "bugs": {
-    "url": "https://github.com/superchargejs/collections/issues"
+    "url": "https://github.com/supercharge/collections/issues"
   },
   "dependencies": {
     "@supercharge/queue-datastructure": "~1.1.1"
@@ -27,7 +27,7 @@
     "index.js",
     "src"
   ],
-  "homepage": "https://github.com/superchargejs/collections",
+  "homepage": "https://github.com/supercharge/collections",
   "keywords": [
     "async/await",
     "async",
@@ -50,7 +50,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/superchargejs/collections.git"
+    "url": "git+https://github.com/supercharge/collections.git"
   },
   "scripts": {
     "lint": "eslint .",
