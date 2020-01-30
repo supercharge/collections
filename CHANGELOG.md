@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.11.0](https://github.com/superchargejs/collections/compare/v1.10.0...v1.11.0) - 2020-xx-xx
+
+### Added
+- `.groupBy()` method
+
+### Updated
+- bump deps
+
+
 ## [1.10.0](https://github.com/superchargejs/collections/compare/v1.9.1...v1.10.0) - 2020-01-22
 
 ### Added
