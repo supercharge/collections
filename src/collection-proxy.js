@@ -229,6 +229,19 @@ class CollectionProxy {
   }
 
   /**
+   * Group the collection items into arrays using the given `key`.
+   *
+   * @param {String} key
+   *
+   * @returns {Object}
+   */
+  async groupBy (key) {
+    return this.all(
+      this._enqueue('groupBy', null, key)
+    )
+  }
+
+  /**
    * Returns `true` when the collection satisfies the given
    * `callback` testing function, `false` otherwise.
    *

@@ -921,4 +921,35 @@ describe('Chained Collection', () => {
         .hasDuplicates()
     ).to.be.true()
   })
+
+  it('groupBy', async () => {
+    const products = [
+      { name: 'Macbook', price: 2500 },
+      { name: 'Macbook', price: 3000 },
+      { name: 'iPhone', price: 1000 }
+    ]
+    expect(
+      await Collect(products).groupBy('name')
+    ).to.equal({
+      Macbook: [
+        { name: 'Macbook', price: 2500 },
+        { name: 'Macbook', price: 3000 }
+      ],
+      iPhone: [
+        { name: 'iPhone', price: 1000 }
+      ]
+    })
+
+    expect(
+      await Collect([]).groupBy('name')
+    ).to.equal({})
+
+    expect(
+      await Collect(products).groupBy('nonExistentKey')
+    ).to.equal({ '': products })
+
+    await expect(
+      Collect(products).groupBy('name.price')
+    ).to.reject()
+  })
 })

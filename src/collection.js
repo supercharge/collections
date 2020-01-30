@@ -236,6 +236,31 @@ class Collection {
   }
 
   /**
+   * Group the collection items into arrays using the given `key`.
+   *
+   * @param {String} key
+   *
+   * @returns {Object}
+   */
+  async groupBy (key) {
+    if (key.includes('.')) {
+      throw new Error('We do not support nested grouping yet. Please send a PR for that feature?')
+    }
+
+    return this.reduce((carry, item) => {
+      const group = item[key] || ''
+
+      if (carry[group] === undefined) {
+        carry[group] = []
+      }
+
+      carry[group].push(item)
+
+      return carry
+    }, {})
+  }
+
+  /**
    * Returns `true` when the collection satisfies the given
    * `callback` testing function, `false` otherwise.
    *
