@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.12.0](https://github.com/supercharge/collections/compare/v1.11.0...v1.12.0) - 2020-02-xx
+
+### Added
+- `.any()` method as an alias for `.some()`
+- `.anySeries()` method as an alias for `.someSeries()`
+
+### Updated
+- bump deps
+
+
 ## [1.11.0](https://github.com/supercharge/collections/compare/v1.10.0...v1.11.0) - 2020-01-30
 
 ### Added
