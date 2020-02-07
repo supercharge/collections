@@ -413,6 +413,21 @@ describe('Chained Collection', () => {
     ).to.be.true()
   })
 
+  it('any', async () => {
+    const start = Date.now()
+
+    expect(
+      await Collect([1, 2, 3]).any(item => item > 5)
+    ).to.be.false()
+
+    const elapsed = Date.now() - start
+    expect(elapsed < 100).to.be.true()
+
+    expect(
+      await Collect([1, 2, 3]).any(item => item < 10)
+    ).to.be.true()
+  })
+
   it('someSeries', async () => {
     const start = Date.now()
 
@@ -429,6 +444,25 @@ describe('Chained Collection', () => {
 
     expect(
       await Collect([1, 2, 3]).map(item => item * 2).someSeries(item => item > 5)
+    ).to.be.true()
+  })
+
+  it('anySeries', async () => {
+    const start = Date.now()
+
+    expect(
+      await Collect([1, 2, 3]).anySeries(async item => {
+        await pause(50)
+
+        return item > 5
+      })
+    ).to.be.false()
+
+    const elapsed = Date.now() - start
+    expect(elapsed >= 150 && elapsed < 200).to.be.true()
+
+    expect(
+      await Collect([1, 2, 3]).map(item => item * 2).anySeries(item => item > 5)
     ).to.be.true()
   })
 

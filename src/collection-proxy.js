@@ -10,6 +10,32 @@ class CollectionProxy {
   }
 
   /**
+   * Alias for the `.some` method. This function determines
+   * whether any item in the `array` passes the truth test
+   * implemented by the given `callback` function.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Boolean}
+   */
+  async any (callback) {
+    return this.some(callback)
+  }
+
+  /**
+   * Alias for the `.someSeries` method. This function determines
+   * whether any item in the `array` passes the truth test
+   * implemented by the given `callback` function.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Boolean}
+   */
+  async anySeries (callback) {
+    return this.someSeries(callback)
+  }
+
+  /**
    * Returns the average of all collection items
    *
    * @returns {Number}
