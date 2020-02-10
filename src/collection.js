@@ -419,16 +419,18 @@ class Collection {
   }
 
   /**
-   * Add one or more items to the end of the colleciton.
+   * Retrieves all values for the given `keys`
    *
-   * @param  {*} items
+   * @param {}
    *
-   * @returns {Collection}
+   * @returns {Number}
    */
-  push (items) {
-    this.items.push(...items)
-
-    return this
+  pluck (...keys) {
+    return this.map(item => {
+      return keys.map(key => {
+        return item[key]
+      })
+    })
   }
 
   /**
@@ -440,6 +442,19 @@ class Collection {
    */
   pop () {
     return this.items.pop()
+  }
+
+  /**
+   * Add one or more items to the end of the colleciton.
+   *
+   * @param  {*} items
+   *
+   * @returns {Collection}
+   */
+  push (items) {
+    this.items.push(...items)
+
+    return this
   }
 
   /**

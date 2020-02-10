@@ -411,14 +411,14 @@ class CollectionProxy {
   }
 
   /**
-   * Add one or more items to the end of the collection.
+   * Retrieves all values for the given `keys`
    *
-   * @param  {*} items
+   * @param {}
    *
-   * @returns {CollectionProxy}
+   * @returns {Number}
    */
-  push (...items) {
-    return this._enqueue('push', null, items)
+  pluck (...keys) {
+    return this._enqueue('pluck', null, keys).collapse()
   }
 
   /**
@@ -434,6 +434,17 @@ class CollectionProxy {
     this.splice(-1, 1)
 
     return collection._enqueue('pop').all()
+  }
+
+  /**
+   * Add one or more items to the end of the collection.
+   *
+   * @param  {*} items
+   *
+   * @returns {CollectionProxy}
+   */
+  push (...items) {
+    return this._enqueue('push', null, items)
   }
 
   /**
