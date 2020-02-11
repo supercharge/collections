@@ -1001,10 +1001,7 @@ describe('Chained Collection', () => {
     expect(
       await Collect(users).pluck(['name', 'email']).all()
     ).to.equal([
-      {
-        name: 'Marcus',
-        email: 'marcus@test.com'
-      },
+      { name: 'Marcus', email: 'marcus@test.com' },
       { name: 'Norman', email: 'norman@test.com' },
       { name: 'Christian', email: 'norman@test.com' }
     ])
