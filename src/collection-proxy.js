@@ -411,13 +411,13 @@ class CollectionProxy {
   }
 
   /**
-   * Retrieves all values for the given `keys`
+   * Retrieves all values for the given `keys`.
    *
-   * @param {}
+   * @param {String|Array} keys
    *
-   * @returns {Number}
+   * @returns {Array}
    */
-  pluck (...keys) {
+  pluck (keys) {
     return this._enqueue('pluck', null, keys).collapse()
   }
 

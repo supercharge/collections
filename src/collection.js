@@ -419,17 +419,50 @@ class Collection {
   }
 
   /**
-   * Retrieves all values for the given `keys`
+   * Retrieves all values for the given `keys`.
    *
-   * @param {}
+   * @param {String|Array} keys
    *
-   * @returns {Number}
+   * @returns {Array}
    */
-  pluck (...keys) {
+  async pluck (keys) {
+    keys = [].concat(keys)
+
+    return keys.length === 1
+      ? this.pluckOne(keys[0])
+      : this.pluckMany(keys)
+  }
+
+  /**
+   * Retrieves all values for a single `key`.
+   *
+   * @param {String} key
+   *
+   * @returns {Array}
+   */
+  async pluckOne (key) {
     return this.map(item => {
-      return keys.map(key => {
-        return item[key]
+      return item[key]
+    })
+  }
+
+  /**
+   * Retrieves all values as an array of objects where
+   * each object contains the given `keys`.
+   *
+   * @param {Array} keys
+   *
+   * @returns {Array}
+   */
+  async pluckMany (keys) {
+    return this.map(item => {
+      const result = {}
+
+      keys.forEach(key => {
+        result[key] = item[key]
       })
+
+      return result
     })
   }
 
