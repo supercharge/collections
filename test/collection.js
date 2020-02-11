@@ -986,4 +986,27 @@ describe('Chained Collection', () => {
       Collect(products).groupBy('name.price')
     ).to.reject()
   })
+
+  it('pluck', async () => {
+    const users = [
+      { id: 1, name: 'Marcus', email: 'marcus@test.com' },
+      { id: 2, name: 'Norman', email: 'norman@test.com' },
+      { id: 3, name: 'Christian', email: 'norman@test.com' }
+    ]
+
+    expect(
+      await Collect(users).pluck('name').all()
+    ).to.equal(['Marcus', 'Norman', 'Christian'])
+
+    expect(
+      await Collect(users).pluck(['name', 'email']).all()
+    ).to.equal([
+      {
+        name: 'Marcus',
+        email: 'marcus@test.com'
+      },
+      { name: 'Norman', email: 'norman@test.com' },
+      { name: 'Christian', email: 'norman@test.com' }
+    ])
+  })
 })
