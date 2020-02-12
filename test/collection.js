@@ -213,6 +213,12 @@ describe('Chained Collection', () => {
         return carry + item
       }, 0)
     ).to.equal(6)
+
+    expect(
+      await Collect(['one', 'two', 'three']).reduce(async (carry, item) => {
+        return `${carry}---${item}`
+      }, 'hey')
+    ).to.equal('hey---one---two---three')
   })
 
   it('reduceRight', async () => {
