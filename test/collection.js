@@ -549,6 +549,14 @@ describe('Chained Collection', () => {
     ).to.be.true()
 
     expect(
+      await Collect(undefined).isEmpty()
+    ).to.be.true()
+
+    expect(
+      await Collect(null).isEmpty()
+    ).to.be.true()
+
+    expect(
       await Collect([1, 2, 3]).isEmpty()
     ).to.be.false()
   })
@@ -556,6 +564,14 @@ describe('Chained Collection', () => {
   it('isNotEmpty', async () => {
     expect(
       await Collect().isNotEmpty()
+    ).to.be.false()
+
+    expect(
+      await Collect(undefined).isNotEmpty()
+    ).to.be.false()
+
+    expect(
+      await Collect(null).isNotEmpty()
     ).to.be.false()
 
     expect(
