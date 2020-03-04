@@ -737,6 +737,8 @@ describe('Chained Collection', () => {
     const pipedConcat = await pipeline.concat([10, 20])
     expect(await pipeline.all()).to.equal([6])
     expect(await pipedConcat.all()).to.equal([6, 10, 20])
+
+    expect(await Collect().concat([1, 2]).all()).to.equal([1, 2])
   })
 
   it('sort', async () => {
