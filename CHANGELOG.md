@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.12.2](https://github.com/supercharge/collections/compare/v1.12.1...v1.12.2) - 2020-03-12
+
+### Fixed
+- `findSeries` now stops when the first matching item is found
+
+
 ## [1.12.1](https://github.com/supercharge/collections/compare/v1.12.0...v1.12.1) - 2020-03-12
 
 ### Updated
