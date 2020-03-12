@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.12.1](https://github.com/supercharge/collections/compare/v1.12.0...v1.12.1) - 2020-03-12
+
+### Updated
+- `has`: uses `findSeries` instead of `find` to determine whether the condition matches
+
+
 ## [1.12.0](https://github.com/supercharge/collections/compare/v1.11.0...v1.12.0) - 2020-02-11
 
 ### Added
