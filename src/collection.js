@@ -173,9 +173,13 @@ class Collection {
    * @returns {*} the found value
    */
   async findSeries (callback) {
-    const mapped = await this.mapSeries(callback)
+    for (const index in this.items) {
+      const result = await callback(this.items[index], index, this.items)
 
-    return this.items.find((_, i) => mapped[i])
+      if (result) {
+        return this.items[index]
+      }
+    }
   }
 
   /**
@@ -191,7 +195,7 @@ class Collection {
     }
 
     if (typeof callback === 'function') {
-      return this.find(callback)
+      return this.findSeries(callback)
     }
 
     throw new Error(`Collection.first() accepts only a callback function as an argument, received ${typeof callback}`)

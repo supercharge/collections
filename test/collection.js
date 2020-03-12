@@ -265,7 +265,7 @@ describe('Chained Collection', () => {
     ).to.equal(2)
 
     const elapsed = Date.now() - start
-    expect(elapsed >= 150 && elapsed < 200).to.be.true() // find should run in sequence
+    expect(elapsed >= 100 && elapsed < 150).to.be.true() // find should run in sequence
 
     expect(
       await Collect([1, 2, 3]).find(item => item === 10)
