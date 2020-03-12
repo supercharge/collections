@@ -270,8 +270,8 @@ class Collection {
    */
   async has (callback) {
     const item = typeof callback === 'function'
-      ? await this.find(callback)
-      : await this.find(item => item === callback)
+      ? await this.findSeries(callback)
+      : await this.findSeries(item => item === callback)
 
     return !!item
   }
