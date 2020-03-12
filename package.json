@@ -1,7 +1,7 @@
 {
   "name": "@supercharge/collections",
   "description": "Supercharge collections",
-  "version": "1.12.1",
+  "version": "1.12.2",
   "author": "Marcus Pöhls <marcus@futurestud.io>",
   "bugs": {
     "url": "https://github.com/supercharge/collections/issues"
