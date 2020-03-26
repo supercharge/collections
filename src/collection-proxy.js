@@ -690,10 +690,12 @@ class CollectionProxy {
   /**
    * Returns all the unique items in the collection.
    *
+   * @param {String|Function}
+   *
    * @returns {CollectionProxy}
    */
-  unique () {
-    return this._enqueue('unique')
+  unique (key) {
+    return this._enqueue('unique', null, key)
   }
 
   /**

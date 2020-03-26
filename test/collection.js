@@ -9,7 +9,7 @@ const { describe, it } = (exports.lab = Lab.script())
 
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-describe('Chained Collection', () => {
+describe('Chained Collection ->', () => {
   it('returns an empty array when used without data', async () => {
     expect(
       await Collect().all()
@@ -655,6 +655,38 @@ describe('Chained Collection', () => {
 
     expect(await unique.all()).to.equal([1, 2, 3, 4])
     expect(await collection.all()).to.equal(items)
+
+    const withKey = [
+      { name: 'Marcus' },
+      { name: 'Marcus' },
+      { name: 'Supercharge' }
+    ]
+
+    const collectionWithKey = await Collect(withKey)
+    const uniqueWithKey = collectionWithKey.unique('name')
+
+    expect(await uniqueWithKey.all()).to.equal([
+      { name: 'Marcus' },
+      { name: 'Supercharge' }
+    ])
+    expect(await collectionWithKey.all()).to.equal(withKey)
+
+    const withCallback = [
+      { name: 'Marcus' },
+      { name: 'Marcus' },
+      { name: 'Supercharge' }
+    ]
+
+    const collectionWithCallback = await Collect(withKey)
+    const uniqueWithCallback = collectionWithCallback.unique(async item => {
+      return item.name
+    })
+
+    expect(await uniqueWithCallback.all()).to.equal([
+      { name: 'Marcus' },
+      { name: 'Supercharge' }
+    ])
+    expect(await collectionWithCallback.all()).to.equal(withCallback)
   })
 
   it('union', async () => {
@@ -1015,7 +1047,7 @@ describe('Chained Collection', () => {
     const users = [
       { id: 1, name: 'Marcus', email: 'marcus@test.com' },
       { id: 2, name: 'Norman', email: 'norman@test.com' },
-      { id: 3, name: 'Christian', email: 'norman@test.com' }
+      { id: 3, name: 'Christian', email: 'christian@test.com' }
     ]
 
     expect(
@@ -1027,7 +1059,7 @@ describe('Chained Collection', () => {
     ).to.equal([
       { name: 'Marcus', email: 'marcus@test.com' },
       { name: 'Norman', email: 'norman@test.com' },
-      { name: 'Christian', email: 'norman@test.com' }
+      { name: 'Christian', email: 'christian@test.com' }
     ])
   })
 })

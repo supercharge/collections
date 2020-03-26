@@ -714,12 +714,46 @@ class Collection {
   /**
    * Returns all the unique items in the collection.
    *
+   * @param {String|Function}
+   *
    * @returns {Array}
    */
-  unique () {
-    return Array.from(
-      new Set(this.items)
-    )
+  async unique (key) {
+    if (!key) {
+      return Array.from(
+        new Set(this.items)
+      )
+    }
+
+    const exists = new Set()
+    const callback = this.valueRetriever(key)
+
+    return this.reject(async item => {
+      const id = await callback(item)
+
+      if (exists.has(id)) {
+        return true
+      }
+
+      exists.add(id)
+    })
+  }
+
+  /**
+   * Create a value receiving callback.
+   *
+   * @param {*} value
+   *
+   * @returns {Function}
+   */
+  valueRetriever (value) {
+    if (typeof value === 'function') {
+      return value
+    }
+
+    return function (item) {
+      return item[value]
+    }
   }
 
   /**
