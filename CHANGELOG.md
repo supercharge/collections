@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.13.0](https://github.com/supercharge/collections/compare/v1.12.2...v1.13.0) - 2020-03-26
+
+### Updated
+- `unique` supports a string or callback function as a parameter to identify unique values
+
+
 ## [1.12.2](https://github.com/supercharge/collections/compare/v1.12.1...v1.12.2) - 2020-03-12
 
 ### Fixed
