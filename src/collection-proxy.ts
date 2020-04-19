@@ -742,6 +742,21 @@ export class CollectionProxy {
   }
 
   /**
+   * Creates a “thenable” allowing you to await collection
+   * pipelines instead of appending a `.all()` call.
+   *
+   * @param {Function} resolve
+   * @param {Function} reject
+   *
+   * @returns {*}
+   */
+  async then (resolve: Function): Promise<void> {
+    resolve(
+      await this.all()
+    )
+  }
+
+  /**
    * Processes the collection pipeline and returns
    * all items in the collection.
    *

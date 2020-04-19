@@ -356,12 +356,12 @@ describe('Chained Collection ->', () => {
   })
 
   it('slice', async () => {
-    const collection1 = await Collect([1, 2, 3, 4, 5, 6])
+    const collection1 = Collect([1, 2, 3, 4, 5, 6])
     const chunk1 = await collection1.slice(3).all()
     expect(await collection1.all()).to.equal([1, 2, 3, 4, 5, 6])
     expect(chunk1).to.equal([4, 5, 6])
 
-    const collection2 = await Collect([1, 2, 3, 4, 5, 6])
+    const collection2 = Collect([1, 2, 3, 4, 5, 6])
     const chunk2 = await collection2.slice(3, 2).all()
     expect(await collection2.all()).to.equal([1, 2, 3, 4, 5, 6])
     expect(chunk2).to.equal([4, 5])
@@ -369,7 +369,7 @@ describe('Chained Collection ->', () => {
 
   it('splice', async () => {
     const collection1 = Collect([1, 2, 3, 4, 5])
-    const chunk1 = await collection1.splice(2)
+    const chunk1 = collection1.splice(2)
     expect(await collection1.all()).to.equal([1, 2])
     expect(await chunk1.all()).to.equal([3, 4, 5])
 
@@ -530,7 +530,7 @@ describe('Chained Collection ->', () => {
 
   it('intersect', async () => {
     const items = [1, 2, 3, 3]
-    const collection = await Collect(items)
+    const collection = Collect(items)
     const intersect = collection.intersect([2, 3, 4, 5])
     expect(await intersect.all()).to.equal([2, 3])
     expect(await collection.all()).to.equal(items)
@@ -601,7 +601,7 @@ describe('Chained Collection ->', () => {
 
   it('take', async () => {
     const items = [1, 2, 3, 4, 5, 6]
-    const collection = await Collect(items)
+    const collection = Collect(items)
 
     const firstTwo = collection.take(2)
     expect(await collection.all()).to.equal(items)
@@ -611,7 +611,7 @@ describe('Chained Collection ->', () => {
     expect(await collection.all()).to.equal(items)
     expect(await lastTwo.all()).to.equal([5, 6])
 
-    const pipeline = await Collect([1, 2, 3, 4, 5, 6])
+    const pipeline = Collect([1, 2, 3, 4, 5, 6])
       .map(item => item * 10)
       .filter(item => item > 20)
     const all = pipeline.take(30)
@@ -620,17 +620,17 @@ describe('Chained Collection ->', () => {
   })
 
   it('takeAndRemove', async () => {
-    const collection = await Collect([1, 2, 3, 4, 5, 6])
+    const collection = Collect([1, 2, 3, 4, 5, 6])
     const firstTwo = collection.takeAndRemove(2)
     expect(await collection.all()).to.equal([3, 4, 5, 6])
     expect(await firstTwo.all()).to.equal([1, 2])
 
-    const collection2 = await Collect([1, 2, 3, 4, 5, 6])
+    const collection2 = Collect([1, 2, 3, 4, 5, 6])
     const lastTwo = collection2.takeAndRemove(-2)
     expect(await lastTwo.all()).to.equal([5, 6])
     expect(await collection2.all()).to.equal([1, 2, 3, 4])
 
-    const pipeline = await Collect([1, 2, 3, 4, 5, 6])
+    const pipeline = Collect([1, 2, 3, 4, 5, 6])
       .map(item => item * 10)
       .filter(item => item > 20)
     const all = pipeline.takeAndRemove(30)
@@ -650,7 +650,7 @@ describe('Chained Collection ->', () => {
 
   it('unique', async () => {
     const items = [1, 2, 2, 1, 3, 4, 4]
-    const collection = await Collect(items)
+    const collection = Collect(items)
     const unique = collection.unique()
 
     expect(await unique.all()).to.equal([1, 2, 3, 4])
@@ -662,7 +662,7 @@ describe('Chained Collection ->', () => {
       { name: 'Supercharge' }
     ]
 
-    const collectionWithKey = await Collect(withKey)
+    const collectionWithKey = Collect(withKey)
     const uniqueWithKey = collectionWithKey.unique('name')
 
     expect(await uniqueWithKey.all()).to.equal([
@@ -677,7 +677,7 @@ describe('Chained Collection ->', () => {
       { name: 'Supercharge' }
     ]
 
-    const collectionWithCallback = await Collect(withKey)
+    const collectionWithCallback = Collect(withKey)
     const uniqueWithCallback = collectionWithCallback.unique(async item => {
       return item.name
     })
@@ -691,7 +691,7 @@ describe('Chained Collection ->', () => {
 
   it('union', async () => {
     const items = [1, 2, 3]
-    const collection = await Collect(items)
+    const collection = Collect(items)
     const union = collection.union([2, 3, 4, 5])
 
     expect(await collection.all()).to.equal(items)
@@ -756,17 +756,17 @@ describe('Chained Collection ->', () => {
 
   it('concat', async () => {
     const collection = Collect([1, 2, 3])
-    const concat = await collection.concat([4, 5])
+    const concat = collection.concat([4, 5])
     expect(await collection.all()).to.equal([1, 2, 3])
     expect(await concat.all()).to.equal([1, 2, 3, 4, 5])
 
     const collection1 = Collect([1, 2, 3])
-    const concat1 = await collection1.concat(4, 5)
+    const concat1 = collection1.concat(4, 5)
     expect(await collection1.all()).to.equal([1, 2, 3])
     expect(await concat1.all()).to.equal([1, 2, 3, 4, 5])
 
     const pipeline = Collect([1, 2, 3]).map(item => item * 2).filter(item => item > 5)
-    const pipedConcat = await pipeline.concat([10, 20])
+    const pipedConcat = pipeline.concat([10, 20])
     expect(await pipeline.all()).to.equal([6])
     expect(await pipedConcat.all()).to.equal([6, 10, 20])
 
@@ -775,7 +775,7 @@ describe('Chained Collection ->', () => {
 
   it('sort', async () => {
     const collection = Collect([3, 2, 1])
-    const sorted = await collection.sort()
+    const sorted = collection.sort()
     expect(await collection.all()).to.equal([3, 2, 1])
     expect(await sorted.all()).to.equal([1, 2, 3])
 
@@ -787,7 +787,7 @@ describe('Chained Collection ->', () => {
     ).to.equal([2, 4, 6])
 
     const collection1 = Collect([1, 2, 3])
-    const sorted1 = await collection1.sort((a, b) => b - a)
+    const sorted1 = collection1.sort((a, b) => b - a)
     expect(await collection1.all()).to.equal([1, 2, 3])
     expect(await sorted1.all()).to.equal([3, 2, 1])
   })
@@ -1061,5 +1061,18 @@ describe('Chained Collection ->', () => {
       { name: 'Norman', email: 'norman@test.com' },
       { name: 'Christian', email: 'christian@test.com' }
     ])
+  })
+
+  it('then', async () => {
+    expect(
+      await Collect([1, 2, 3]).map(item => item * 2)
+    ).to.equal([2, 4, 6])
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(item => item * 2)
+        .intersect([2, 4, 6])
+        .filter(item => item > 0)
+    ).to.equal([2, 4, 6])
   })
 })
