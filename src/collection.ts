@@ -1,7 +1,9 @@
 'use strict'
 
-class Collection {
-  constructor (items = []) {
+export class Collection {
+  private items: any[]
+
+  constructor (items: any[] = []) {
     this.items = items
   }
 
@@ -11,7 +13,7 @@ class Collection {
    *
    * @returns {Array}
    */
-  async all () {
+  async all (): Promise<any[]> {
     return this.items
   }
 
@@ -20,7 +22,7 @@ class Collection {
    *
    * @returns {Number}
    * */
-  async avg () {
+  async avg (): Promise<number> {
     return await this.sum() / this.size()
   }
 
@@ -32,7 +34,7 @@ class Collection {
    *
    * @returns {Array}
    */
-  chunk (size) {
+  chunk (size: number): any[] {
     const chunks = []
 
     while (this.size()) {
@@ -49,7 +51,7 @@ class Collection {
    *
    * @returns {Array}
    */
-  collapse () {
+  collapse (): any[] {
     return [].concat(...this.items)
   }
 
@@ -60,8 +62,8 @@ class Collection {
    *
    * @returns {Array}
    */
-  async compact () {
-    return this.filter(item => item)
+  async compact (): Promise<any[]> {
+    return this.filter((item: any) => item)
   }
 
   /**
@@ -69,11 +71,11 @@ class Collection {
    * concatenated items of the original
    * collection with the new `items`.
    *
-   * @param {*} items
+   * @param {Array} items
    *
    * @returns {Array}
    */
-  concat (items) {
+  concat (items: any[]): any[] {
     return this.items.concat(...items)
   }
 
@@ -84,8 +86,8 @@ class Collection {
    *
    * @returns {CollectionProxy}
    */
-  diff ({ items }) {
-    return this.items.filter(item => !items.includes(item))
+  diff (items: any[]): any[] {
+    return this.items.filter((item: any) => !items.includes(item))
   }
 
   /**
@@ -97,7 +99,7 @@ class Collection {
    *
    * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
    */
-  async every (callback) {
+  async every (callback: Function): Promise<boolean> {
     const mapped = await this.map(callback)
 
     return mapped.every(value => value)
@@ -112,7 +114,7 @@ class Collection {
    *
    * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
    */
-  async everySeries (callback) {
+  async everySeries (callback: Function): Promise<boolean> {
     const mapped = await this.mapSeries(callback)
 
     return mapped.every(value => value)
@@ -127,7 +129,7 @@ class Collection {
    *
    * @returns {Array}
    */
-  async filter (callback) {
+  async filter (callback: Function): Promise<any[]> {
     const mapped = await this.map(callback)
 
     return this.items.filter((_, i) => mapped[i])
@@ -142,7 +144,7 @@ class Collection {
    *
    * @returns {Array}
    */
-  async filterSeries (callback) {
+  async filterSeries (callback: Function): Promise<any[]> {
     const mapped = await this.mapSeries(callback)
 
     return this.items.filter((_, i) => mapped[i])
@@ -157,7 +159,7 @@ class Collection {
    *
    * @returns {*} the found value
    */
-  async find (callback) {
+  async find (callback: Function): Promise<any> {
     const mapped = await this.map(callback)
 
     return this.items.find((_, i) => mapped[i])
@@ -172,7 +174,8 @@ class Collection {
    *
    * @returns {*} the found value
    */
-  async findSeries (callback) {
+  async findSeries (callback: Function): Promise<any|undefined> {
+    // eslint-disable-next-line
     for (const index in this.items) {
       const result = await callback(this.items[index], index, this.items)
 
@@ -189,13 +192,13 @@ class Collection {
    *
    * @returns {*} the found value
    */
-  async first (callback) {
+  async first (callback: Function): Promise<any> {
     if (!callback) {
       return this.items[0]
     }
 
     if (typeof callback === 'function') {
-      return this.findSeries(callback)
+      return await this.findSeries(callback)
     }
 
     throw new Error(`Collection.first() accepts only a callback function as an argument, received ${typeof callback}`)
@@ -211,7 +214,7 @@ class Collection {
    *
    * @returns {Array}
    */
-  async flatMap (callback) {
+  async flatMap (callback: Function): Promise<any[]> {
     this.items = await this.map(callback)
 
     return this.collapse()
@@ -224,7 +227,7 @@ class Collection {
    *
    * @param {Function} callback
    */
-  async forEach (callback) {
+  async forEach (callback: Function): Promise<void> {
     await this.map(callback)
   }
 
@@ -235,7 +238,7 @@ class Collection {
    *
    * @param {Function} callback
    */
-  async forEachSeries (callback) {
+  async forEachSeries (callback: Function): Promise<void> {
     await this.mapSeries(callback)
   }
 
@@ -246,12 +249,12 @@ class Collection {
    *
    * @returns {Object}
    */
-  async groupBy (key) {
+  async groupBy (key: string): Promise<any> {
     if (key.includes('.')) {
       throw new Error('We do not support nested grouping yet. Please send a PR for that feature?')
     }
 
-    return this.reduce((carry, item) => {
+    return this.reduce((carry: any, item: any) => {
       const group = item[key] || ''
 
       if (carry[group] === undefined) {
@@ -272,10 +275,10 @@ class Collection {
    *
    * @returns {Boolean}
    */
-  async has (callback) {
+  async has (callback: Function): Promise<boolean> {
     const item = typeof callback === 'function'
       ? await this.findSeries(callback)
-      : await this.findSeries(item => item === callback)
+      : await this.findSeries((item: any) => item === callback)
 
     return !!item
   }
@@ -285,7 +288,7 @@ class Collection {
    *
    * @returns {Boolean}
    */
-  async hasDuplicates () {
+  async hasDuplicates (): Promise<boolean> {
     return (new Set(this.items)).size !== this.size()
   }
 
@@ -296,7 +299,7 @@ class Collection {
    *
    * @returns {Array}
    */
-  intersect (items) {
+  intersect (items: any[]): any[] {
     return [...new Set(
       this.items.filter(value => items.includes(value))
     )]
@@ -307,7 +310,7 @@ class Collection {
    *
    * @returns {Boolean}
    */
-  isEmpty () {
+  isEmpty (): boolean {
     return this.items.length === 0
   }
 
@@ -316,7 +319,7 @@ class Collection {
    *
    * @returns {Boolean}
    */
-  isNotEmpty () {
+  isNotEmpty (): boolean {
     return this.items.length > 0
   }
 
@@ -325,7 +328,7 @@ class Collection {
    *
    * @returns {String}
    */
-  join (separator) {
+  join (separator: string): string {
     return this.items.join(separator)
   }
 
@@ -337,7 +340,7 @@ class Collection {
    *
    * @returns {*} the found value
    */
-  async last (callback) {
+  async last (callback: Function): Promise<any> {
     if (!callback) {
       return this.items[this.items.length - 1]
     }
@@ -360,8 +363,9 @@ class Collection {
    *
    * @returns {Array}
    */
-  async map (callback) {
-    return Promise.all(
+  async map (callback: Function): Promise<any[]> {
+    return await Promise.all(
+      // @ts-ignore
       this.items.map(callback)
     )
   }
@@ -375,9 +379,10 @@ class Collection {
    *
    * @returns {Array}
    */
-  async mapSeries (callback) {
+  async mapSeries (callback: Function): Promise<any[]> {
     const results = []
 
+    // eslint-disable-next-line
     for (const index in this.items) {
       results.push(
         await callback(this.items[index], index, this.items)
@@ -392,7 +397,7 @@ class Collection {
    *
    * @returns {Number}
    */
-  max () {
+  max (): number {
     return Math.max(...this.items)
   }
 
@@ -403,14 +408,14 @@ class Collection {
    *
    * @returns {Number}
    */
-  median () {
-    this.sort((a, b) => a - b)
+  median (): number {
+    this.sort((a: any, b: any) => a - b)
 
-    const mid = Math.floor(this.size() / 2)
+    const mid: number = Math.floor(this.size() / 2)
 
     return this.size() % 2 !== 0
       ? this.items[mid]
-      : (this.items[mid] + this.items[(mid - 1)]) / 2
+      : (this.items[mid] + this.items[(mid - 1)]) / 2 // eslint-disable-line
   }
 
   /**
@@ -418,7 +423,7 @@ class Collection {
    *
    * @returns {Number}
    */
-  min () {
+  min (): number {
     return Math.min(...this.items)
   }
 
@@ -429,8 +434,8 @@ class Collection {
    *
    * @returns {Array}
    */
-  async pluck (keys) {
-    keys = [].concat(keys)
+  async pluck (key: string|string[]): Promise<any[]> {
+    const keys = ([] as any[]).concat(key)
 
     return keys.length === 1
       ? this.pluckOne(keys[0])
@@ -444,8 +449,8 @@ class Collection {
    *
    * @returns {Array}
    */
-  async pluckOne (key) {
-    return this.map(item => {
+  async pluckOne (key: string): Promise<any[]> {
+    return this.map((item: any) => {
       return item[key]
     })
   }
@@ -458,9 +463,9 @@ class Collection {
    *
    * @returns {Array}
    */
-  async pluckMany (keys) {
-    return this.map(item => {
-      const result = {}
+  async pluckMany (keys: string[]): Promise<any[]> {
+    return await this.map((item: any) => {
+      const result: any = {}
 
       keys.forEach(key => {
         result[key] = item[key]
@@ -477,7 +482,7 @@ class Collection {
    *
    * @returns {Number}
    */
-  pop () {
+  pop (): any {
     return this.items.pop()
   }
 
@@ -488,7 +493,7 @@ class Collection {
    *
    * @returns {Collection}
    */
-  push (items) {
+  push (items: any[]): this {
     this.items.push(...items)
 
     return this
@@ -504,7 +509,8 @@ class Collection {
    *
    * @returns {*} resulting accumulator value
    */
-  async reduce (reducer, accumulator) {
+  async reduce (reducer: Function, accumulator: any): Promise<any> {
+    // eslint-disable-next-line
     for (const index in this.items) {
       accumulator = await reducer(accumulator, this.items[index], index, this.items)
     }
@@ -522,7 +528,7 @@ class Collection {
    *
    * @returns {*} resulting accumulator value
    */
-  async reduceRight (reducer, accumulator) {
+  async reduceRight (reducer: Function, accumulator: any): Promise<any> {
     let index = this.items.length
 
     while (index--) {
@@ -541,7 +547,7 @@ class Collection {
    *
    * @returns {Array}
    */
-  async reject (callback) {
+  async reject (callback: Function): Promise<any[]> {
     const mapped = await this.map(callback)
 
     return this.items.filter((_, i) => !mapped[i])
@@ -556,7 +562,7 @@ class Collection {
    *
    * @returns {Array}
    */
-  async rejectSeries (callback) {
+  async rejectSeries (callback: Function): Promise<any[]> {
     const mapped = await this.mapSeries(callback)
 
     return this.items.filter((_, i) => !mapped[i])
@@ -567,7 +573,7 @@ class Collection {
   *
   * @returns {Array}
   */
-  reverse () {
+  reverse (): any[] {
     this.items.reverse()
 
     return this.items
@@ -578,7 +584,7 @@ class Collection {
    *
    * @returns {*}
    */
-  shift () {
+  shift (): any {
     return this.items.shift()
   }
 
@@ -587,7 +593,7 @@ class Collection {
    *
    * @returns {Number}
    */
-  size () {
+  size (): number {
     return this.items.length
   }
 
@@ -601,7 +607,8 @@ class Collection {
    *
    * @returns {Array}
    */
-  slice ({ start, limit }) {
+  slice (options: any): any[] {
+    const { start, limit } = options
     const chunk = this.items.slice(start)
 
     return chunk.slice(0, limit)
@@ -618,7 +625,8 @@ class Collection {
   *
   * @returns {Array}
   */
-  splice ({ start, limit, inserts }) {
+  splice (options: any): any[] {
+    const { start, limit, inserts } = options
     const flattend = Array.prototype.concat(...inserts)
     this.items.splice(start, limit || this.items.length, ...flattend)
 
@@ -634,7 +642,7 @@ class Collection {
    *
    * @returns {Boolean}
    */
-  async some (callback) {
+  async some (callback: Function): Promise<boolean> {
     const mapped = await this.map(callback)
 
     return mapped.some(value => value)
@@ -649,7 +657,7 @@ class Collection {
    *
    * @returns {Boolean}
    */
-  async someSeries (callback) {
+  async someSeries (callback: Function): Promise<boolean> {
     const mapped = await this.mapSeries(callback)
 
     return mapped.some(value => value)
@@ -662,7 +670,7 @@ class Collection {
    *
    * @returns {Collection}
    */
-  sort (comparator) {
+  sort (comparator: (a: any, b: any) => number): any[] {
     return [...this.items.sort(comparator)]
   }
 
@@ -671,8 +679,8 @@ class Collection {
    *
    * @returns {Number} resulting sum of collection items
    */
-  async sum () {
-    return this.reduce((carry, item) => {
+  async sum (): Promise<number> {
+    return await this.reduce((carry: number, item: number) => {
       return carry + item
     }, 0)
   }
@@ -683,9 +691,9 @@ class Collection {
    *
    * @param {Integer} limit
    *
-   * @returns {Collection}
+   * @returns {Array}
    */
-  takeAndRemove (limit) {
+  takeAndRemove (limit: number): any[] {
     return limit < 0
       ? this.items.splice(0, this.size() + limit)
       : this.items.splice(limit)
@@ -694,9 +702,9 @@ class Collection {
   /**
    * Tap into the chain, run the given `callback` and retreive the original value.
    *
-   * @returns {Number}
+   * @returns {Collection}
    */
-  async tap (callback) {
+  async tap (callback: Function): Promise<this> {
     await this.forEach(callback)
 
     return this
@@ -707,7 +715,7 @@ class Collection {
    *
    * @returns {String}
    */
-  toJSON () {
+  toJSON (): string {
     return JSON.stringify(this.items)
   }
 
@@ -718,7 +726,7 @@ class Collection {
    *
    * @returns {Array}
    */
-  async unique (key) {
+  async unique (key?: string|Function): Promise<any[]> {
     if (!key) {
       return Array.from(
         new Set(this.items)
@@ -728,7 +736,7 @@ class Collection {
     const exists = new Set()
     const callback = this.valueRetriever(key)
 
-    return this.reject(async item => {
+    return await this.reject(async (item: any) => {
       const id = await callback(item)
 
       if (exists.has(id)) {
@@ -746,14 +754,12 @@ class Collection {
    *
    * @returns {Function}
    */
-  valueRetriever (value) {
-    if (typeof value === 'function') {
-      return value
-    }
-
-    return function (item) {
-      return item[value]
-    }
+  valueRetriever (value: Function|any): Function {
+    return typeof value === 'function'
+      ? value
+      : function (item: any) {
+        return item[value]
+      }
   }
 
   /**
@@ -761,11 +767,9 @@ class Collection {
    *
    * @returns {Collection}
    */
-  unshift (items) {
+  unshift (items: any[]): this {
     this.items.unshift(...items)
 
     return this
   }
 }
-
-module.exports = Collection

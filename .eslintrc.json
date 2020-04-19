@@ -4,12 +4,14 @@
     "node": true
   },
   "extends": [
-    "standard"
-  ],
-  "plugins": [
-    "standard"
+    "standard-with-typescript"
   ],
   "parserOptions": {
-    "ecmaVersion": 2018
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/return-await": 0,
+    "@typescript-eslint/require-await": 0,
+    "@typescript-eslint/strict-boolean-expressions": 0
   }
 }
