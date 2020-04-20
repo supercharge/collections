@@ -1071,8 +1071,9 @@ describe('Chained Collection ->', () => {
     expect(
       await Collect([1, 2, 3])
         .map(item => item * 2)
-        .intersect([2, 4, 6])
+        .union([1, 3, 5])
         .filter(item => item > 0)
-    ).to.equal([2, 4, 6])
+        .sort((a, b) => a - b)
+    ).to.equal([1, 2, 3, 4, 5, 6])
   })
 })
