@@ -60,12 +60,9 @@ const users = await Collect(
 
     return user
   })
-  .all()
 
 // users = [ <list of newly-subscribed users> ]
 ```
-
-**Notice:** when chaining methods like `map` or `filter`, you'll receive a collection instance in return. You must actively end the call chain using the `.all()` method to process the collection pipeline and retrieve the final result.
 
 You can directly await the result for methods returning a definite value. The function returns a new instance of the collection without altering the original input array:
 
