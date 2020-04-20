@@ -63,5 +63,6 @@
     "test:list": "lab --assert @hapi/code --dry --verbose",
     "test:run": "lab --assert @hapi/code --leaks --coverage --reporter console --output stdout --reporter html --output ./coverage/coverage.html",
     "test:single": "npm run build && lab --assert @hapi/code --leaks --id"
-  }
+  },
+  "types": "dist"
 }
