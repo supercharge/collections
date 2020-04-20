@@ -59,9 +59,9 @@
     "build": "tsc",
     "lint": "eslint src --ext .js,.ts",
     "lint:fix": "eslint src --ext .js,.ts --fix",
-    "list-tests": "lab --assert @hapi/code --dry --verbose",
     "test": "npm run build && npm run lint && npm run test:run",
+    "test:list": "lab --assert @hapi/code --dry --verbose",
     "test:run": "lab --assert @hapi/code --leaks --coverage --reporter console --output stdout --reporter html --output ./coverage/coverage.html",
-    "test:single": "lab --assert @hapi/code --leaks --id"
+    "test:single": "npm run build && lab --assert @hapi/code --leaks --id"
   }
 }
