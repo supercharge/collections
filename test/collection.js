@@ -397,53 +397,25 @@ describe('Chained Collection ->', () => {
   })
 
   it('isEmpty', async () => {
-    expect(
-      await Collect().isEmpty()
-    ).to.be.true()
+    expect(await Collect().isEmpty()).to.be.true()
+    expect(await Collect(null).isEmpty()).to.be.true()
+    expect(await Collect(undefined).isEmpty()).to.be.true()
 
-    expect(
-      await Collect(undefined).isEmpty()
-    ).to.be.true()
-
-    expect(
-      await Collect(null).isEmpty()
-    ).to.be.true()
-
-    expect(
-      await Collect([1, 2, 3]).isEmpty()
-    ).to.be.false()
+    expect(await Collect([1, 2, 3]).isEmpty()).to.be.false()
   })
 
   it('isNotEmpty', async () => {
-    expect(
-      await Collect().isNotEmpty()
-    ).to.be.false()
+    expect(await Collect().isNotEmpty()).to.be.false()
+    expect(await Collect(null).isNotEmpty()).to.be.false()
+    expect(await Collect(undefined).isNotEmpty()).to.be.false()
 
-    expect(
-      await Collect(undefined).isNotEmpty()
-    ).to.be.false()
-
-    expect(
-      await Collect(null).isNotEmpty()
-    ).to.be.false()
-
-    expect(
-      await Collect([1, 2, 3]).isNotEmpty()
-    ).to.be.true()
+    expect(await Collect([1, 2, 3]).isNotEmpty()).to.be.true()
   })
 
   it('join', async () => {
-    expect(
-      await Collect([1, 2, 3]).join()
-    ).to.equal('1,2,3')
-
-    expect(
-      await Collect([1, 2, 3]).join('')
-    ).to.equal('123')
-
-    expect(
-      await Collect([1, 2, 3]).join('-')
-    ).to.equal('1-2-3')
+    expect(await Collect([1, 2, 3]).join()).to.equal('1,2,3')
+    expect(await Collect([1, 2, 3]).join('')).to.equal('123')
+    expect(await Collect([1, 2, 3]).join('-')).to.equal('1-2-3')
 
     expect(
       await Collect([1, 2, 3])
@@ -686,7 +658,7 @@ describe('Chained Collection ->', () => {
       await Collect([1, 2, 3]).first()
     ).to.equal(1)
 
-    expect(
+    await expect(
       Collect([1, 2, 3]).first(1)
     ).to.reject(Error) // only callback functions are allowed
 
@@ -728,7 +700,7 @@ describe('Chained Collection ->', () => {
   it('throws', async () => {
     const fn = () => { throw new Error() }
 
-    expect(
+    await expect(
       Collect([1, 2, 3]).forEach(fn)
     ).to.reject()
   })
@@ -802,7 +774,7 @@ describe('Chained Collection ->', () => {
       await Collect([1, 2, 3]).last()
     ).to.equal(3)
 
-    expect(
+    await expect(
       Collect([1, 2, 3]).last(1)
     ).to.reject(Error) // only callback functions are allowed
 
