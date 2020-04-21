@@ -4,6 +4,9 @@
 
 ### Added
 - TypeScript typings
+- collection pipelines are now awaitable: no need to call `.all()` to retrieve the result
+  - before: `await Collect([1, 2, 3]).map(...).filter().all()`
+  - now: `await Collect([1, 2, 3]).map(...).filter()`
 
 ### Updated
 - bump dependencies
