@@ -40,19 +40,6 @@ export class CollectionProxy {
   }
 
   /**
-   * Alias for the `.someSeries` method. This function determines
-   * whether any item in the `array` passes the truth test
-   * implemented by the given `callback` function.
-   *
-   * @param {Function} callback
-   *
-   * @returns {Boolean}
-   */
-  async anySeries (callback: Function): Promise<boolean> {
-    return this.someSeries(callback)
-  }
-
-  /**
    * Returns the average of all collection items
    *
    * @returns {Number}
@@ -131,65 +118,37 @@ export class CollectionProxy {
   }
 
   /**
-   * Asynchrounous version of Array#every(). Checks whether
-   * the `callback` returns `true` for all items in the
-   * array. Runs all checks in parallel.
+   * Asynchronous version of `Array#every()`, running the (async) testing
+   * function in sequence. Returns `true` if all items in the collection
+   * pass the check implemented by the `callback`, otherwise `false`.
    *
    * @param {Function} callback
    *
    * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
    */
   async every (callback: Function): Promise<boolean> {
-    return this.all(
-      this._enqueue('every', callback)
-    )
+    return this
+      ._enqueue('every', callback)
+      .all()
   }
 
   /**
-   * Asynchronous version of `Array#every()`, running the (async) testing function
-   * **in sequence**. Returns `true` if all items in the collection pass the
-   * check implemented by the `callback`, otherwise `false`.
+   * Asynchronous version of Array#filter(), running the (async) testing
+   * function in sequence. The `callback` should return `true`
+   * if an item should be included in the resulting collection.
    *
    * @param {Function} callback
    *
-   * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
-   */
-  async everySeries (callback: Function): Promise<boolean> {
-    return this.all(
-      this._enqueue('everySeries', callback)
-    )
-  }
-
-  /**
-   * Asynchronous version of Array#filter(). The `callback`
-   * testing function should return `true` if an item
-   * should be included in the resulting collection.
-   *
-   * @param {Function} callback
-   *
-   * @returns {CollectionProxy}
+   * @returns {Array}
    */
   filter (callback: Function): this {
     return this._enqueue('filter', callback)
   }
 
   /**
-   * Asynchronous version of Array#filter(), running the (async) testing
-   * function **in series**. The `callback` should return `true`
-   * if an item should be included in the resulting collection.
-   *
-   * @param {Function} callback
-   *
-   * @returns {CollectionProxy}
-   */
-  filterSeries (callback: Function): this {
-    return this._enqueue('filterSeries', callback)
-  }
-
-  /**
-   * Asynchronous version of Array#find(). Returns the first
-   * item in the collection that satisfies the `callback`
-   * testing function, `undefined` otherwise.
+   * Asynchronous version of Array#find(), running the (async) testing
+   * function in sequence. Returns the first item in the collection
+   * satisfying the given `callback`, `undefined` otherwise.
    *
    * @param {Function} callback
    *
@@ -198,21 +157,6 @@ export class CollectionProxy {
   async find (callback: Function): Promise<any> {
     return this.all(
       this._enqueue('find', callback)
-    )
-  }
-
-  /**
-   * Asynchronous version of Array#find(), running the (async) testing
-   * function **in sequence**. Returns the first item in the
-   * collection that satisfying the check, `undefined` otherwise.
-   *
-   * @param {Function} callback
-   *
-   * @returns {*} the found value
-   */
-  async findSeries (callback: Function): Promise<any> {
-    return this.all(
-      this._enqueue('findSeries', callback)
     )
   }
 
@@ -247,27 +191,13 @@ export class CollectionProxy {
 
   /**
    * Asynchrounous version of Array#forEach(), running the given
-   * `callback` function on each `array` item in parallel. The
-   * callback receives the current array item as a parameter.
+   * `callback` function on each `array` item in sequence.
    *
    * @param {Function} callback
    */
   async forEach (callback: Function): Promise<void> {
     return this.all(
       this._enqueue('forEach', callback)
-    )
-  }
-
-  /**
-   * Asynchrounous version of Array#forEach(), running the given
-   * `callback` function on each `array` item **in sequence**.
-   * The callback receives the current array item as a parameter.
-   *
-   * @param {Function} callback
-   */
-  async forEachSeries (callback: Function): Promise<void> {
-    return this.all(
-      this._enqueue('forEachSeries', callback)
     )
   }
 
@@ -285,8 +215,9 @@ export class CollectionProxy {
   }
 
   /**
-   * Returns `true` when the collection satisfies the given
-   * `callback` testing function, `false` otherwise.
+   * Determines whether the the collection contains the item
+   * represented by `callback` or if the collection
+   * satisfies the given `callback` testing function.
    *
    * @param {Function} callback
    *
@@ -373,28 +304,15 @@ export class CollectionProxy {
 
   /**
    * Asynchronous version of Array#map(), running all transformations
-   * in parallel. It runs the given `callback` on each item of the
-   * `array` and returns an array of transformed items.
-   *
-   * @param {Function} callback
-   *
-   * @returns {CollectionProxy}
-   */
-  map (callback: Function): this {
-    return this._enqueue('map', callback)
-  }
-
-  /**
-   * Asynchronous version of Array#map(), running all transformations
    * in sequence. It runs the given `callback` on each item of
    * the `array` and returns an array of transformed items.
    *
    * @param {Function} callback
    *
-   * @returns {CollectionProxy}
+   * @returns {Array}
    */
-  mapSeries (callback: Function): this {
-    return this._enqueue('mapSeries', callback)
+  map (callback: Function): this {
+    return this._enqueue('map', callback)
   }
 
   /**
@@ -498,29 +416,16 @@ export class CollectionProxy {
   }
 
   /**
-   * Inverse of Array#filter(), **removing** all items satisfying the
-   * `callback` testing function. The callback should return `true`
-   * if an item should be removed from the resulting collection.
-   *
-   * @param {Function} callback
-   *
-   * @returns {CollectionProxy}
-   */
-  reject (callback: Function): this {
-    return this._enqueue('reject', callback)
-  }
-
-  /**
    * Inverse of Array#filter(), **removing** all items satisfying the `callback`
    * testing function. Processes each item in sequence. The callback should
    * return `true` if an item should be removed from the resulting collection.
    *
    * @param {Function} callback
    *
-   * @returns {CollectionProxy}
+   * @returns {Array}
    */
-  rejectSeries (callback: Function): this {
-    return this._enqueue('rejectSeries', callback)
+  reject (callback: Function): this {
+    return this._enqueue('reject', callback)
   }
 
   /**
@@ -591,9 +496,9 @@ export class CollectionProxy {
   }
 
   /**
-   * Asynchronous version of `Array#some()`. This function
-   * tests whether at least one element in the `array`
-   * passes the check implemented by the `callback`.
+   * Asynchronous version of `Array#some()`, running the (async) testing function
+   * in sequence. Returns `true` if at least one element in the collection
+   * passes the check implemented by the `callback`, otherwise `false`.
    *
    * @param {Function} callback
    *
@@ -602,21 +507,6 @@ export class CollectionProxy {
   async some (callback: Function): Promise<boolean> {
     return this.all(
       this._enqueue('some', callback)
-    )
-  }
-
-  /**
-   * Asynchronous version of `Array#some()`, running the (async) testing function
-   * **in sequence**. Returns `true` if at least one element in the collection
-   * passes the check implemented by the `callback`, otherwise `false`.
-   *
-   * @param {Function} callback
-   *
-   * @returns {Boolean}
-   */
-  async someSeries (callback: Function): Promise<boolean> {
-    return this.all(
-      this._enqueue('someSeries', callback)
     )
   }
 

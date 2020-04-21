@@ -91,9 +91,9 @@ export class Collection {
   }
 
   /**
-   * Asynchrounous version of Array#every(). Checks whether
-   * the `callback` returns `true` for all items in the
-   * array. Runs all checks in parallel.
+   * Asynchronous version of `Array#every()`, running the (async) testing
+   * function in sequence. Returns `true` if all items in the collection
+   * pass the check implemented by the `callback`, otherwise `false`.
    *
    * @param {Function} callback
    *
@@ -106,24 +106,9 @@ export class Collection {
   }
 
   /**
-   * Asynchronous version of `Array#every()`, running the (async) testing function
-   * **in sequence**. Returns `true` if all items in the collection pass the
-   * check implemented by the `callback`, otherwise `false`.
-   *
-   * @param {Function} callback
-   *
-   * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
-   */
-  async everySeries (callback: Function): Promise<boolean> {
-    const mapped = await this.mapSeries(callback)
-
-    return mapped.every(value => value)
-  }
-
-  /**
-   * Asynchronous version of Array#filter(). The `callback`
-   * testing function should return `true` if an item
-   * should be included in the resulting collection.
+   * Asynchronous version of Array#filter(), running the (async) testing
+   * function in sequence. The `callback` should return `true`
+   * if an item should be included in the resulting collection.
    *
    * @param {Function} callback
    *
@@ -136,48 +121,17 @@ export class Collection {
   }
 
   /**
-   * Asynchronous version of Array#filter(), running the (async) testing
-   * function **in sequence**. The `callback` should return `true`
-   * if an item should be included in the resulting collection.
-   *
-   * @param {Function} callback
-   *
-   * @returns {Array}
-   */
-  async filterSeries (callback: Function): Promise<any[]> {
-    const mapped = await this.mapSeries(callback)
-
-    return this.items.filter((_, i) => mapped[i])
-  }
-
-  /**
-   * Asynchronous version of Array#find(). Returns the first
-   * item in the collection that satisfies the `callback`
-   * testing function, `undefined` otherwise.
-   *
-   * @param {Function} callback
-   *
-   * @returns {*} the found value
-   */
-  async find (callback: Function): Promise<any> {
-    const mapped = await this.map(callback)
-
-    return this.items.find((_, i) => mapped[i])
-  }
-
-  /**
    * Asynchronous version of Array#find(), running the (async) testing
-   * function **in sequence**. Returns the first item in the
-   * collection that satisfying the check, `undefined` otherwise.
+   * function in sequence. Returns the first item in the collection
+   * satisfying the given `callback`, `undefined` otherwise.
    *
    * @param {Function} callback
    *
    * @returns {*} the found value
    */
-  async findSeries (callback: Function): Promise<any|undefined> {
-    // eslint-disable-next-line
-    for (const index in this.items) {
-      const result = await callback(this.items[index], index, this.items)
+  async find (callback: Function): Promise<any|undefined> {
+    for (const [index, value] of this.items.entries()) {
+      const result = await callback(value, index, this.items)
 
       if (result) {
         return this.items[index]
@@ -198,7 +152,7 @@ export class Collection {
     }
 
     if (typeof callback === 'function') {
-      return await this.findSeries(callback)
+      return this.find(callback)
     }
 
     throw new Error(`Collection.first() accepts only a callback function as an argument, received ${typeof callback}`)
@@ -222,24 +176,12 @@ export class Collection {
 
   /**
    * Asynchrounous version of Array#forEach(), running the given
-   * `callback` function on each `array` item in parallel. The
-   * callback receives the current array item as a parameter.
+   * `callback` function on each `array` item in sequence.
    *
    * @param {Function} callback
    */
   async forEach (callback: Function): Promise<void> {
     await this.map(callback)
-  }
-
-  /**
-   * Asynchrounous version of Array#forEach(), running the given
-   * `callback` function on each `array` item **in sequence**.
-   * The callback receives the current array item as a parameter.
-   *
-   * @param {Function} callback
-   */
-  async forEachSeries (callback: Function): Promise<void> {
-    await this.mapSeries(callback)
   }
 
   /**
@@ -268,8 +210,9 @@ export class Collection {
   }
 
   /**
-   * Returns `true` when the collection satisfies the given
-   * `callback` testing function, `false` otherwise.
+   * Determines whether the the collection contains the item
+   * represented by `callback` or if the collection
+   * satisfies the given `callback` testing function.
    *
    * @param {Function} callback
    *
@@ -277,8 +220,8 @@ export class Collection {
    */
   async has (callback: Function): Promise<boolean> {
     const item = typeof callback === 'function'
-      ? await this.findSeries(callback)
-      : await this.findSeries((item: any) => item === callback)
+      ? await this.find(callback)
+      : await this.find((item: any) => item === callback)
 
     return !!item
   }
@@ -356,22 +299,6 @@ export class Collection {
 
   /**
    * Asynchronous version of Array#map(), running all transformations
-   * in parallel. It runs the given `callback` on each item of the
-   * `array` and returns an array of transformed items.
-   *
-   * @param {Function} callback
-   *
-   * @returns {Array}
-   */
-  async map (callback: Function): Promise<any[]> {
-    return await Promise.all(
-      // @ts-ignore
-      this.items.map(callback)
-    )
-  }
-
-  /**
-   * Asynchronous version of Array#map(), running all transformations
    * in sequence. It runs the given `callback` on each item of
    * the `array` and returns an array of transformed items.
    *
@@ -379,13 +306,12 @@ export class Collection {
    *
    * @returns {Array}
    */
-  async mapSeries (callback: Function): Promise<any[]> {
+  async map (callback: Function): Promise<any[]> {
     const results = []
 
-    // eslint-disable-next-line
-    for (const index in this.items) {
+    for (const [index, value] of this.items.entries()) {
       results.push(
-        await callback(this.items[index], index, this.items)
+        await callback(value, index, this.items)
       )
     }
 
@@ -464,7 +390,7 @@ export class Collection {
    * @returns {Array}
    */
   async pluckMany (keys: string[]): Promise<any[]> {
-    return await this.map((item: any) => {
+    return this.map((item: any) => {
       const result: any = {}
 
       keys.forEach(key => {
@@ -539,21 +465,6 @@ export class Collection {
   }
 
   /**
-   * Inverse of Array#filter(), **removing** all items satisfying the
-   * `callback` testing function. The callback should return `true`
-   * if an item should be removed from the resulting collection.
-   *
-   * @param {Function} callback
-   *
-   * @returns {Array}
-   */
-  async reject (callback: Function): Promise<any[]> {
-    const mapped = await this.map(callback)
-
-    return this.items.filter((_, i) => !mapped[i])
-  }
-
-  /**
    * Inverse of Array#filter(), **removing** all items satisfying the `callback`
    * testing function. Processes each item in sequence. The callback should
    * return `true` if an item should be removed from the resulting collection.
@@ -562,8 +473,8 @@ export class Collection {
    *
    * @returns {Array}
    */
-  async rejectSeries (callback: Function): Promise<any[]> {
-    const mapped = await this.mapSeries(callback)
+  async reject (callback: Function): Promise<any[]> {
+    const mapped = await this.map(callback)
 
     return this.items.filter((_, i) => !mapped[i])
   }
@@ -634,9 +545,9 @@ export class Collection {
   }
 
   /**
-   * Asynchronous version of `Array#some()`. This function
-   * tests whether at least one element in the `array`
-   * passes the check implemented by the `callback`.
+   * Asynchronous version of `Array#some()`, running the (async) testing function
+   * in sequence. Returns `true` if at least one element in the collection
+   * passes the check implemented by the `callback`, otherwise `false`.
    *
    * @param {Function} callback
    *
@@ -644,21 +555,6 @@ export class Collection {
    */
   async some (callback: Function): Promise<boolean> {
     const mapped = await this.map(callback)
-
-    return mapped.some(value => value)
-  }
-
-  /**
-   * Asynchronous version of `Array#some()`, running the (async) testing function
-   * **in sequence**. Returns `true` if at least one element in the collection
-   * passes the check implemented by the `callback`, otherwise `false`.
-   *
-   * @param {Function} callback
-   *
-   * @returns {Boolean}
-   */
-  async someSeries (callback: Function): Promise<boolean> {
-    const mapped = await this.mapSeries(callback)
 
     return mapped.some(value => value)
   }
@@ -680,7 +576,7 @@ export class Collection {
    * @returns {Number} resulting sum of collection items
    */
   async sum (): Promise<number> {
-    return await this.reduce((carry: number, item: number) => {
+    return this.reduce((carry: number, item: number) => {
       return carry + item
     }, 0)
   }
@@ -736,7 +632,7 @@ export class Collection {
     const exists = new Set()
     const callback = this.valueRetriever(key)
 
-    return await this.reject(async (item: any) => {
+    return this.reject(async (item: any) => {
       const id = await callback(item)
 
       if (exists.has(id)) {

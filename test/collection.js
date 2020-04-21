@@ -94,7 +94,7 @@ describe('Chained Collection ->', () => {
     expect(
       await Collect([1, 2, 3])
         .map(async item => {
-          await pause(50)
+          await pause(10)
 
           return item * 10
         })
@@ -102,24 +102,7 @@ describe('Chained Collection ->', () => {
     ).to.equal([10, 20, 30])
 
     const elapsed = Date.now() - start
-    expect(elapsed < 100).to.be.true() // map should run in parallel
-  })
-
-  it('mapSeries', async () => {
-    const start = Date.now()
-
-    expect(
-      await Collect([1, 2, 3])
-        .mapSeries(async item => {
-          await pause(50)
-
-          return item * 10
-        })
-        .all()
-    ).to.equal([10, 20, 30])
-
-    const elapsed = Date.now() - start
-    expect(elapsed > 100 && elapsed < 200).to.be.true() // functions should run in sequence
+    expect(elapsed >= 30).to.be.true() // map should run in sequence
   })
 
   it('flatMap', async () => {
@@ -128,7 +111,7 @@ describe('Chained Collection ->', () => {
     expect(
       await Collect([1, 2, 3])
         .flatMap(async item => {
-          await pause(50)
+          await pause(10)
 
           return [item, item]
         })
@@ -136,7 +119,7 @@ describe('Chained Collection ->', () => {
     ).to.equal([1, 1, 2, 2, 3, 3])
 
     const elapsed = Date.now() - start
-    expect(elapsed < 100).to.be.true() // map should run in parallel
+    expect(elapsed >= 30).to.be.true() // map should run in sequence
   })
 
   it('filter', async () => {
@@ -144,31 +127,14 @@ describe('Chained Collection ->', () => {
 
     expect(
       await Collect([1, 2, 3]).filter(async (item) => {
-        await pause(50)
+        await pause(10)
 
         return item > 1
       }).all()
     ).to.equal([2, 3])
 
     const elapsed = Date.now() - start
-    expect(elapsed < 80).to.be.true()
-  })
-
-  it('filterSeries', async () => {
-    const start = Date.now()
-
-    expect(
-      await Collect([1, 2, 3])
-        .filterSeries(async (item) => {
-          await pause(50)
-
-          return item > 1
-        })
-        .all()
-    ).to.equal([2, 3])
-
-    const elapsed = Date.now() - start
-    expect(elapsed >= 150 && elapsed < 200).to.be.true() // filter should run in sequence
+    expect(elapsed >= 30).to.be.true()
   })
 
   it('reject', async () => {
@@ -177,7 +143,7 @@ describe('Chained Collection ->', () => {
     expect(
       await Collect([1, 2, 3, 4, 5])
         .reject(async (item) => {
-          await pause(50)
+          await pause(10)
 
           return item % 2 === 1 // remove all odds
         })
@@ -185,30 +151,13 @@ describe('Chained Collection ->', () => {
     ).to.equal([2, 4])
 
     const elapsed = Date.now() - start
-    expect(elapsed < 100).to.be.true()
-  })
-
-  it('rejectSeries', async () => {
-    const start = Date.now()
-
-    expect(
-      await Collect([1, 2, 3])
-        .rejectSeries(async (item) => {
-          await pause(50)
-
-          return item % 2 === 0 // remove all evens
-        })
-        .all()
-    ).to.equal([1, 3])
-
-    const elapsed = Date.now() - start
-    expect(elapsed >= 150 && elapsed < 200).to.be.true() // reject should run in sequence
+    expect(elapsed >= 50).to.be.true()
   })
 
   it('reduce', async () => {
     expect(
       await Collect([1, 2, 3]).reduce(async (carry, item) => {
-        await pause(50)
+        await pause(10)
 
         return carry + item
       }, 0)
@@ -224,7 +173,7 @@ describe('Chained Collection ->', () => {
   it('reduceRight', async () => {
     expect(
       await Collect([1, 2, 3, 4, 5]).reduceRight(async (carry, item) => {
-        await pause(50)
+        await pause(10)
 
         return `${carry}${item}`
       }, '')
@@ -232,7 +181,7 @@ describe('Chained Collection ->', () => {
 
     expect(
       await Collect([1, 2, 3, 4, 5]).reduceRight(async (carry, item) => {
-        await pause(50)
+        await pause(10)
 
         return carry.concat(item)
       }, [])
@@ -254,24 +203,6 @@ describe('Chained Collection ->', () => {
     ).to.be.undefined()
   })
 
-  it('findSeries', async () => {
-    const start = Date.now()
-
-    expect(
-      await Collect([1, 2, 3]).findSeries(async item => {
-        await pause(50)
-        return item === 2
-      })
-    ).to.equal(2)
-
-    const elapsed = Date.now() - start
-    expect(elapsed >= 100 && elapsed < 150).to.be.true() // find should run in sequence
-
-    expect(
-      await Collect([1, 2, 3]).find(item => item === 10)
-    ).to.be.undefined()
-  })
-
   it('every', async () => {
     const start = Date.now()
 
@@ -284,25 +215,6 @@ describe('Chained Collection ->', () => {
 
     expect(
       await Collect([1, 2, 3]).every(item => item < 10)
-    ).to.be.true()
-  })
-
-  it('everySeries', async () => {
-    const start = Date.now()
-
-    expect(
-      await Collect([1, 2, 3]).everySeries(async item => {
-        await pause(50)
-
-        return item > 5
-      })
-    ).to.be.false()
-
-    const elapsed = Date.now() - start
-    expect(elapsed >= 150).to.be.true()
-
-    expect(
-      await Collect([1, 2, 3]).map(item => item * 10).everySeries(item => item > 5)
     ).to.be.true()
   })
 
@@ -434,44 +346,6 @@ describe('Chained Collection ->', () => {
     ).to.be.true()
   })
 
-  it('someSeries', async () => {
-    const start = Date.now()
-
-    expect(
-      await Collect([1, 2, 3]).someSeries(async item => {
-        await pause(50)
-
-        return item > 5
-      })
-    ).to.be.false()
-
-    const elapsed = Date.now() - start
-    expect(elapsed >= 150 && elapsed < 200).to.be.true()
-
-    expect(
-      await Collect([1, 2, 3]).map(item => item * 2).someSeries(item => item > 5)
-    ).to.be.true()
-  })
-
-  it('anySeries', async () => {
-    const start = Date.now()
-
-    expect(
-      await Collect([1, 2, 3]).anySeries(async item => {
-        await pause(50)
-
-        return item > 5
-      })
-    ).to.be.false()
-
-    const elapsed = Date.now() - start
-    expect(elapsed >= 150 && elapsed < 200).to.be.true()
-
-    expect(
-      await Collect([1, 2, 3]).map(item => item * 2).anySeries(item => item > 5)
-    ).to.be.true()
-  })
-
   it('sum', async () => {
     expect(
       await Collect([1, 2, 3]).sum()
@@ -489,12 +363,12 @@ describe('Chained Collection ->', () => {
     const start = Date.now()
 
     await Collect([1, 2, 3, 4])
-      .forEach(async item => {
-        await pause(item * 10)
+      .forEach(async () => {
+        await pause(10)
       })
 
     const elapsed = Date.now() - start
-    expect(elapsed < 50).to.be.true()
+    expect(elapsed >= 40).to.be.true()
 
     const callback = Sinon.spy()
 
@@ -505,27 +379,6 @@ describe('Chained Collection ->', () => {
     expect(callback.calledWith(2)).to.be.true()
     expect(callback.calledWith(3)).to.be.true()
     expect(callback.calledWith(4)).to.be.false()
-  })
-
-  it('forEachSeries', async () => {
-    const start = Date.now()
-
-    await Collect([1, 2, 3, 4])
-      .forEachSeries(async item => {
-        await pause(item * 10)
-      })
-
-    const elapsed = Date.now() - start
-    expect(elapsed >= 100 && elapsed < 150).to.be.true() // functions should run in sequence
-
-    const callback = Sinon.spy()
-
-    await Collect([1, 2, 3]).forEachSeries(callback)
-
-    expect(callback.called).to.be.true()
-    expect(callback.calledWith(1)).to.be.true()
-    expect(callback.calledWith(2)).to.be.true()
-    expect(callback.calledWith(3)).to.be.true()
   })
 
   it('intersect', async () => {
@@ -1075,5 +928,9 @@ describe('Chained Collection ->', () => {
         .filter(item => item > 0)
         .sort((a, b) => a - b)
     ).to.equal([1, 2, 3, 4, 5, 6])
+
+    expect(
+      await Collect([1, 2, 3]).every(item => item > 5)
+    ).to.be.false()
   })
 })
