@@ -134,7 +134,7 @@ describe('Chained Collection ->', () => {
     ).to.equal([2, 3])
 
     const elapsed = Date.now() - start
-    expect(elapsed >= 30) .to.be.within(30, 100)
+    expect(elapsed >= 30).to.be.within(30, 100)
   })
 
   it('reject', async () => {
