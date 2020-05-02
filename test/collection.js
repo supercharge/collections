@@ -368,7 +368,7 @@ describe('Chained Collection ->', () => {
       })
 
     const elapsed = Date.now() - start
-    expect(elapsed >= 40).to.be.true()
+    expect(elapsed).to.be.within(40, 100)
 
     const callback = Sinon.spy()
 
