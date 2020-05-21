@@ -1,24 +1,14 @@
 {
+  "extends": "@supercharge/tsconfig",
   "compilerOptions": {
-    "declaration": true,
-    "target": "es2017", // Node.js v8
-    "module": "commonjs",
-    "lib": [
-      "es2018"
-    ],
-    "removeComments": false,
-    "moduleResolution": "node",
-    "outDir": "./dist",
-    "strictNullChecks": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "strict": true
+    "outDir": "./dist"
   },
   "include": [
     "./**/*"
   ],
   "exclude": [
     "./node_modules",
+    "./test",
     "./dist"
   ]
 }
