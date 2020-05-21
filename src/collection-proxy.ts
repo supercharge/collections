@@ -599,26 +599,12 @@ export class CollectionProxy {
    */
   async then (onFullfilled: (value: any) => any, onRejected: (value: any) => any): Promise<void> {
     try {
-      return onFullfilled(
+      onFullfilled(
         await this.all()
       )
     } catch (error) {
-      return onRejected(error)
+      onRejected(error)
     }
-  }
-
-  /**
-   * Creates a “catchable” allowing you to catch errors and
-   * handle them in a callback without throwing them.
-   *
-   * @param {Function} onRejected
-   */
-  async catch (onRejected: (value: any) => any): Promise<void> {
-    if (!onRejected) {
-      throw new Error('Using .catch(error => {}) requires a callback function handling the error.')
-    }
-
-    return this.then(() => {}, onRejected)
   }
 
   /**

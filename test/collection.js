@@ -909,24 +909,6 @@ describe('Chained Collection ->', () => {
       Collect([1, 2, 3]).map(() => {
         throw new Error('failed')
       })
-    ).to.reject()
-  })
-
-  it('catch', async () => {
-    let error
-
-    await Collect([1, 2, 3]).map(() => {
-      throw new Error('failed')
-    }).catch(err => {
-      error = err
-    })
-
-    expect(error).to.exist()
-    expect(error.message).to.equal('failed')
-
-    const exception = await expect(
-      Collect([1, 2, 3]).map(item => item > 5).catch()
-    ).to.reject()
-    expect(exception.message).to.include('requires a callback function')
+    ).to.reject('failed')
   })
 })
