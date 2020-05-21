@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.0.0](https://github.com/supercharge/collections/compare/v1.13.0...v2.0.0) - 2020-04-xx
+## [2.0.0](https://github.com/supercharge/collections/compare/v1.13.0...v2.0.0) - 2020-05-21
 
 ### Added
 - TypeScript typings
@@ -13,12 +13,12 @@
 - moved code base to TypeScript to automatically generate type definitions
 
 ### Breaking Changes
-- all `xSeries` methods became the default and were removed
-  - for example: `mapSeries` became `map` and the `mapSeries` method was removed
+- all `xSeries` methods become the default and were removed
+  - for example: `mapSeries` becomes `map` and the `mapSeries` method was removed
   - the methods running async functions in parallel were removed in favor of the sequence versions
-  - I found myself defaulting to the `xSeries` methods because I typically don't know the side-effects of parallel processing on a large amount of items. That's why the methods iterating over the items in sequence are the new default.
+  - I found myself defaulting to the `xSeries` methods because I typically don’t want to handle the side-effects of parallel processing on a large collections. That’s why the methods iterating over the items in sequence are the new default.
 
-**Note:** there are no new `xParallel` methods to fill the gap for the missing methods processing async tasks in parallel. If you need the parallel methods, I'm happy to support you on a pull request.
+**Note:** there are no new `xParallel` methods to fill the gap for the missing methods processing async tasks in parallel. If you need the parallel methods, I’m happy to support you on a pull request.
 
 
 ## [1.13.0](https://github.com/supercharge/collections/compare/v1.12.2...v1.13.0) - 2020-03-26
