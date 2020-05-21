@@ -8,7 +8,7 @@
     <h3>Collections</h3>
   </p>
   <p>
-    <strong><code>async/await-ready</code></strong> array & collection utilities for Node.js
+    <strong><code>async/await-ready</code></strong> array methods for Node.js
   </p>
   <br/>
   <p>
