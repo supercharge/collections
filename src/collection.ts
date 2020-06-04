@@ -376,8 +376,9 @@ export class Collection {
    * @returns {Array}
    */
   async pluckOne (key: string): Promise<any[]> {
+    const keySplitted: string[] = key.split('.')
     return this.map((item: any) => {
-      return item[key]
+      return keySplitted.reduce((parent, prop) => parent?.[prop], item)
     })
   }
 
@@ -394,7 +395,8 @@ export class Collection {
       const result: any = {}
 
       keys.forEach(key => {
-        result[key] = item[key]
+        const keySplitted: string[] = key.split('.')
+        result[key] = keySplitted.reduce((parent, prop) => parent?.[prop], item)
       })
 
       return result
