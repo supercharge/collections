@@ -46,7 +46,7 @@ export class CollectionProxy {
    * @returns {Number}
    */
   async avg (): Promise<number> {
-    return this._enqueue('avg')
+    return this.enqueue('avg')
   }
 
   /**
@@ -58,7 +58,7 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   chunk (size: number): this {
-    return this._enqueue('chunk', undefined, size)
+    return this.enqueue('chunk', undefined, size)
   }
 
   /**
@@ -78,7 +78,7 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   collapse (): this {
-    return this._enqueue('collapse')
+    return this.enqueue('collapse')
   }
 
   /**
@@ -89,7 +89,7 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   compact (): this {
-    return this._enqueue('compact')
+    return this.enqueue('compact')
   }
 
   /**
@@ -102,7 +102,7 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   concat (...items: any[]): CollectionProxy {
-    return this.clone()._enqueue('concat', undefined, items)
+    return this.clone().enqueue('concat', undefined, items)
   }
 
   /**
@@ -113,7 +113,7 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   diff (items: any[]): this {
-    return this._enqueue('diff', undefined, items)
+    return this.enqueue('diff', undefined, items)
   }
 
   /**
@@ -126,7 +126,7 @@ export class CollectionProxy {
    * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
    */
   async every (callback: Function): Promise<boolean> {
-    return this._enqueue('every', callback)
+    return this.enqueue('every', callback)
   }
 
   /**
@@ -139,7 +139,7 @@ export class CollectionProxy {
    * @returns {Array}
    */
   filter (callback: Function): this {
-    return this._enqueue('filter', callback)
+    return this.enqueue('filter', callback)
   }
 
   /**
@@ -152,7 +152,7 @@ export class CollectionProxy {
    * @returns {*} the found value
    */
   async find (callback: Function): Promise<any> {
-    return this._enqueue('find', callback)
+    return this.enqueue('find', callback)
   }
 
   /**
@@ -165,7 +165,7 @@ export class CollectionProxy {
    * @returns {*} the found value
    */
   async first (callback: Function): Promise<any> {
-    return this._enqueue('first', callback).all()
+    return this.enqueue('first', callback).all()
   }
 
   /**
@@ -179,7 +179,7 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   flatMap (callback: Function): this {
-    return this._enqueue('flatMap', callback)
+    return this.enqueue('flatMap', callback)
   }
 
   /**
@@ -189,7 +189,7 @@ export class CollectionProxy {
    * @param {Function} callback
    */
   async forEach (callback: Function): Promise<void> {
-    return this._enqueue('forEach', callback).all()
+    return this.enqueue('forEach', callback).all()
   }
 
   /**
@@ -200,7 +200,7 @@ export class CollectionProxy {
    * @returns {Object}
    */
   async groupBy (key: string): Promise<any> {
-    return this._enqueue('groupBy', undefined, key).all()
+    return this.enqueue('groupBy', undefined, key).all()
   }
 
   /**
@@ -213,7 +213,7 @@ export class CollectionProxy {
    * @returns {Boolean}
    */
   async has (callback: Function): Promise<boolean> {
-    return this._enqueue('has', callback)
+    return this.enqueue('has', callback)
   }
 
   /**
@@ -222,7 +222,7 @@ export class CollectionProxy {
    * @returns {Boolean}
    */
   async hasDuplicates (): Promise<boolean> {
-    return this._enqueue('hasDuplicates')
+    return this.enqueue('hasDuplicates')
   }
 
   /**
@@ -233,7 +233,7 @@ export class CollectionProxy {
    * @returns {Array}
    */
   intersect (items: any[]): this {
-    return this._enqueue('intersect', undefined, items)
+    return this.enqueue('intersect', undefined, items)
   }
 
   /**
@@ -242,7 +242,7 @@ export class CollectionProxy {
    * @returns {Boolean}
    */
   async isEmpty (): Promise<boolean> {
-    return this._enqueue('isEmpty')
+    return this.enqueue('isEmpty')
   }
 
   /**
@@ -251,7 +251,7 @@ export class CollectionProxy {
    * @returns {Boolean}
    */
   async isNotEmpty (): Promise<boolean> {
-    return this._enqueue('isNotEmpty')
+    return this.enqueue('isNotEmpty')
   }
 
   /**
@@ -263,7 +263,7 @@ export class CollectionProxy {
    * @returns {String}
    */
   async join (separator: string): Promise<string> {
-    return this._enqueue('join', undefined, separator)
+    return this.enqueue('join', undefined, separator)
   }
 
   /**
@@ -276,7 +276,7 @@ export class CollectionProxy {
    * @returns {*} the found value
    */
   async last (callback: Function): Promise<any> {
-    return this._enqueue('last', callback).all()
+    return this.enqueue('last', callback).all()
   }
 
   /**
@@ -289,7 +289,7 @@ export class CollectionProxy {
    * @returns {Array}
    */
   map (callback: Function): this {
-    return this._enqueue('map', callback)
+    return this.enqueue('map', callback)
   }
 
   /**
@@ -298,7 +298,7 @@ export class CollectionProxy {
    * @returns {Number}
    */
   async max (): Promise<number> {
-    return this._enqueue('max')
+    return this.enqueue('max')
   }
 
   /**
@@ -307,7 +307,7 @@ export class CollectionProxy {
    * @returns {Number}
    */
   async median (): Promise<number> {
-    return this._enqueue('median')
+    return this.enqueue('median')
   }
 
   /**
@@ -316,7 +316,7 @@ export class CollectionProxy {
    * @returns {Number}
    */
   async min (): Promise<number> {
-    return this._enqueue('min')
+    return this.enqueue('min')
   }
 
   /**
@@ -327,7 +327,7 @@ export class CollectionProxy {
    * @returns {Array}
    */
   pluck (keys: string|string[]): this {
-    return this._enqueue('pluck', undefined, keys).collapse()
+    return this.enqueue('pluck', undefined, keys).collapse()
   }
 
   /**
@@ -339,7 +339,7 @@ export class CollectionProxy {
     return upon(this.clone(), collection => {
       this.splice(-1, 1)
 
-      return collection._enqueue('pop')
+      return collection.enqueue('pop')
     })
   }
 
@@ -351,7 +351,7 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   push (...items: any[]): this {
-    return this._enqueue('push', undefined, items)
+    return this.enqueue('push', undefined, items)
   }
 
   /**
@@ -365,7 +365,7 @@ export class CollectionProxy {
    * @returns {*} resulting accumulator value
    */
   async reduce (reducer: Function, initial: any): Promise<any> {
-    return this._enqueue('reduce', reducer, initial).all()
+    return this.enqueue('reduce', reducer, initial).all()
   }
 
   /**
@@ -379,7 +379,7 @@ export class CollectionProxy {
    * @returns {*} resulting accumulator value
    */
   async reduceRight (reducer: Function, initial: any): Promise<any> {
-    return this._enqueue('reduceRight', reducer, initial).all()
+    return this.enqueue('reduceRight', reducer, initial).all()
   }
 
   /**
@@ -392,7 +392,7 @@ export class CollectionProxy {
    * @returns {Array}
    */
   reject (callback: Function): this {
-    return this._enqueue('reject', callback)
+    return this.enqueue('reject', callback)
   }
 
   /**
@@ -402,7 +402,7 @@ export class CollectionProxy {
   * @returns {CollectionProxy}
   */
   reverse (): CollectionProxy {
-    return this.clone()._enqueue('reverse')
+    return this.clone().enqueue('reverse')
   }
 
   /**
@@ -414,7 +414,7 @@ export class CollectionProxy {
     return upon(this.clone(), async collection => {
       this.splice(0, 1)
 
-      return collection._enqueue('shift').all()
+      return collection.enqueue('shift').all()
     })
   }
 
@@ -424,7 +424,7 @@ export class CollectionProxy {
    * @returns {Number}
    */
   async size (): Promise<number> {
-    return this._enqueue('size').all()
+    return this.enqueue('size').all()
   }
 
   /**
@@ -438,7 +438,7 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   slice (start: number, limit?: number): this {
-    return this._enqueue('slice', undefined, { start, limit })
+    return this.enqueue('slice', undefined, { start, limit })
   }
 
   /**
@@ -454,7 +454,7 @@ export class CollectionProxy {
    */
   splice (start: number, limit: number, ...inserts: any[]): CollectionProxy {
     return tap(this.clone().slice(start, limit), () => {
-      this._enqueue('splice', undefined, { start, limit, inserts })
+      this.enqueue('splice', undefined, { start, limit, inserts })
     })
   }
 
@@ -468,7 +468,7 @@ export class CollectionProxy {
    * @returns {Boolean}
    */
   async some (callback: Function): Promise<boolean> {
-    return this._enqueue('some', callback).all()
+    return this.enqueue('some', callback).all()
   }
 
   /**
@@ -479,7 +479,7 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   sort (comparator: Function): CollectionProxy {
-    return this.clone()._enqueue('sort', comparator)
+    return this.clone().enqueue('sort', comparator)
   }
 
   /**
@@ -488,7 +488,7 @@ export class CollectionProxy {
    * @returns {Number} resulting sum of collection items
    */
   async sum (): Promise<number> {
-    return this._enqueue('sum').all()
+    return this.enqueue('sum').all()
   }
 
   /**
@@ -517,7 +517,7 @@ export class CollectionProxy {
    */
   takeAndRemove (limit: number): CollectionProxy {
     return tap(this.take(limit), () => {
-      this._enqueue('takeAndRemove', undefined, limit)
+      this.enqueue('takeAndRemove', undefined, limit)
     })
   }
 
@@ -527,7 +527,7 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   tap (callback: Function): this {
-    return this._enqueue('tap', callback)
+    return this.enqueue('tap', callback)
   }
 
   /**
@@ -536,7 +536,7 @@ export class CollectionProxy {
    * @returns {String}
    */
   async toJSON (): Promise<string> {
-    return this._enqueue('toJSON').all()
+    return this.enqueue('toJSON').all()
   }
 
   /**
@@ -558,7 +558,7 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   unique (key?: string|Function): this {
-    return this._enqueue('unique', undefined, key)
+    return this.enqueue('unique', undefined, key)
   }
 
   /**
@@ -567,7 +567,7 @@ export class CollectionProxy {
    * @returns {*}
    */
   unshift (...items: any[]): this {
-    return this._enqueue('unshift', undefined, items)
+    return this.enqueue('unshift', undefined, items)
   }
 
   /**
@@ -580,7 +580,7 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  private _enqueue (method: string, callback?: Function, data?: any): this {
+  private enqueue (method: string, callback?: Function, data?: any): this {
     this.callChain.enqueue({ method, callback, data })
 
     return this
