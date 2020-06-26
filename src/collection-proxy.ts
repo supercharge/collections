@@ -1,6 +1,7 @@
 'use strict'
 
 import { Collection } from './collection'
+import { tap, upon } from '@supercharge/goodies'
 import Queue from '@supercharge/queue-datastructure'
 
 export class CollectionProxy {
@@ -335,11 +336,11 @@ export class CollectionProxy {
    * @returns {*}
    */
   async pop (): Promise<any> {
-    const collection = this.clone()
+    return upon(this.clone(), collection => {
+      this.splice(-1, 1)
 
-    this.splice(-1, 1)
-
-    return collection._enqueue('pop')
+      return collection._enqueue('pop')
+    })
   }
 
   /**
@@ -410,11 +411,11 @@ export class CollectionProxy {
    * @returns {*}
    */
   async shift (): Promise<any> {
-    const collection = this.clone()
+    return upon(this.clone(), async collection => {
+      this.splice(0, 1)
 
-    this.splice(0, 1)
-
-    return collection._enqueue('shift').all()
+      return collection._enqueue('shift').all()
+    })
   }
 
   /**
@@ -452,11 +453,9 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   splice (start: number, limit: number, ...inserts: any[]): CollectionProxy {
-    const collection = this.clone().slice(start, limit)
-
-    this._enqueue('splice', undefined, { start, limit, inserts })
-
-    return collection
+    return tap(this.clone().slice(start, limit), () => {
+      this._enqueue('splice', undefined, { start, limit, inserts })
+    })
   }
 
   /**
@@ -517,11 +516,9 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   takeAndRemove (limit: number): CollectionProxy {
-    const collection = this.take(limit)
-
-    this._enqueue('takeAndRemove', undefined, limit)
-
-    return collection
+    return tap(this.take(limit), () => {
+      this._enqueue('takeAndRemove', undefined, limit)
+    })
   }
 
   /**
@@ -583,7 +580,7 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  _enqueue (method: string, callback?: Function, data?: any): this {
+  private _enqueue (method: string, callback?: Function, data?: any): this {
     this.callChain.enqueue({ method, callback, data })
 
     return this
