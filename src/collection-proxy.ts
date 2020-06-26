@@ -1,7 +1,6 @@
 'use strict'
 
 import { Collection } from './collection'
-import { tap, upon } from '@supercharge/goodies'
 import Queue from '@supercharge/queue-datastructure'
 
 export class CollectionProxy {
@@ -336,11 +335,11 @@ export class CollectionProxy {
    * @returns {*}
    */
   async pop (): Promise<any> {
-    return upon(this.clone(), collection => {
-      this.splice(-1, 1)
+    const collection = this.clone()
 
-      return collection.enqueue('pop')
-    })
+    this.splice(-1, 1)
+
+    return collection.enqueue('pop')
   }
 
   /**
@@ -411,11 +410,11 @@ export class CollectionProxy {
    * @returns {*}
    */
   async shift (): Promise<any> {
-    return upon(this.clone(), async collection => {
-      this.splice(0, 1)
+    const collection = this.clone()
 
-      return collection.enqueue('shift').all()
-    })
+    this.splice(0, 1)
+
+    return collection.enqueue('shift').all()
   }
 
   /**
@@ -453,9 +452,11 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   splice (start: number, limit: number, ...inserts: any[]): CollectionProxy {
-    return tap(this.clone().slice(start, limit), () => {
-      this.enqueue('splice', undefined, { start, limit, inserts })
-    })
+    const collection = this.clone().slice(start, limit)
+
+    this.enqueue('splice', undefined, { start, limit, inserts })
+
+    return collection
   }
 
   /**
@@ -516,9 +517,11 @@ export class CollectionProxy {
    * @returns {CollectionProxy}
    */
   takeAndRemove (limit: number): CollectionProxy {
-    return tap(this.take(limit), () => {
-      this.enqueue('takeAndRemove', undefined, limit)
-    })
+    const collection = this.take(limit)
+
+    this.enqueue('takeAndRemove', undefined, limit)
+
+    return collection
   }
 
   /**
