@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.0](https://github.com/supercharge/collections/compare/v2.0.0...v2.1.0) - 2020-06-30
+
+### Added
+- `count` method
+
+
 ## [2.0.0](https://github.com/supercharge/collections/compare/v1.13.0...v2.0.0) - 2020-05-21
 
 ### Added
