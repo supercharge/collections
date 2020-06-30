@@ -80,6 +80,25 @@ export class Collection {
   }
 
   /**
+   * Counts the items in the collection. By default, it behaves like an alias
+   * for the `size()` method counting each individual item. The `callback`
+   * function allows you to count a subset of items in the collection.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Number}
+   */
+  async count (callback?: Function): Promise<number> {
+    if (!callback) {
+      return this.size()
+    }
+
+    const filtered = await this.filter(callback)
+
+    return filtered.length
+  }
+
+  /**
    * Removes all values from the collection that are present in the given array.
    *
    * @param {*} items

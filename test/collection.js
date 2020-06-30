@@ -910,4 +910,20 @@ describe('Chained Collection ->', () => {
       })
     ).to.reject('failed')
   })
+
+  it('count', async () => {
+    expect(
+      await Collect([1, 2, 3]).count()
+    ).to.equal(3)
+
+    expect(
+      await Collect([1, 2, 3, 4]).count(item => {
+        return item > 2
+      })
+    ).to.equal(2)
+
+    await expect(
+      Collect([1, 2, 3]).count('non-function')
+    ).to.reject()
+  })
 })

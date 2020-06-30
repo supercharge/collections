@@ -92,9 +92,8 @@ export class CollectionProxy {
   }
 
   /**
-   * Creates a new collection containing the
-   * concatenated items of the original
-   * collection with the new `items`.
+   * Creates a new collection containing the concatenated items
+   * of the original collection with the new `items`.
    *
    * @param {*} items
    *
@@ -102,6 +101,19 @@ export class CollectionProxy {
    */
   concat (...items: any[]): CollectionProxy {
     return this.clone().enqueue('concat', undefined, items)
+  }
+
+  /**
+   * Counts the items in the collection. By default, it behaves like an alias
+   * for the `size()` method counting each individual item. The `callback`
+   * function allows you to count a subset of items in the collection.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Number}
+   */
+  async count (callback?: Function): Promise<number> {
+    return this.enqueue('count', callback).all()
   }
 
   /**
