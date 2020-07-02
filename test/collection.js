@@ -136,6 +136,27 @@ describe('Chained Collection ->', () => {
     expect(elapsed).to.be.within(30, 100)
   })
 
+  it('filterIf', async () => {
+    const start = Date.now()
+
+    expect(
+      await Collect([1, 2, 3]).filterIf(2 > 1, async (item) => {
+        await pause(5)
+
+        return item > 1
+      }).all()
+    ).to.equal([2, 3])
+
+    const elapsed = Date.now() - start
+    expect(elapsed).to.be.within(15, 50)
+
+    expect(
+      await Collect([1, 2, 3]).filterIf(1 > 7, async (item) => {
+        return item > 1
+      }).all()
+    ).to.equal([1, 2, 3])
+  })
+
   it('reject', async () => {
     const start = Date.now()
 

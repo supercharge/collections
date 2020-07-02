@@ -140,6 +140,21 @@ export class Collection {
   }
 
   /**
+   * A variant of the `filter` method running the (async) testing
+   * function only if the given `condition` is `true`.
+   *
+   * @param {Function} callback
+   * @param {Boolean} condition
+   *
+   * @returns {Array}
+   */
+  async filterIf (callback: Function, condition: boolean): Promise<any[]> {
+    return condition
+      ? this.filter(callback)
+      : this.items
+  }
+
+  /**
    * Asynchronous version of Array#find(), running the (async) testing
    * function in sequence. Returns the first item in the collection
    * satisfying the given `callback`, `undefined` otherwise.

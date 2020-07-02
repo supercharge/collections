@@ -154,6 +154,19 @@ export class CollectionProxy {
   }
 
   /**
+   * A variant of the `filter` method running the (async) testing
+   * function only if the given `condition` is `true`.
+   *
+   * @param {Boolean} condition
+   * @param {Function} callback
+   *
+   * @returns {Array}
+   */
+  filterIf (condition: boolean, callback: Function): this {
+    return this.enqueue('filterIf', callback, condition)
+  }
+
+  /**
    * Asynchronous version of Array#find(), running the (async) testing
    * function in sequence. Returns the first item in the collection
    * satisfying the given `callback`, `undefined` otherwise.
