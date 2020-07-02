@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.2.0](https://github.com/supercharge/collections/compare/v2.1.0...v2.2.0) - 2020-07-xx
+
+### Added
+- `filterIf(condition, callback)` method: a variant of the the `filter` method only filtering the collection if the `condition` evaluates to true
+
+
 ## [2.1.0](https://github.com/supercharge/collections/compare/v2.0.0...v2.1.0) - 2020-06-30
 
 ### Added
