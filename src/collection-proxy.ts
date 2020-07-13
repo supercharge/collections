@@ -193,6 +193,15 @@ export class CollectionProxy {
   }
 
   /**
+   * Flattens the collection one level deep.
+   *
+   * @returns {CollectionProxy}
+   */
+  flatten (): this {
+    return this.enqueue('collapse')
+  }
+
+  /**
    * Asynchronous version of Array#flatMap(). It invokes the `callback`
    * on each collection item. The callback can modify and return the
    * item resulting in a new collection of modified items.

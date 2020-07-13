@@ -79,6 +79,12 @@ describe('Chained Collection ->', () => {
     ).to.equal([1, {}, 'Marcus', true, 22])
   })
 
+  it('flatten', async () => {
+    expect(
+      await Collect([1, 2, [3, 4]]).flatten()
+    ).to.equal([1, 2, 3, 4])
+  })
+
   it('compact', async () => {
     expect(
       await Collect([0, null, undefined, 1, false, 2, '', 3, NaN])
