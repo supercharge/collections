@@ -3,11 +3,11 @@
 import { Collection } from './collection'
 import Queue from '@supercharge/queue-datastructure'
 
-export class CollectionProxy {
+export class CollectionProxy<T> {
   /**
    * Stores the list of items in the collection.
    */
-  private readonly items: any[]
+  private readonly items: T[]
 
   /**
    * Stores all operations on the collection until the values
@@ -21,8 +21,8 @@ export class CollectionProxy {
    * @param items
    * @param callChain
    */
-  constructor (items: any, callChain: any[] = []) {
-    this.items = [].concat(items || [])
+  constructor (items: T[], callChain: any[] = []) {
+    this.items = ([] as T[]).concat(items || [])
     this.callChain = new Queue(callChain)
   }
 
@@ -35,7 +35,7 @@ export class CollectionProxy {
    *
    * @returns {Boolean}
    */
-  async any (callback: Function): Promise<boolean> {
+  async any (callback: (value: T, index: number, items: T[]) => unknown | Promise<unknown>): Promise<boolean> {
     return this.some(callback)
   }
 
@@ -65,8 +65,8 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  clone (): CollectionProxy {
-    return new CollectionProxy(
+  clone (): CollectionProxy<T> {
+    return new CollectionProxy<T>(
       this.items, this.callChain.items()
     )
   }
@@ -81,9 +81,8 @@ export class CollectionProxy {
   }
 
   /**
-   * Removes all falsey values from the given `array`.
-   * Falsey values are `null`, `undefined`, `''`,
-   * `false`, `0`, `NaN`.
+   * Removes all falsy values from the given `array`. Falsy values
+   * are `null`, `undefined`, `''`, `false`, `0`, `-0`, `0n`, `NaN`.
    *
    * @returns {CollectionProxy}
    */
@@ -99,7 +98,7 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  concat (...items: any[]): CollectionProxy {
+  concat (...items: T[]): CollectionProxy<T> {
     return this.clone().enqueue('concat', undefined, items)
   }
 
@@ -123,7 +122,7 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  diff (items: any[]): this {
+  diff (items: T[]): this {
     return this.enqueue('diff', undefined, items)
   }
 
@@ -136,7 +135,7 @@ export class CollectionProxy {
    *
    * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
    */
-  async every (callback: Function): Promise<boolean> {
+  async every (callback: (value: T, index: number, items: T[]) => unknown | Promise<unknown>): Promise<boolean> {
     return this.enqueue('every', callback)
   }
 
@@ -145,12 +144,12 @@ export class CollectionProxy {
    * function in sequence. The `callback` should return `true`
    * if an item should be included in the resulting collection.
    *
-   * @param {Function} callback
+   * @param {Function} predicate
    *
    * @returns {Array}
    */
-  filter (callback: Function): this {
-    return this.enqueue('filter', callback)
+  filter (predicate: (value: T, index: number, items: T[]) => unknown | Promise<unknown>): this {
+    return this.enqueue('filter', predicate)
   }
 
   /**
@@ -162,7 +161,7 @@ export class CollectionProxy {
    *
    * @returns {Array}
    */
-  filterIf (condition: boolean, callback: Function): this {
+  filterIf (condition: boolean, callback: (value: T, index: number, items: T[]) => unknown | Promise<unknown>): this {
     return this.enqueue('filterIf', callback, condition)
   }
 
@@ -171,12 +170,12 @@ export class CollectionProxy {
    * function in sequence. Returns the first item in the collection
    * satisfying the given `callback`, `undefined` otherwise.
    *
-   * @param {Function} callback
+   * @param {Function} predicate
    *
    * @returns {*} the found value
    */
-  async find (callback: Function): Promise<any> {
-    return this.enqueue('find', callback)
+  async find<S extends T> (predicate: (value: T, index: number, items: T[]) => value is S): Promise<any> {
+    return this.enqueue('find', predicate)
   }
 
   /**
@@ -188,8 +187,8 @@ export class CollectionProxy {
    *
    * @returns {*} the found value
    */
-  async first (callback: Function): Promise<any> {
-    return this.enqueue('first', callback).all()
+  async first<S extends T> (predicate: (value: T, index: number, items: T[]) => value is S): Promise<any> {
+    return this.enqueue('first', predicate).all()
   }
 
   /**
@@ -211,7 +210,7 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  flatMap (callback: Function): this {
+  flatMap<R> (callback: (value: T, index: number, items: T[]) => R[] | Promise<R[]>): CollectionProxy<any> {
     return this.enqueue('flatMap', callback)
   }
 
@@ -221,7 +220,7 @@ export class CollectionProxy {
    *
    * @param {Function} callback
    */
-  async forEach (callback: Function): Promise<void> {
+  async forEach (callback: (value: T, index: number, items: T[]) => void | Promise<void>): Promise<void> {
     return this.enqueue('forEach', callback).all()
   }
 
@@ -245,7 +244,7 @@ export class CollectionProxy {
    *
    * @returns {Boolean}
    */
-  async has (callback: Function): Promise<boolean> {
+  async has (callback: (value: T, index: number, items: T[]) => boolean | Promise<boolean>): Promise<boolean> {
     return this.enqueue('has', callback)
   }
 
@@ -265,7 +264,7 @@ export class CollectionProxy {
    *
    * @returns {Array}
    */
-  intersect (items: any[]): this {
+  intersect (items: T[]): this {
     return this.enqueue('intersect', undefined, items)
   }
 
@@ -300,16 +299,15 @@ export class CollectionProxy {
   }
 
   /**
-   * Returns the last item in the collection
-   * that satisfies the `callback` testing
-   * function, `undefined` otherwise.
+   * Returns the last item in the collection that satisfies the
+   * `predicate` testing function, `undefined` otherwise.
    *
    * @param {Function} callback
    *
    * @returns {*} the found value
    */
-  async last (callback: Function): Promise<any> {
-    return this.enqueue('last', callback).all()
+  async last<S extends T> (predicate: (value: T, index: number, items: T[]) => value is S): Promise<S> {
+    return this.enqueue('last', predicate).all()
   }
 
   /**
@@ -321,7 +319,7 @@ export class CollectionProxy {
    *
    * @returns {Array}
    */
-  map (callback: Function): this {
+  map<R> (callback: (value: T, index: number, items: T[]) => R[]): CollectionProxy<any> {
     return this.enqueue('map', callback)
   }
 
@@ -383,7 +381,7 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  push (...items: any[]): this {
+  push (...items: T[]): this {
     return this.enqueue('push', undefined, items)
   }
 
@@ -397,7 +395,7 @@ export class CollectionProxy {
    *
    * @returns {*} resulting accumulator value
    */
-  async reduce (reducer: Function, initial: any): Promise<any> {
+  async reduce<R> (reducer: (carry: R, currentValue: T, currentIndex: number, items: T[]) => R | Promise<R>, initial: R): Promise<R> {
     return this.enqueue('reduce', reducer, initial).all()
   }
 
@@ -411,7 +409,7 @@ export class CollectionProxy {
    *
    * @returns {*} resulting accumulator value
    */
-  async reduceRight (reducer: Function, initial: any): Promise<any> {
+  async reduceRight<R> (reducer: (carry: R, currentValue: T, currentIndex: number, items: T[]) => R | Promise<R>, initial: R): Promise<R> {
     return this.enqueue('reduceRight', reducer, initial).all()
   }
 
@@ -420,12 +418,12 @@ export class CollectionProxy {
    * testing function. Processes each item in sequence. The callback should
    * return `true` if an item should be removed from the resulting collection.
    *
-   * @param {Function} callback
+   * @param {Function} predicate
    *
    * @returns {Array}
    */
-  reject (callback: Function): this {
-    return this.enqueue('reject', callback)
+  reject (predicate: (value: T, index: number, items: T[]) => unknown | Promise<unknown>): this {
+    return this.enqueue('reject', predicate)
   }
 
   /**
@@ -434,7 +432,7 @@ export class CollectionProxy {
   *
   * @returns {CollectionProxy}
   */
-  reverse (): CollectionProxy {
+  reverse (): CollectionProxy<T> {
     return this.clone().enqueue('reverse')
   }
 
@@ -443,7 +441,7 @@ export class CollectionProxy {
    *
    * @returns {*}
    */
-  async shift (): Promise<any> {
+  async shift (): Promise<T> {
     const collection = this.clone()
 
     this.splice(0, 1)
@@ -485,7 +483,7 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  splice (start: number, limit: number, ...inserts: any[]): CollectionProxy {
+  splice (start: number, limit: number, ...inserts: T[]): CollectionProxy<T> {
     const collection = this.clone().slice(start, limit)
 
     this.enqueue('splice', undefined, { start, limit, inserts })
@@ -502,7 +500,7 @@ export class CollectionProxy {
    *
    * @returns {Boolean}
    */
-  async some (callback: Function): Promise<boolean> {
+  async some (callback: (value: T, index: number, items: T[]) => unknown | Promise<unknown>): Promise<boolean> {
     return this.enqueue('some', callback).all()
   }
 
@@ -513,7 +511,7 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  sort (comparator: Function): CollectionProxy {
+  sort (comparator: (a: T, b: T) => number): CollectionProxy<T> {
     return this.clone().enqueue('sort', comparator)
   }
 
@@ -534,7 +532,7 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  take (limit: number): CollectionProxy {
+  take (limit: number): CollectionProxy<T> {
     const collection = this.clone()
 
     return limit < 0
@@ -550,7 +548,7 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  takeAndRemove (limit: number): CollectionProxy {
+  takeAndRemove (limit: number): CollectionProxy<T> {
     const collection = this.take(limit)
 
     this.enqueue('takeAndRemove', undefined, limit)
@@ -563,7 +561,7 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  tap (callback: Function): this {
+  tap (callback: (item: T) => void): this {
     return this.enqueue('tap', callback)
   }
 
@@ -583,8 +581,8 @@ export class CollectionProxy {
    *
    * @returns {CollectionProxy}
    */
-  union (items: any): CollectionProxy {
-    return this.concat(items).unique()
+  union (items: T[]): CollectionProxy<T> {
+    return this.concat(...items).unique()
   }
 
   /**
@@ -603,7 +601,7 @@ export class CollectionProxy {
    *
    * @returns {*}
    */
-  unshift (...items: any[]): this {
+  unshift (...items: T[]): this {
     return this.enqueue('unshift', undefined, items)
   }
 

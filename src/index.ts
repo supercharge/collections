@@ -10,8 +10,8 @@ import { CollectionProxy } from './collection-proxy'
  *
  * @returns {CollectionProxy}
  */
-const collect = (collection: any): CollectionProxy => {
-  return new CollectionProxy(collection)
+const collect = <T>(collection: T[]): CollectionProxy<T> => {
+  return new CollectionProxy<T>(collection)
 }
 
 export = collect
