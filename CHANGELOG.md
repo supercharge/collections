@@ -1,9 +1,10 @@
 # Changelog
 
-## [2.3.0](https://github.com/supercharge/collections/compare/v2.2.0...v2.3.0) - 2020-07-xx
+## [2.3.0](https://github.com/supercharge/collections/compare/v2.2.0...v2.3.0) - 2020-07-19
 
 ### Added
 - `flatten()` method: flatten the collection one level deep
+- typed collections: improved TypeScript type definitions enable IntelliSense (when possible) inside callback methods
 
 
 ## [2.2.0](https://github.com/supercharge/collections/compare/v2.1.0...v2.2.0) - 2020-07-02
