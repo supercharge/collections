@@ -139,7 +139,7 @@ describe('Chained Collection ->', () => {
     ).to.equal([2, 3])
 
     const elapsed = Date.now() - start
-    expect(elapsed).to.be.within(30, 100)
+    expect(elapsed).to.be.within(29, 100)
   })
 
   it('filterIf', async () => {
@@ -154,7 +154,7 @@ describe('Chained Collection ->', () => {
     ).to.equal([2, 3])
 
     const elapsed = Date.now() - start
-    expect(elapsed).to.be.within(15, 50)
+    expect(elapsed).to.be.within(14, 50)
 
     expect(
       await Collect([1, 2, 3]).filterIf(1 > 7, async (item) => {
@@ -394,7 +394,7 @@ describe('Chained Collection ->', () => {
       })
 
     const elapsed = Date.now() - start
-    expect(elapsed).to.be.within(40, 100)
+    expect(elapsed).to.be.within(39, 70)
 
     const callback = Sinon.spy()
 
