@@ -657,17 +657,29 @@ export class Collection {
    * @returns {Array}
    */
   async unique (key?: string|Function): Promise<any[]> {
-    if (!key) {
-      return Array.from(
-        new Set(this.items)
+    if (key) {
+      return this.uniqueBy(
+        this.valueRetriever(key)
       )
     }
 
+    return Array.from(
+      new Set(this.items)
+    )
+  }
+
+  /**
+   * Returns all unique items in the collection identified by the given `selector`.
+   *
+   * @param {Function}
+   *
+   * @returns {Array}
+   */
+  async uniqueBy (selector: (item: any) => any): Promise<any[]> {
     const exists = new Set()
-    const callback = this.valueRetriever(key)
 
     return this.reject(async (item: any) => {
-      const id = await callback(item)
+      const id = await selector(item)
 
       if (exists.has(id)) {
         return true
@@ -684,7 +696,7 @@ export class Collection {
    *
    * @returns {Function}
    */
-  valueRetriever (value: Function|any): Function {
+  valueRetriever (value: Function|any): (item: any) => any {
     return typeof value === 'function'
       ? value
       : function (item: any) {

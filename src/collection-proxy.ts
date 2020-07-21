@@ -597,6 +597,17 @@ export class CollectionProxy<T> {
   }
 
   /**
+   * Returns all unique items in the collection identified by the given `selector`.
+   *
+   * @param {Function}
+   *
+   * @returns {CollectionProxy}
+   */
+  uniqueBy (selector: (item: T) => unknown | Promise<unknown>): this {
+    return this.enqueue('uniqueBy', selector)
+  }
+
+  /**
    * Add one or more items to the beginning of the collection.
    *
    * @returns {*}

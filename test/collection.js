@@ -507,37 +507,47 @@ describe('Chained Collection ->', () => {
     expect(await unique.all()).to.equal([1, 2, 3, 4])
     expect(await collection.all()).to.equal(items)
 
-    const withKey = [
+    const users = [
       { name: 'Marcus' },
       { name: 'Marcus' },
       { name: 'Supercharge' }
     ]
 
-    const collectionWithKey = Collect(withKey)
-    const uniqueWithKey = collectionWithKey.unique('name')
+    // with key
+    const collectionWithKey = Collect(users).unique('name')
 
-    expect(await uniqueWithKey.all()).to.equal([
+    expect(await collectionWithKey.all()).to.equal([
       { name: 'Marcus' },
       { name: 'Supercharge' }
     ])
-    expect(await collectionWithKey.all()).to.equal(withKey)
+    expect(await collectionWithKey.all()).to.equal(users)
 
-    const withCallback = [
-      { name: 'Marcus' },
+    // with function
+    expect(
+      await Collect(users).unique(async item => {
+        return item.name
+      })
+    ).to.equal([
       { name: 'Marcus' },
       { name: 'Supercharge' }
+    ])
+  })
+
+  it('uniqueBy', async () => {
+    const items = [
+      { name: 'Marcus' },
+      { name: 'Supercharge' },
+      { name: 'Marcus' }
     ]
 
-    const collectionWithCallback = Collect(withKey)
-    const uniqueWithCallback = collectionWithCallback.unique(async item => {
-      return item.name
-    })
-
-    expect(await uniqueWithCallback.all()).to.equal([
+    expect(
+      await Collect(items).uniqueBy(async item => {
+        return item.name
+      })
+    ).to.equal([
       { name: 'Marcus' },
       { name: 'Supercharge' }
     ])
-    expect(await collectionWithCallback.all()).to.equal(withCallback)
   })
 
   it('union', async () => {
