@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/supercharge/collections/compare/v2.3.0...v2.4.0) - 2020-07-21
+
+### Added
+- `uniqueBy(callback)` method: create a collection of unique items where each unique item is identified by a value returned from the `callback`
+- GitHub Action to publish the package in the GitHub Package Registry
+
+
 ## [2.3.0](https://github.com/supercharge/collections/compare/v2.2.0...v2.3.0) - 2020-07-19
 
 ### Added
