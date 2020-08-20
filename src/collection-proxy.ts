@@ -3,6 +3,23 @@
 import { Collection } from './collection'
 import Queue from '@supercharge/queue-datastructure'
 
+interface QueueItem {
+  /**
+   * Stores the parameter data for the collection method.
+   */
+  data?: any
+
+  /**
+   * Identifies the collection method.
+   */
+  method: string
+
+  /**
+   * Stores the user-land callback processing in the collection method.
+   */
+  callback?: Function
+}
+
 export class CollectionProxy<T> {
   /**
    * Stores the list of items in the collection.
@@ -14,16 +31,16 @@ export class CollectionProxy<T> {
    * should be returned. Then, the queued operations in
    * the call chain will be processed.
    */
-  private readonly callChain: Queue
+  private readonly callChain: Queue<QueueItem>
 
   /**
    *
    * @param items
    * @param callChain
    */
-  constructor (items: T[], callChain: any[] = []) {
+  constructor (items: T[], callChain?: QueueItem[]) {
     this.items = ([] as T[]).concat(items || [])
-    this.callChain = new Queue(callChain)
+    this.callChain = new Queue<QueueItem>(...callChain ?? [])
   }
 
   /**
@@ -661,7 +678,9 @@ export class CollectionProxy<T> {
 
     while (this.callChain.isNotEmpty()) {
       try {
+        // @ts-expect-error
         const { method, callback, data } = this.callChain.dequeue()
+
         collection = await (
           callback
             ? collection[method](callback, data)
