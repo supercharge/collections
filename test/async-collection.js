@@ -1,8 +1,8 @@
 'use strict'
 
-const Collect = require('../dist')
 const Sinon = require('sinon')
 const Lab = require('@hapi/lab')
+const Collect = require('../dist')
 const { expect } = require('@hapi/code')
 
 const { describe, it } = (exports.lab = Lab.script())
