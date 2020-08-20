@@ -28,8 +28,7 @@
     "node": ">=8"
   },
   "files": [
-    "dist",
-    "index.js"
+    "dist"
   ],
   "homepage": "https://github.com/supercharge/collections",
   "keywords": [
@@ -48,7 +47,7 @@
     "superchargejs"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist",
   "publishConfig": {
     "access": "public"
   },
