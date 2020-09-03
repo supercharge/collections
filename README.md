@@ -29,6 +29,10 @@
 
 ---
 
+## Introduction
+The `@supercharge/collections` package provides a convenient wrapper to work with arrays.
+
+
 ## Installation
 
 ```
@@ -45,7 +49,9 @@ The package exports a function accepting an array as a parameter. From there, yo
 
 
 ### Sync Collections by default
-The package is async/await-ready and supports async functions for most of the methods.
+A created collection (`Collect([1, 2, 3])`) is synchronous by default. That means it behaves like JavaScript’s array methods.
+
+In contrast to JavaScript’s array methods, collections have a lot more methods available making your code a lot simpler. Here are basic examples using a collection:
 
 ```js
 const User = require('../models/user')
@@ -60,6 +66,20 @@ const notSubscribedUsers = Collect(users)
   .all()
 
 // notSubscribedUsers = [ <list of not-yet-subscribed users> ]
+
+
+// other example:
+
+// “has” in JS Arrays
+const hasNotSubscribedUsers = !![].concat(users).find(user => {
+  return user.notSubscribedToNewsletter
+})
+
+// “has” in Collections
+const hasNotSubscribedUsers = Collect(users).has(user => {
+  return user.notSubscribedToNewsletter
+})
+
 ```
 
 
