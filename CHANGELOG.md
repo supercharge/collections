@@ -10,6 +10,13 @@
   - you must explicitly call `collection.all()` to retrieve the resulting array from a synchronous collection
 - a collection becomes async as soon as you provide an **async callback method** to methods like `map`, `filter`, `find`, and so on:
 
+### Updated
+- bump dependencies
+- change `main` entrypoint in `package.json` to `dist` folder
+
+### Removed
+- remove `index.js` file which acted as a middleman to export from `dist` folder
+
 ### Breaking Changes
 - collections are now synchronous by default, meaning you don’t need to await a collection if you’re not using an async callback
 
