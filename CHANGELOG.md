@@ -1,5 +1,53 @@
 # Changelog
 
+## [3.0.0](https://github.com/supercharge/collections/compare/v2.4.0...v3.0.0) - 2020-09-03
+
+### Added
+- synchronous collections by default
+  - all collections were **async** by default until versions `2.x`, you had to await every collection pipeline
+  - this changes with the release of version `3.0`: all collections are **sync** by default
+  - synchronous collections work like JavaScript’s array methods
+  - you must explicitly call `collection.all()` to retrieve the resulting array from a synchronous collection
+- a collection becomes async as soon as you provide an **async callback method** to methods like `map`, `filter`, `find`, and so on:
+
+### Breaking Changes
+- collections are now synchronous by default, meaning you don’t need to await a collection if you’re not using an async callback
+
+#### Sync Collections
+Synchronous collections work like JavaScript’s Array methods. For example, the following pipeline stays a synchronous pipeline:
+
+```js
+const Collect = require('@supercharge/collections')
+
+const collection = Collect([1, 2, 3, 4, 5])
+  .map(item => item * 2)
+  .filter(item => item > 5)
+  .sort((a, b) => b -a)
+
+// on sync collections, you must explicitly call `.all()` to retrieve the result
+
+const result = collection.all()
+//  [10, 8, 6]
+```
+
+#### Async Collections
+In comparison, a collection becomes async as soon as you provide an async callback method to methods like `map`, `filter`, `find`, and so on:
+
+```js
+const Collect = require('@supercharge/collections')
+
+const collection = Collect([1, 2, 3, 4, 5])
+  .map(async item => item * 2) // the collection is async from here on
+  .filter(item => item > 5)
+  .sort((a, b) => b -a)
+
+// async collections must be awaited
+
+const result = await collection
+//  [10, 8, 6]
+```
+
+
 ## [2.4.0](https://github.com/supercharge/collections/compare/v2.3.0...v2.4.0) - 2020-07-21
 
 ### Added
