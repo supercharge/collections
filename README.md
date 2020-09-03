@@ -43,38 +43,49 @@ Find all the [details and available methods in the extensive Supercharge docs](h
 ## Usage
 The package exports a function accepting an array as a parameter. From there, you can chain all collection methods.
 
+
+### Sync Collections by default
 The package is async/await-ready and supports async functions for most of the methods.
 
 ```js
-const User = require('models/user')
+const User = require('../models/user')
 const Collect = require('@supercharge/collections')
 
-const users = await Collect(
-    await User.all()
-  )
-  .filter(async user => {
-    return user.notSubscribedToNewsletter()
+const users = await User.findAll()
+
+const notSubscribedUsers = Collect(users)
+  .filter(user => {
+    return user.notSubscribedToNewsletter
   })
-  .map(async user => {
+  .all()
+
+// notSubscribedUsers = [ <list of not-yet-subscribed users> ]
+```
+
+
+### Async Collections
+The package is async/await-ready and supports async callback functions. A collection becomes async (returns a promise) as soon as you provide an async callback method to methods like `map`, `filter`, `find`, and so on. You then need to `await` the collection pipeline:
+
+```js
+const User = require('../models/user')
+const Collect = require('@supercharge/collections')
+
+const users = await User.findAll()
+
+const subscribedUsers = await Collect(users)
+  .filter(user => {
+    return user.notSubscribedToNewsletter
+  })
+  .map(async user => { // <-- providing an async callback creates an async collection that you need to `await`
     await user.subscribeToNewsletter()
 
     return user
   })
 
-// users = [ <list of newly-subscribed users> ]
+// subscribedUsers = [ <list of newly-subscribed users> ]
 ```
 
-You can directly await the result for methods returning a definite value. The function returns a new instance of the collection without altering the original input array:
-
-```js
-await Collect([ 1, 2, 3 ])
-  .map(item => item * 100)
-  .reduce((carry, item) => {
-    return carry + item
-  }, 0)
-
-// result: 600
-```
+You can directly await async collections without ending the call chain with `.all()`. You can still call `.all()` though, it works as well.
 
 
 ## Contributing
