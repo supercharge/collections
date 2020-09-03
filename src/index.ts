@@ -1,6 +1,6 @@
 'use strict'
 
-import { CollectionProxy } from './collection-proxy'
+import { SyncCollection } from './sync-collection'
 
 /**
  * Create a new collection for the given `items`. The `items`
@@ -8,10 +8,10 @@ import { CollectionProxy } from './collection-proxy'
  *
  * @param {*} items
  *
- * @returns {CollectionProxy}
+ * @returns {SyncCollection}
  */
-const collect = <T>(collection: T[]): CollectionProxy<T> => {
-  return new CollectionProxy<T>(collection)
+const collect = <T>(collection: T[]): SyncCollection<T> => {
+  return new SyncCollection<T>(collection)
 }
 
 export = collect

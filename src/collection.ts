@@ -13,7 +13,7 @@ export class Collection {
    *
    * @returns {Array}
    */
-  async all (): Promise<any[]> {
+  all (): any[] {
     return this.items
   }
 
@@ -288,7 +288,7 @@ export class Collection {
    * @returns {Boolean}
    */
   isEmpty (): boolean {
-    return this.items.length === 0
+    return this.size() === 0
   }
 
   /**
@@ -297,7 +297,7 @@ export class Collection {
    * @returns {Boolean}
    */
   isNotEmpty (): boolean {
-    return this.items.length > 0
+    return !this.isEmpty()
   }
 
   /**
@@ -319,7 +319,7 @@ export class Collection {
    */
   async last (callback: Function): Promise<any> {
     if (!callback) {
-      return this.items[this.items.length - 1]
+      return this.items[this.size() - 1]
     }
 
     if (typeof callback === 'function') {
@@ -470,10 +470,9 @@ export class Collection {
    * @returns {*} resulting accumulator value
    */
   async reduce (reducer: Function, accumulator: any): Promise<any> {
-    // eslint-disable-next-line
-    for (const index in this.items) {
-      accumulator = await reducer(accumulator, this.items[index], index, this.items)
-    }
+    await this.forEach(async (item: any, index: number) => {
+      accumulator = await reducer(accumulator, item, index, this.items)
+    })
 
     return accumulator
   }
@@ -489,7 +488,7 @@ export class Collection {
    * @returns {*} resulting accumulator value
    */
   async reduceRight (reducer: Function, accumulator: any): Promise<any> {
-    let index = this.items.length
+    let index = this.size()
 
     while (index--) {
       accumulator = await reducer(accumulator, this.items[index], index, this.items)
@@ -556,7 +555,9 @@ export class Collection {
     const { start, limit } = options
     const chunk = this.items.slice(start)
 
-    return chunk.slice(0, limit)
+    return typeof limit === 'number'
+      ? chunk.slice(0, limit)
+      : chunk.slice(0)
   }
 
   /**
@@ -573,7 +574,7 @@ export class Collection {
   splice (options: any): any[] {
     const { start, limit, inserts } = options
     const flattend = Array.prototype.concat(...inserts)
-    this.items.splice(start, limit || this.items.length, ...flattend)
+    this.items.splice(start, limit, ...flattend)
 
     return this.items.slice(0)
   }
