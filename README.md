@@ -66,10 +66,11 @@ const notSubscribedUsers = Collect(users)
   .all()
 
 // notSubscribedUsers = [ <list of not-yet-subscribed users> ]
+```
 
+Here’s another example outlining how to determine whether the array “has” an item:
 
-// other example:
-
+```js
 // “has” in JS Arrays
 const hasNotSubscribedUsers = !![].concat(users).find(user => {
   return user.notSubscribedToNewsletter
@@ -79,8 +80,9 @@ const hasNotSubscribedUsers = !![].concat(users).find(user => {
 const hasNotSubscribedUsers = Collect(users).has(user => {
   return user.notSubscribedToNewsletter
 })
-
 ```
+
+All available methods are outlined in the [docs](https://superchargejs.com/docs/collections).
 
 
 ### Async Collections
