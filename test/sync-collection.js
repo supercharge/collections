@@ -686,6 +686,16 @@ describe('Collection ->', () => {
     ).to.equal(true)
   })
 
+  it('includes', () => {
+    expect(
+      Collect([1, 2, 3]).includes(3)
+    ).to.equal(true)
+
+    expect(
+      Collect([1, 2, 3]).includes(item => item === 2)
+    ).to.equal(true)
+  })
+
   it('throws', () => {
     expect(() => {
       Collect([1, 2, 3]).forEach(() => {
