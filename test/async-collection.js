@@ -646,6 +646,12 @@ describe('Chained Collection ->', () => {
         .map(async item => item)
         .has(5)
     ).to.be.false()
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(async item => item)
+        .has(1)
+    ).to.be.true()
   })
 
   it('includes', async () => {
@@ -664,6 +670,12 @@ describe('Chained Collection ->', () => {
         .map(async item => item)
         .includes(5)
     ).to.be.false()
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(async item => item)
+        .includes(1)
+    ).to.be.true()
   })
 
   it('throws', async () => {

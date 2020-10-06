@@ -682,8 +682,16 @@ describe('Collection ->', () => {
     ).to.equal(true)
 
     expect(
+      Collect([1, 2, 3]).has(4)
+    ).to.equal(false)
+
+    expect(
       Collect([1, 2, 3]).has(item => item === 2)
     ).to.equal(true)
+
+    expect(
+      Collect([1, 2, 3]).has(item => item === 4)
+    ).to.equal(false)
   })
 
   it('includes', () => {
@@ -692,8 +700,16 @@ describe('Collection ->', () => {
     ).to.equal(true)
 
     expect(
+      Collect([1, 2, 3]).includes(4)
+    ).to.equal(false)
+
+    expect(
       Collect([1, 2, 3]).includes(item => item === 2)
     ).to.equal(true)
+
+    expect(
+      Collect([1, 2, 3]).includes(item => item === 4)
+    ).to.equal(false)
   })
 
   it('throws', () => {
