@@ -317,7 +317,7 @@ export class SyncCollection<T> {
   /**
    * Determines whether the the collection contains the item
    * represented by `callback` or if the collection
-   * satisfies the given `callback` testing function.
+   * satisfies the given `callback` testing function. Alias of `includes`.
    *
    * @param {Function} predicate
    *
@@ -344,6 +344,21 @@ export class SyncCollection<T> {
    */
   hasDuplicates (): boolean {
     return (new Set(this.items)).size !== this.size()
+  }
+
+  /**
+   * Determines whether the the collection contains the item
+   * represented by `callback` or if the collection
+   * satisfies the given `callback` testing function. Alias of `has`.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {Boolean}
+   */
+  includes (predicate: (value: T, index: number, items: T[]) => any): boolean
+  includes (predicate: (value: T, index: number, items: T[]) => Promise<any>): Promise<boolean>
+  includes (predicate: (value: T, index: number, items: T[]) => any): any {
+    return this.has(predicate)
   }
 
   /**

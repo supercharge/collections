@@ -646,6 +646,36 @@ describe('Chained Collection ->', () => {
         .map(async item => item)
         .has(5)
     ).to.be.false()
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(async item => item)
+        .has(1)
+    ).to.be.true()
+  })
+
+  it('includes', async () => {
+    expect(
+      await Collect([1, 2, 3]).includes(async item => item === 4)
+    ).to.equal(false)
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(async item => item)
+        .includes(async item => item === 1)
+    ).to.be.true()
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(async item => item)
+        .includes(5)
+    ).to.be.false()
+
+    expect(
+      await Collect([1, 2, 3])
+        .map(async item => item)
+        .includes(1)
+    ).to.be.true()
   })
 
   it('throws', async () => {
