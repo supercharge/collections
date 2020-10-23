@@ -279,14 +279,12 @@ export class SyncCollection<T> {
    *
    * @param {Function} action
    */
-  forEach (action: (value: T, index: number, items: T[]) => void): SyncCollection<T>
-  forEach (action: (value: T, index: number, items: T[]) => Promise<void>): PendingAsyncCollection<T>
+  forEach (action: (value: T, index: number, items: T[]) => void): void
+  forEach (action: (value: T, index: number, items: T[]) => Promise<void>): Promise<void>
   forEach (action: (value: T, index: number, items: T[]) => any): any {
     return isAsyncFunction(action)
       ? this.proxy('forEach', action).all()
-      : tap(this, () => {
-        this.items.forEach(action)
-      })
+      : this.items.forEach(action)
   }
 
   /**
