@@ -584,6 +584,17 @@ describe('Collection ->', () => {
       Collect().concat([1, 2]).all()
     ).to.equal([1, 2])
 
+    expect(
+      Collect()
+        .concat(1)
+        .concat(2)
+        .concat([3, 4])
+        .concat(5, undefined)
+        .concat([6, undefined])
+        .compact()
+        .all()
+    ).to.equal([1, 2, 3, 4, 5, 6])
+
     const collection = Collect([1, 2, 3])
     expect(collection.all()).to.equal([1, 2, 3])
     expect(collection.concat([4, 5]).all()).to.equal([1, 2, 3, 4, 5])
