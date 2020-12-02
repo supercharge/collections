@@ -10,7 +10,7 @@ import { SyncCollection } from './sync-collection'
  *
  * @returns {SyncCollection}
  */
-const collect = <T>(collection: T[]): SyncCollection<T> => {
+const collect = <T>(collection: T | T[]): SyncCollection<T> => {
   return new SyncCollection<T>(collection)
 }
 

@@ -14,7 +14,7 @@ export class SyncCollection<T> {
    * @param items
    * @param callChain
    */
-  constructor (items: T[]) {
+  constructor (items: T | T[]) {
     this.items = ([] as T[]).concat(items || [])
   }
 
