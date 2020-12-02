@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/supercharge/collections/compare/v3.0.0...v3.1.0) - 2020-12-02
+
+### Updated
+- bump dependencies
+- change typings to allow single values and arrays (`T | T[]`) when creating collections
+
+
 ## [3.0.0](https://github.com/supercharge/collections/compare/v2.4.0...v3.0.0) - 2020-09-03
 
 ### Added
