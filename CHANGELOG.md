@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.1.1](https://github.com/supercharge/collections/compare/v3.1.0...v3.1.1) - 2021-01-03
+
+### Fixed
+- fixed types: make `predicate` parameter optional for `Collection#first`
+
+
 ## [3.1.0](https://github.com/supercharge/collections/compare/v3.0.0...v3.1.0) - 2020-12-02
 
 ### Updated
