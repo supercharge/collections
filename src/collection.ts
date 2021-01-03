@@ -180,7 +180,7 @@ export class Collection {
    *
    * @returns {*} the found value
    */
-  async first (callback: Function): Promise<any> {
+  async first (callback?: Function): Promise<any> {
     if (!callback) {
       return this.items[0]
     }

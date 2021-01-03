@@ -201,7 +201,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*} the found value
    */
-  async first<S extends T> (predicate: (value: T, index: number, items: T[]) => value is S): Promise<any> {
+  async first<S extends T> (predicate?: (value: T, index: number, items: T[]) => value is S): Promise<any> {
     return this.enqueue('first', predicate).all()
   }
 
