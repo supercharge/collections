@@ -235,7 +235,7 @@ export class SyncCollection<T> {
    * @returns {*} the found value
    */
   first (predicate?: (value: T, index: number, items: T[]) => T): T
-  first (predicate?: (value: T, index: number, items: T[]) => T): Promise<T>
+  first (predicate?: (value: T, index: number, items: T[]) => Promise<T>): PendingAsyncCollection<T>
   first (predicate?: (value: T, index: number, items: T[]) => any): any {
     if (!predicate) {
       return this.items[0]
@@ -265,8 +265,8 @@ export class SyncCollection<T> {
    *
    * @returns {SyncCollection}
    */
-  flatMap<R> (action: (value: T, index: number, items: T[]) => R[]): SyncCollection<R>
-  flatMap<R> (action: (value: T, index: number, items: T[]) => Promise<R[]>): PendingAsyncCollection<R>
+  flatMap<R> (action: (value: T, index: number, items: T[]) => R): SyncCollection<R>
+  flatMap<R> (action: (value: T, index: number, items: T[]) => Promise<R>): PendingAsyncCollection<R>
   flatMap (action: (value: T, index: number, items: T[]) => any): any {
     return isAsyncFunction(action)
       ? this.proxy('flatMap', action)
@@ -433,8 +433,8 @@ export class SyncCollection<T> {
    *
    * @returns {Array}
    */
-  map<R> (action: (value: T, index: number, items: T[]) => R[]): SyncCollection<R>
-  map<R> (action: (value: T, index: number, items: T[]) => Promise<R[]>): PendingAsyncCollection<R>
+  map<R> (action: (value: T, index: number, items: T[]) => R): SyncCollection<R>
+  map<R> (action: (value: T, index: number, items: T[]) => Promise<R>): PendingAsyncCollection<R>
   map (action: (value: T, index: number, items: T[]) => any): any {
     return isAsyncFunction(action)
       ? this.proxy('map', action)
