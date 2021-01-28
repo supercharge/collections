@@ -7,23 +7,23 @@
     "url": "https://github.com/supercharge/collections/issues"
   },
   "dependencies": {
-    "@supercharge/goodies": "~1.5.1",
+    "@supercharge/goodies": "~1.8.0",
     "@supercharge/queue-datastructure": "~2.1.0"
   },
   "devDependencies": {
     "@hapi/code": "~8.0.2",
     "@hapi/lab": "~24.1.0",
     "@supercharge/tsconfig": "~1.0.0",
-    "@typescript-eslint/eslint-plugin": "~4.9.0",
-    "eslint": "~7.14.0",
+    "@typescript-eslint/eslint-plugin": "~4.14.1",
+    "eslint": "~7.18.0",
     "eslint-config-standard": "~16.0.2",
-    "eslint-config-standard-with-typescript": "~19.0.1",
+    "eslint-config-standard-with-typescript": "~20.0.0",
     "eslint-plugin-import": "~2.22.1",
     "eslint-plugin-node": "~11.1.0",
     "eslint-plugin-promise": "~4.2.1",
     "eslint-plugin-standard": "~4.1.0",
-    "sinon": "~9.2.1",
-    "typescript": "~4.1.2"
+    "sinon": "~9.2.4",
+    "typescript": "~4.1.3"
   },
   "engines": {
     "node": ">=8"
