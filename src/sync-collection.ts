@@ -265,8 +265,8 @@ export class SyncCollection<T> {
    *
    * @returns {SyncCollection}
    */
-  flatMap<R> (action: (value: T, index: number, items: T[]) => R): SyncCollection<R>
-  flatMap<R> (action: (value: T, index: number, items: T[]) => Promise<R>): PendingAsyncCollection<R>
+  flatMap<R> (action: (value: T, index: number, items: T[]) => R[]): SyncCollection<R>
+  flatMap<R> (action: (value: T, index: number, items: T[]) => Promise<R[]>): PendingAsyncCollection<R>
   flatMap (action: (value: T, index: number, items: T[]) => any): any {
     return isAsyncFunction(action)
       ? this.proxy('flatMap', action)
@@ -331,8 +331,8 @@ export class SyncCollection<T> {
     return typeof predicate === 'function'
       ? !!this.find(predicate)
       : !!this.items.find((item: any) => {
-        return item === predicate
-      })
+          return item === predicate
+        })
   }
 
   /**
