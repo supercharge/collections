@@ -125,6 +125,12 @@ describe('Chained Collection ->', () => {
           return [item, item]
         })
     ).to.equal([1, 1, 2, 2, 3, 3])
+
+    expect(
+      await Collect([[1], [2], [3]])
+        .flatMap(async item => item)
+        .filter(async item => item > 2)
+    ).to.equal([3])
   })
 
   it('filter', async () => {
