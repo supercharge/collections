@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.1.3](https://github.com/supercharge/collections/compare/v3.1.2...v3.1.3) - 2021-01-28
+
+### Fixed
+- fixed another typing issue for `flatMap`
+
+
 ## [3.1.2](https://github.com/supercharge/collections/compare/v3.1.1...v3.1.2) - 2021-01-07
 
 ### Fixed
