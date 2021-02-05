@@ -218,7 +218,7 @@ export class SyncCollection<T> {
    *
    * @returns {*} the found value
    */
-  find (predicate: (value: T, index: number, items: T[]) => T): T
+  find (predicate: (value: T, index: number, items: T[]) => T): T | undefined
   find (predicate: (value: T, index: number, items: T[]) => Promise<T>): Promise<T>
   find (predicate: (value: T, index: number, items: T[]) => any): any {
     return isAsyncFunction(predicate)
@@ -234,7 +234,8 @@ export class SyncCollection<T> {
    *
    * @returns {*} the found value
    */
-  first (predicate?: (value: T, index: number, items: T[]) => T): T
+  first (): T | undefined
+  first (predicate?: (value: T, index: number, items: T[]) => T): T | undefined
   first (predicate?: (value: T, index: number, items: T[]) => Promise<T>): PendingAsyncCollection<T>
   first (predicate?: (value: T, index: number, items: T[]) => any): any {
     if (!predicate) {
@@ -640,7 +641,7 @@ export class SyncCollection<T> {
    *
    * @returns {*}
    */
-  shift (): T {
+  shift (): T | undefined {
     return tap(this.clone().first(), () => {
       this.items.shift()
     })
