@@ -50,6 +50,12 @@ describe('Collection ->', () => {
     expect(input).to.equal([1, 2, 3, 4, 5, 6, 7, 8])
 
     expect(
+      Collect(input)
+        .chunk(10)
+        .all()
+    ).to.equal([[1, 2, 3, 4, 5, 6, 7, 8]])
+
+    expect(
       Collect([1, 2, 3, 4, 5, 6, 7, 8])
         .map(item => item * 10)
         .filter(item => item > 50)
