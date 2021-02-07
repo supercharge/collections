@@ -52,7 +52,7 @@ export class SyncCollection<T> {
   }
 
   /**
-   * Breaks the collection into multiple, smaller collections of the given `size`.
+   * Split the collection into multiple, smaller collections of the given `size`.
    *
    * @param {Number} size
    *
