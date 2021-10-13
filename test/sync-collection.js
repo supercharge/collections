@@ -911,4 +911,43 @@ describe('Collection ->', () => {
       Collect([1, 2, 3]).count('non-function')
     }).to.throw()
   })
+
+  it('Symbol.iterator', () => {
+    const collection = Collect([1, 2, 3])
+
+    const iterable = collection[Symbol.iterator]()
+    expect(iterable.next).to.be.a.function()
+
+    const items = []
+
+    for (const item of iterable) {
+      items.push(item)
+    }
+
+    expect(items).to.equal([1, 2, 3])
+  })
+
+  it('Symbol.iterator is iterable', () => {
+    const collection = Collect([1, 2, 3])
+
+    const iterable = collection[Symbol.iterator]()
+    expect(iterable.next).to.be.a.function()
+
+    const items = []
+
+    // eslint-disable-next-line no-unreachable-loop
+    for (const item of iterable) {
+      items.push(item)
+      break
+    }
+
+    expect(items).to.equal([1])
+
+    // Continue with same iterable:
+    for (const item of iterable) {
+      items.push(item)
+    }
+
+    expect(items).to.equal([1, 2, 3])
+  })
 })

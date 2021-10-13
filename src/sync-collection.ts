@@ -3,7 +3,7 @@
 import { isAsyncFunction, tap } from '@supercharge/goodies'
 import { PendingAsyncCollection } from './pending-async-collection'
 
-export class SyncCollection<T> {
+export class SyncCollection<T> implements Iterable<T> {
   /**
    * Stores the list of items in the collection.
    */
@@ -16,6 +16,15 @@ export class SyncCollection<T> {
    */
   constructor (items: T | T[]) {
     this.items = ([] as T[]).concat(items || [])
+  }
+
+  /**
+   * Returns an iterable of the values in the collection.
+   *
+   * @returns {IterableIterator}
+   */
+  [Symbol.iterator] (): IterableIterator<T> {
+    return this.items[Symbol.iterator]()
   }
 
   /**
