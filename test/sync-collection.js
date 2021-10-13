@@ -1,6 +1,5 @@
 'use strict'
 
-const Sinon = require('sinon')
 const Lab = require('@hapi/lab')
 const Collect = require('../dist')
 const { expect } = require('@hapi/code')
@@ -364,15 +363,13 @@ describe('Collection ->', () => {
   })
 
   it('forEach', () => {
-    const callback = Sinon.spy()
+    const items = []
 
-    Collect([1, 2, 3]).forEach(callback)
+    Collect([1, 2, 3]).forEach(item => {
+      items.push(item)
+    })
 
-    expect(callback.called).to.be.true()
-    expect(callback.calledWith(1)).to.be.true()
-    expect(callback.calledWith(2)).to.be.true()
-    expect(callback.calledWith(3)).to.be.true()
-    expect(callback.calledWith(4)).to.be.false()
+    expect(items).to.equal([1, 2, 3])
   })
 
   it('intersect', () => {
