@@ -1,9 +1,11 @@
 # Changelog
 
-## [3.1.5](https://github.com/supercharge/collections/compare/v3.1.4...v3.1.5) - 2021-02-xx
+## [3.1.5](https://github.com/supercharge/collections/compare/v3.1.4...v3.1.5) - 2021-10-13
 
 ### Updated
 - bump dependencies
+- run tests for Node.js v16
+- rename `master` branch to `main`
 
 
 ## [3.1.4](https://github.com/supercharge/collections/compare/v3.1.3...v3.1.4) - 2021-02-05
