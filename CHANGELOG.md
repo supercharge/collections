@@ -1,6 +1,9 @@
 # Changelog
 
-## [3.1.5](https://github.com/supercharge/collections/compare/v3.1.4...v3.1.5) - 2021-10-13
+## [3.2.0](https://github.com/supercharge/collections/compare/v3.1.4...v3.2.0) - 2021-10-13
+
+### Added
+- add iterator support to synchronous collections
 
 ### Updated
 - bump dependencies
