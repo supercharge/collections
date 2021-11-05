@@ -275,8 +275,8 @@ export class SyncCollection<T> implements Iterable<T> {
    *
    * @returns {SyncCollection}
    */
-  flatMap<R> (action: (value: T, index: number, items: T[]) => R[]): SyncCollection<R>
   flatMap<R> (action: (value: T, index: number, items: T[]) => Promise<R[]>): PendingAsyncCollection<R>
+  flatMap<R> (action: (value: T, index: number, items: T[]) => R[]): SyncCollection<R>
   flatMap (action: (value: T, index: number, items: T[]) => any): any {
     return isAsyncFunction(action)
       ? this.proxy('flatMap', action)
@@ -443,8 +443,8 @@ export class SyncCollection<T> implements Iterable<T> {
    *
    * @returns {Array}
    */
-  map<R> (action: (value: T, index: number, items: T[]) => R): SyncCollection<R>
   map<R> (action: (value: T, index: number, items: T[]) => Promise<R>): PendingAsyncCollection<R>
+  map<R> (action: (value: T, index: number, items: T[]) => R): SyncCollection<R>
   map (action: (value: T, index: number, items: T[]) => any): any {
     return isAsyncFunction(action)
       ? this.proxy('map', action)
@@ -572,8 +572,8 @@ export class SyncCollection<T> implements Iterable<T> {
    *
    * @returns {*} resulting accumulator value
    */
-  reduce<R> (reducer: (carry: R, currentValue: T, currentIndex?: number, items?: T[]) => R, accumulator: R): R
   reduce<R> (reducer: (carry: R, currentValue: T, currentIndex?: number, items?: T[]) => Promise<R>, accumulator: R): Promise<R>
+  reduce<R> (reducer: (carry: R, currentValue: T, currentIndex?: number, items?: T[]) => R, accumulator: R): R
   reduce (reducer: (carry: any, currentValue: T, currentIndex?: number, items?: T[]) => any, accumulator: any): any {
     if (isAsyncFunction(reducer)) {
       return this.proxy('reduce', reducer, accumulator).all()
