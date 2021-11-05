@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.1](https://github.com/supercharge/collections/compare/v3.2.0...v3.2.1) - 2021-11-05
+
+### Updated
+- bump dependencies
+- change order of typings allowing the compiler to pick the stricter ones first
+
+
 ## [3.2.0](https://github.com/supercharge/collections/compare/v3.1.4...v3.2.0) - 2021-10-13
 
 ### Added
