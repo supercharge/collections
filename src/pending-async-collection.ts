@@ -334,7 +334,7 @@ export class PendingAsyncCollection<T> {
    * @returns {String}
    */
   async join (separator: string): Promise<string> {
-    return this.enqueue('join', undefined, separator)
+    return this.enqueue('join', undefined, separator).all()
   }
 
   /**
@@ -698,7 +698,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*}
    */
-  async then (onFullfilled: (value: any) => any, onRejected: (value: any) => any): Promise<void> {
+  async then<R = T[]> (onFullfilled: (value: R) => unknown, onRejected: (value: any) => unknown): Promise<void> {
     try {
       onFullfilled(
         await this.all()
@@ -713,7 +713,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*}
    */
-  async all (): Promise<T> {
+  async all<R = T[]> (): Promise<R> {
     let collection: any = new Collection(
       this.clone().entries()
     )
