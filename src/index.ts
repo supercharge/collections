@@ -1,6 +1,6 @@
 'use strict'
 
-import { SyncCollection } from './sync-collection'
+import { PendingAsyncCollection } from './pending-async-collection'
 
 /**
  * Create a new collection for the given `items`. The `items`
@@ -8,10 +8,13 @@ import { SyncCollection } from './sync-collection'
  *
  * @param {*} items
  *
- * @returns {SyncCollection}
+ * @returns {PendingAsyncCollection}
  */
-const collect = <T>(collection: T | T[]): SyncCollection<T> => {
-  return new SyncCollection<T>(collection)
+const collect = <T>(collection?: T | T[]): PendingAsyncCollection<T> => {
+  return new PendingAsyncCollection<T>(
+    ([] as T[]).concat(collection ?? [])
+  )
 }
 
-export = collect
+export default collect
+export const Collect = collect
