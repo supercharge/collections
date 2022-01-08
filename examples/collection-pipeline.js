@@ -1,6 +1,6 @@
 'use strict'
 
-const Collect = require('..')
+const { Collect } = require('..')
 
 /**
  * Helper function that waits for the given amount
@@ -17,16 +17,17 @@ async function wait (ms) {
 }
 
 async function run () {
-  const input = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  const input = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   const result = await Collect(input)
     .map(item => item * 100)
     .map(async timeout => {
       await wait(timeout)
+      console.log(`waited: ${timeout} milliseconds`)
+
       return timeout
     })
     .filter(timeout => timeout > 500)
-    .all()
 
   console.log(`Result: ${result}`)
 }
