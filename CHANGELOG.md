@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.0.1](https://github.com/supercharge/collections/compare/v4.0.0...v4.0.1) - 2022-01-08
+
+### Updated
+- refined typings
+
+
 ## [4.0.0](https://github.com/supercharge/collections/compare/v3.2.1...v4.0.0) - 2022-01-08
 
 ### Updated
