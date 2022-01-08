@@ -1,6 +1,6 @@
 # Changelog
 
-## [4.0.0](https://github.com/supercharge/collections/compare/v3.2.1...v4.0.0) - 2022-0x-xx
+## [4.0.0](https://github.com/supercharge/collections/compare/v3.2.1...v4.0.0) - 2022-01-08
 
 ### Updated
 - bump dependencies
