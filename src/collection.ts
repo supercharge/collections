@@ -1,8 +1,14 @@
 'use strict'
 
 export class Collection {
+  /**
+   * Stores the collection items.
+   */
   private items: any[]
 
+  /**
+   * Creates a new instance.
+   */
   constructor (items: any[] = []) {
     this.items = items
   }
@@ -227,7 +233,7 @@ export class Collection {
    */
   async groupBy (key: string): Promise<any> {
     if (key.includes('.')) {
-      throw new Error('We do not support nested grouping yet. Please send a PR for that feature?')
+      throw new Error('We do not support nested grouping yet. Please send a PR for that feature.')
     }
 
     return this.reduce((carry: any, item: any) => {
@@ -267,19 +273,6 @@ export class Collection {
    */
   async hasDuplicates (): Promise<boolean> {
     return (new Set(this.items)).size !== this.size()
-  }
-
-  /**
-   * Determines whether the the collection contains the item
-   * represented by `callback` or if the collection
-   * satisfies the given `callback` testing function. Alias of `has`.
-   *
-   * @param {Function} callback
-   *
-   * @returns {Boolean}
-   */
-  async includes (callback: Function): Promise<boolean> {
-    return this.has(callback)
   }
 
   /**
@@ -330,7 +323,7 @@ export class Collection {
    *
    * @returns {*} the found value
    */
-  async last (callback: Function): Promise<any> {
+  async last (callback?: Function): Promise<any> {
     if (!callback) {
       return this.items[this.size() - 1]
     }

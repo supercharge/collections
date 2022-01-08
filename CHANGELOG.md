@@ -1,5 +1,35 @@
 # Changelog
 
+## [4.0.0](https://github.com/supercharge/collections/compare/v3.2.1...v4.0.0) - 2022-0x-xx
+
+### Updated
+- bump dependencies
+- move to UVU and c8 for testing (we previously used `@hapi/lab` and `@hapi/code`)
+
+### Breaking Changes
+- use named exports
+  ```js
+  // now
+  const { Collect } = require('@supercharge/collections')
+
+  // before
+  const Collect = require('@supercharge/collections')
+  ```
+
+- remove synchronous collection: **everything is async now and must be awaited**
+  ```js
+  // now
+  const { Collect } = require('@supercharge/collections')
+  const numsGreater5 = await Collect([5, 6, 7]).filter(num => num > 5)
+
+  // before
+  const Collect = require('@supercharge/collections')
+  const numsGreater5 = Collect([5, 6, 7]).filter(num => num > 5).all()
+  ```
+
+- removed iterator support: we had iterators for synchronous collections in `@supercharge/collections` v3. Because `@supercharge/collections` v4 is now fully async, we’re going to add async iterators. In a later feature release. For now, we’re shipping v4 without async iterators. We appreciate a pull request if you want to add iterator support :)
+
+
 ## [3.2.1](https://github.com/supercharge/collections/compare/v3.2.0...v3.2.1) - 2021-11-05
 
 ### Updated

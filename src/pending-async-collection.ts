@@ -1,24 +1,8 @@
 'use strict'
 
+import { QueueItem } from './contracts'
 import { Collection } from './collection'
 import Queue from '@supercharge/queue-datastructure'
-
-interface QueueItem {
-  /**
-   * Stores the parameter data for the collection method.
-   */
-  data?: any
-
-  /**
-   * Identifies the collection method.
-   */
-  method: string
-
-  /**
-   * Stores the user-land callback processing in the collection method.
-   */
-  callback?: Function
-}
 
 export class PendingAsyncCollection<T> {
   /**
@@ -40,7 +24,7 @@ export class PendingAsyncCollection<T> {
    * @param callChain
    */
   constructor (items: T[], callChain?: QueueItem[]) {
-    this.items = ([] as T[]).concat(items)
+    this.items = items
     this.callChain = new Queue<QueueItem>(...callChain ?? [])
   }
 
@@ -59,7 +43,22 @@ export class PendingAsyncCollection<T> {
    * @returns {Number}
    */
   async avg (): Promise<number> {
-    return this.enqueue('avg')
+    return this.enqueue<number>('avg').all()
+  }
+
+  /**
+   * Alias for the `.some` method. This function determines
+   * whether any item in the `array` passes the truth test
+   * implemented by the given `callback` function.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Boolean}
+   */
+  async any (callback: (value: T, index: number, items: T[]) => Promise<unknown>): Promise<boolean>
+  async any (callback: (value: T, index: number, items: T[]) => unknown): Promise<boolean>
+  async any (callback: (value: T, index: number, items: T[]) => Promise<unknown> | unknown): Promise<boolean> {
+    return this.some(callback)
   }
 
   /**
@@ -70,7 +69,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {PendingAsyncCollection}
    */
-  chunk (size: number): this {
+  chunk (size: number): PendingAsyncCollection<T> {
     return this.enqueue('chunk', undefined, size)
   }
 
@@ -81,7 +80,7 @@ export class PendingAsyncCollection<T> {
    */
   clone (): PendingAsyncCollection<T> {
     return new PendingAsyncCollection<T>(
-      this.items, this.callChain.items()
+      this.items.slice(), this.callChain.items()
     )
   }
 
@@ -90,7 +89,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {PendingAsyncCollection}
    */
-  collapse (): this {
+  collapse (): PendingAsyncCollection<T> {
     return this.enqueue('collapse')
   }
 
@@ -100,7 +99,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {PendingAsyncCollection}
    */
-  compact (): this {
+  compact (): PendingAsyncCollection<T> {
     return this.enqueue('compact')
   }
 
@@ -126,7 +125,7 @@ export class PendingAsyncCollection<T> {
    * @returns {Number}
    */
   async count (callback?: Function): Promise<number> {
-    return this.enqueue('count', callback).all()
+    return this.enqueue<number>('count', callback).all()
   }
 
   /**
@@ -136,7 +135,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {PendingAsyncCollection}
    */
-  diff (items: T[]): this {
+  diff (items: T[]): PendingAsyncCollection<T> {
     return this.enqueue('diff', undefined, items)
   }
 
@@ -149,8 +148,10 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {Boolean} Returns `true` if all items pass the predicate check, `false` otherwise.
    */
-  async every (callback: (value: T, index: number, items: T[]) => unknown | Promise<unknown>): Promise<boolean> {
-    return this.enqueue('every', callback)
+  async every (predicate: (value: T, index: number, items: T[]) => Promise<unknown>): Promise<boolean>
+  async every (predicate: (value: T, index: number, items: T[]) => unknown): Promise<boolean>
+  async every (callback: (value: T, index: number, items: T[]) => Promise<unknown> | unknown): Promise<boolean> {
+    return this.enqueue<boolean>('every', callback).all()
   }
 
   /**
@@ -162,7 +163,9 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {Array}
    */
-  filter (predicate: (value: T, index: number, items: T[]) => unknown | Promise<unknown>): this {
+  filter (predicate: (value: T, index: number, items: T[]) => Promise<unknown>): PendingAsyncCollection<T>
+  filter (predicate: (value: T, index: number, items: T[]) => unknown): PendingAsyncCollection<T>
+  filter (predicate: (value: T, index: number, items: T[]) => Promise<unknown> | unknown): PendingAsyncCollection<T> {
     return this.enqueue('filter', predicate)
   }
 
@@ -175,7 +178,9 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {Array}
    */
-  filterIf (condition: boolean, callback: (value: T, index: number, items: T[]) => unknown | Promise<unknown>): this {
+  filterIf (condition: boolean, callback: (value: T, index: number, items: T[]) => Promise<unknown>): PendingAsyncCollection<T>
+  filterIf (condition: boolean, callback: (value: T, index: number, items: T[]) => unknown): PendingAsyncCollection<T>
+  filterIf (condition: boolean, callback: (value: T, index: number, items: T[]) => Promise<unknown> | unknown): PendingAsyncCollection<T> {
     return this.enqueue('filterIf', callback, condition)
   }
 
@@ -188,8 +193,11 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*} the found value
    */
-  async find<S extends T> (predicate: (value: T, index: number, items: T[]) => value is S): Promise<any> {
-    return this.enqueue('find', predicate)
+  async find<S extends T> (predicate: (value: T, index: number, items: T[]) => value is S): Promise<any>
+  async find (predicate: (value: T, index: number, items: T[]) => Promise<unknown>): Promise<T | undefined>
+  async find (predicate: (value: T, index: number, items: T[]) => unknown): Promise<T | undefined>
+  async find (predicate: (value: T, index: number, items: T[]) => Promise<unknown> | unknown): Promise<T | undefined> {
+    return this.enqueue('find', predicate).all()
   }
 
   /**
@@ -201,7 +209,11 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*} the found value
    */
-  async first<S extends T> (predicate?: (value: T, index: number, items: T[]) => value is S): Promise<any> {
+  async first (): Promise<T | undefined>
+  async first<S extends T> (predicate?: (value: T, index: number, items: T[]) => value is S): Promise<T | undefined>
+  async first (predicate?: (value: T, index: number, items: T[]) => Promise<unknown>): Promise<T | undefined>
+  async first (predicate?: (value: T, index: number, items: T[]) => unknown): Promise<T | undefined>
+  async first (predicate?: (value: T, index: number, items: T[]) => Promise<unknown> | unknown): Promise<T | undefined> {
     return this.enqueue('first', predicate).all()
   }
 
@@ -210,7 +222,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {PendingAsyncCollection}
    */
-  flatten (): this {
+  flatten (): PendingAsyncCollection<T> {
     return this.enqueue('collapse')
   }
 
@@ -224,7 +236,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {PendingAsyncCollection}
    */
-  flatMap<R> (callback: (value: T, index: number, items: T[]) => R[] | Promise<R[]>): PendingAsyncCollection<any> {
+  flatMap<R> (callback: (value: T, index: number, items: T[]) => Promise<R> | R): PendingAsyncCollection<any> {
     return this.enqueue('flatMap', callback)
   }
 
@@ -234,8 +246,8 @@ export class PendingAsyncCollection<T> {
    *
    * @param {Function} callback
    */
-  async forEach (callback: (value: T, index: number, items: T[]) => void | Promise<void>): Promise<void> {
-    return this.enqueue('forEach', callback).all()
+  async forEach (callback: (value: T, index: number, items: T[]) => Promise<void> | void): Promise<void> {
+    return this.enqueue<any>('forEach', callback).all()
   }
 
   /**
@@ -258,8 +270,8 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {Boolean}
    */
-  async has (callback: (value: T, index: number, items: T[]) => boolean | Promise<boolean>): Promise<boolean> {
-    return this.enqueue('has', callback)
+  async has (callback: (value: T, index: number, items: T[]) => Promise<boolean> | boolean): Promise<boolean> {
+    return this.enqueue<boolean>('has', callback).all()
   }
 
   /**
@@ -268,7 +280,7 @@ export class PendingAsyncCollection<T> {
    * @returns {Boolean}
    */
   async hasDuplicates (): Promise<boolean> {
-    return this.enqueue('hasDuplicates')
+    return this.enqueue<boolean>('hasDuplicates').all()
   }
 
   /**
@@ -280,7 +292,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {Boolean}
    */
-  async includes (callback: (value: T, index: number, items: T[]) => boolean | Promise<boolean>): Promise<boolean> {
+  async includes (callback: (value: T, index: number, items: T[]) => Promise<boolean> | boolean): Promise<boolean> {
     return this.has(callback)
   }
 
@@ -291,7 +303,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {Array}
    */
-  intersect (items: T[]): this {
+  intersect (items: T[]): PendingAsyncCollection<T> {
     return this.enqueue('intersect', undefined, items)
   }
 
@@ -301,7 +313,7 @@ export class PendingAsyncCollection<T> {
    * @returns {Boolean}
    */
   async isEmpty (): Promise<boolean> {
-    return this.enqueue('isEmpty')
+    return this.enqueue<boolean>('isEmpty').all()
   }
 
   /**
@@ -310,7 +322,7 @@ export class PendingAsyncCollection<T> {
    * @returns {Boolean}
    */
   async isNotEmpty (): Promise<boolean> {
-    return this.enqueue('isNotEmpty')
+    return this.enqueue<boolean>('isNotEmpty').all()
   }
 
   /**
@@ -333,7 +345,11 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*} the found value
    */
-  async last<S extends T> (predicate: (value: T, index: number, items: T[]) => value is S): Promise<S> {
+  async last (): Promise<T | undefined>
+  async last<S extends T> (predicate?: (value: T, index: number, items: T[]) => value is S): Promise<T | undefined>
+  async last (predicate?: (value: T, index: number, items: T[]) => Promise<unknown>): Promise<T | undefined>
+  async last (predicate?: (value: T, index: number, items: T[]) => unknown): Promise<T | undefined>
+  async last (predicate?: (value: T, index: number, items: T[]) => Promise<unknown> | unknown): Promise<T | undefined> {
     return this.enqueue('last', predicate).all()
   }
 
@@ -346,8 +362,10 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {Array}
    */
-  map<R> (callback: (value: T, index: number, items: T[]) => R[]): PendingAsyncCollection<any> {
-    return this.enqueue('map', callback)
+  map<R> (action: (value: T, index: number, items: T[]) => Promise<R>): PendingAsyncCollection<R>
+  map<R> (action: (value: T, index: number, items: T[]) => R): PendingAsyncCollection<R>
+  map<R> (action: (value: T, index: number, items: T[]) => R): any {
+    return this.enqueue('map', action) as unknown as PendingAsyncCollection<R>
   }
 
   /**
@@ -356,7 +374,7 @@ export class PendingAsyncCollection<T> {
    * @returns {Number}
    */
   async max (): Promise<number> {
-    return this.enqueue('max')
+    return this.enqueue<number>('max').all()
   }
 
   /**
@@ -365,7 +383,7 @@ export class PendingAsyncCollection<T> {
    * @returns {Number}
    */
   async median (): Promise<number> {
-    return this.enqueue('median')
+    return this.enqueue<number>('median').all()
   }
 
   /**
@@ -374,7 +392,7 @@ export class PendingAsyncCollection<T> {
    * @returns {Number}
    */
   async min (): Promise<number> {
-    return this.enqueue('min')
+    return this.enqueue<number>('min').all()
   }
 
   /**
@@ -396,12 +414,12 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*}
    */
-  async pop (): Promise<any> {
+  async pop (): Promise<T | undefined> {
     const collection = this.clone()
 
     this.splice(-1, 1)
 
-    return collection.enqueue('pop')
+    return collection.enqueue('pop').all()
   }
 
   /**
@@ -411,7 +429,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {PendingAsyncCollection}
    */
-  push (...items: T[]): this {
+  push (...items: T[]): PendingAsyncCollection<T> {
     return this.enqueue('push', undefined, items)
   }
 
@@ -425,8 +443,10 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*} resulting accumulator value
    */
-  async reduce<R> (reducer: (carry: R, currentValue: T, currentIndex: number, items: T[]) => R | Promise<R>, initial: R): Promise<R> {
-    return this.enqueue('reduce', reducer, initial).all()
+  async reduce<R> (reducer: (carry: R, currentValue: T, currentIndex?: number, items?: T[]) => Promise<R>, accumulator: R): Promise<R>
+  async reduce<R> (reducer: (carry: R, currentValue: T, currentIndex?: number, items?: T[]) => R, accumulator: R): Promise<R>
+  async reduce<R> (reducer: (carry: R, currentValue: T, currentIndex: number, items: T[]) => Promise<R> | R, initial: R): Promise<R> {
+    return this.enqueue<R>('reduce', reducer, initial).all()
   }
 
   /**
@@ -439,8 +459,10 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*} resulting accumulator value
    */
-  async reduceRight<R> (reducer: (carry: R, currentValue: T, currentIndex: number, items: T[]) => R | Promise<R>, initial: R): Promise<R> {
-    return this.enqueue('reduceRight', reducer, initial).all()
+  async reduceRight<R> (reducer: (carry: R, currentValue: T, currentIndex?: number, items?: T[]) => Promise<R>, accumulator: R): Promise<R>
+  async reduceRight<R> (reducer: (carry: R, currentValue: T, currentIndex?: number, items?: T[]) => R, accumulator: R): Promise<R>
+  async reduceRight<R> (reducer: (carry: R, currentValue: T, currentIndex: number, items: T[]) => Promise<R> | R, initial: R): Promise<R> {
+    return this.enqueue<R>('reduceRight', reducer, initial).all()
   }
 
   /**
@@ -452,7 +474,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {Array}
    */
-  reject (predicate: (value: T, index: number, items: T[]) => unknown | Promise<unknown>): this {
+  reject (predicate: (value: T, index: number, items: T[]) => Promise<unknown> | unknown): PendingAsyncCollection<T> {
     return this.enqueue('reject', predicate)
   }
 
@@ -471,7 +493,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*}
    */
-  async shift (): Promise<T> {
+  async shift (): Promise<T | undefined> {
     const collection = this.clone()
 
     this.splice(0, 1)
@@ -485,7 +507,7 @@ export class PendingAsyncCollection<T> {
    * @returns {Number}
    */
   async size (): Promise<number> {
-    return this.enqueue('size').all()
+    return this.enqueue<number>('size').all()
   }
 
   /**
@@ -532,8 +554,10 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {Boolean}
    */
-  async some (predicate: (value: T, index: number, items: T[]) => unknown | Promise<unknown>): Promise<boolean> {
-    return this.enqueue('some', predicate).all()
+  async some (callback: (value: T, index: number, items: T[]) => Promise<unknown>): Promise<boolean>
+  async some (callback: (value: T, index: number, items: T[]) => unknown): Promise<boolean>
+  async some (predicate: (value: T, index: number, items: T[]) => Promise<unknown> | unknown): Promise<boolean> {
+    return this.enqueue<boolean>('some', predicate).all()
   }
 
   /**
@@ -553,7 +577,7 @@ export class PendingAsyncCollection<T> {
    * @returns {Number} resulting sum of collection items
    */
   async sum (): Promise<number> {
-    return this.enqueue('sum').all()
+    return this.enqueue<number>('sum').all()
   }
 
   /**
@@ -593,7 +617,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {PendingAsyncCollection}
    */
-  tap (callback: (item: T) => void): this {
+  tap (callback: (item: T) => void): PendingAsyncCollection<T> {
     return this.enqueue('tap', callback)
   }
 
@@ -603,7 +627,7 @@ export class PendingAsyncCollection<T> {
    * @returns {String}
    */
   async toJSON (): Promise<string> {
-    return this.enqueue('toJSON').all()
+    return this.enqueue<string>('toJSON').all()
   }
 
   /**
@@ -624,7 +648,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {PendingAsyncCollection}
    */
-  unique (key?: string|Function): this {
+  unique (key?: string|Function): PendingAsyncCollection<T> {
     return this.enqueue('unique', undefined, key)
   }
 
@@ -635,7 +659,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {PendingAsyncCollection}
    */
-  uniqueBy (selector: (item: T) => unknown | Promise<unknown>): this {
+  uniqueBy (selector: (item: T) => Promise<unknown> | unknown): PendingAsyncCollection<T> {
     return this.enqueue('uniqueBy', selector)
   }
 
@@ -644,7 +668,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*}
    */
-  unshift (...items: T[]): this {
+  unshift (...items: T[]): PendingAsyncCollection<T> {
     return this.enqueue('unshift', undefined, items)
   }
 
@@ -658,10 +682,12 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {PendingAsyncCollection}
    */
-  enqueue (method: string, callback?: Function, data?: any): this {
+  enqueue<ReturnType = T> (method: string, callback?: Function, data?: any): PendingAsyncCollection<ReturnType> {
     this.callChain.enqueue({ method, callback, data })
 
-    return this
+    return new PendingAsyncCollection<ReturnType>(
+      this.items.slice() as unknown as ReturnType[], this.callChain.items()
+    )
   }
 
   /**
@@ -687,15 +713,14 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*}
    */
-  async all (): Promise<any> {
+  async all (): Promise<T> {
     let collection: any = new Collection(
       this.clone().entries()
     )
 
     while (this.callChain.isNotEmpty()) {
       try {
-        // @ts-expect-error
-        const { method, callback, data } = this.callChain.dequeue()
+        const { method, callback, data } = this.callChain.dequeue()!
 
         collection = await (
           callback
@@ -709,6 +734,7 @@ export class PendingAsyncCollection<T> {
         }
       } catch (error) {
         this.callChain.clear()
+
         throw error
       }
     }
