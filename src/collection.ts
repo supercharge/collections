@@ -359,6 +359,21 @@ export class Collection {
   }
 
   /**
+   * A variant of the `filter` method running the (async) testing
+   * function only if the given `condition` is `true`.
+   *
+   * @param {Function} callback
+   * @param {Boolean} condition
+   *
+   * @returns {Array}
+   */
+  async mapIf (callback: Function, condition: boolean): Promise<any[]> {
+    return condition
+      ? this.map(callback)
+      : this.items
+  }
+
+  /**
    * Returns the max value in the collection.
    *
    * @returns {Number}

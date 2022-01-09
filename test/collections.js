@@ -97,6 +97,29 @@ test('map', async () => {
   ).toEqual([10, 20, 30])
 })
 
+test('mapIf', async () => {
+  const start = Date.now()
+
+  expect(
+    await Collect([1, 2, 3]).mapIf(2 > 1, async (item) => {
+      await pause(5)
+
+      return item * 100
+    })
+  ).toEqual([100, 200, 300])
+
+  const elapsed = Date.now() - start
+  expect(elapsed).toBeWithinRange(14, 50)
+
+  expect(
+    await Collect([1, 2, 3])
+      .map(async item => item)
+      .mapIf(1 > 7, async (item) => {
+        return item * 100
+      })
+  ).toEqual([1, 2, 3])
+})
+
 test('flatMap', async () => {
   const start = Date.now()
 

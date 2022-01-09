@@ -140,7 +140,7 @@ export class PendingAsyncCollection<T> {
   }
 
   /**
-   * Asynchronous version of `Array#every()`, running the (async) testing
+   * Asynchronous version of `Array#every()`, running the async testing
    * function in sequence. Returns `true` if all items in the collection
    * pass the check implemented by the `callback`, otherwise `false`.
    *
@@ -155,7 +155,7 @@ export class PendingAsyncCollection<T> {
   }
 
   /**
-   * Asynchronous version of Array#filter(), running the (async) testing
+   * Asynchronous version of Array#filter(), running the async testing
    * function in sequence. The `callback` should return `true`
    * if an item should be included in the resulting collection.
    *
@@ -170,7 +170,7 @@ export class PendingAsyncCollection<T> {
   }
 
   /**
-   * A variant of the `filter` method running the (async) testing
+   * A variant of the `filter` method running the async testing
    * function only if the given `condition` is `true`.
    *
    * @param {Boolean} condition
@@ -185,7 +185,7 @@ export class PendingAsyncCollection<T> {
   }
 
   /**
-   * Asynchronous version of Array#find(), running the (async) testing
+   * Asynchronous version of Array#find(), running the async testing
    * function in sequence. Returns the first item in the collection
    * satisfying the given `callback`, `undefined` otherwise.
    *
@@ -369,6 +369,20 @@ export class PendingAsyncCollection<T> {
   }
 
   /**
+   * A variant of the `map` method running the async `action`
+   * function only if the given `condition` is `true`.
+   *
+   * @param {Function} callback
+   *
+   * @returns {Array}
+   */
+  mapIf<R> (condition: boolean, action: (value: T, index: number, items: T[]) => Promise<R>): PendingAsyncCollection<R>
+  mapIf<R> (condition: boolean, action: (value: T, index: number, items: T[]) => R): PendingAsyncCollection<R>
+  mapIf<R> (condition: boolean, action: (value: T, index: number, items: T[]) => R): any {
+    return this.enqueue('mapIf', action, condition) as unknown as PendingAsyncCollection<R>
+  }
+
+  /**
    * Returns the max value in the collection.
    *
    * @returns {Number}
@@ -546,7 +560,7 @@ export class PendingAsyncCollection<T> {
   }
 
   /**
-   * Asynchronous version of `Array#some()`, running the (async) testing function
+   * Asynchronous version of `Array#some()`, running the async testing function
    * in sequence. Returns `true` if at least one element in the collection
    * passes the check implemented by the `callback`, otherwise `false`.
    *
