@@ -1,7 +1,7 @@
 {
   "name": "@supercharge/collections",
   "description": "async/await-ready array methods for JavaScript and Node.js",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "author": "Marcus Pöhls <marcus@superchargejs.com>",
   "bugs": {
     "url": "https://github.com/supercharge/collections/issues"
