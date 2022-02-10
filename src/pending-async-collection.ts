@@ -257,7 +257,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {Object}
    */
-  async groupBy (key: string): Promise<any> {
+  async groupBy (key: keyof T): Promise<any> {
     return this.enqueue('groupBy', undefined, key).all()
   }
 
@@ -712,11 +712,14 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {*}
    */
-  async then<R = T[]> (onFullfilled: (value: R) => unknown, onRejected: (value: any) => unknown): Promise<void> {
+  async then<R = T[]> (onFullfilled: (value: R) => unknown, onRejected: (reason: any) => unknown): Promise<R | undefined> {
+    await Promise.all([])
     try {
-      onFullfilled(
-        await this.all()
-      )
+      const result = await this.all<R>()
+
+      onFullfilled(result)
+
+      return result
     } catch (error) {
       onRejected(error)
     }
