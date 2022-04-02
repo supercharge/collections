@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.3.0](https://github.com/supercharge/collections/compare/v4.2.0...v4.3.0) - 2022-04-xx
+
+### Updated
+- refine type in `forEach` allowing `any` return value from the callback
+
+
 ## [4.2.0](https://github.com/supercharge/collections/compare/v4.1.0...v4.2.0) - 2022-02-10
 
 ### Added
