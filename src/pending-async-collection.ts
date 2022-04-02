@@ -246,8 +246,8 @@ export class PendingAsyncCollection<T> {
    *
    * @param {Function} callback
    */
-  async forEach (callback: (value: T, index: number, items: T[]) => Promise<void> | void): Promise<void> {
-    return this.enqueue<any>('forEach', callback).all()
+  async forEach (callback: (value: T, index: number, items: T[]) => Promise<any> | any): Promise<void> {
+    return await this.enqueue<any>('forEach', callback).all()
   }
 
   /**
