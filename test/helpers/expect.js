@@ -1,6 +1,6 @@
 'use strict'
 
-const expect = require('expect')
+const { expect } = require('expect')
 
 expect.extend({
   toBeWithinRange (received, floor, ceiling) {
