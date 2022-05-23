@@ -362,10 +362,10 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {Array}
    */
-  map<R> (action: (value: T, index: number, items: T[]) => Promise<R>): PendingAsyncCollection<R>
   map<R> (action: (value: T, index: number, items: T[]) => R): PendingAsyncCollection<R>
-  map<R> (action: (value: T, index: number, items: T[]) => R): any {
-    return this.enqueue('map', action) as unknown as PendingAsyncCollection<R>
+  map<R> (action: (value: T, index: number, items: T[]) => Promise<R>): PendingAsyncCollection<R>
+  map<R> (action: (value: T, index: number, items: T[]) => R | Promise<R>): PendingAsyncCollection<R> {
+    return this.enqueue<R>('map', action)
   }
 
   /**
@@ -376,10 +376,10 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {Array}
    */
-  mapIf<R> (condition: boolean, action: (value: T, index: number, items: T[]) => Promise<R>): PendingAsyncCollection<R>
   mapIf<R> (condition: boolean, action: (value: T, index: number, items: T[]) => R): PendingAsyncCollection<R>
-  mapIf<R> (condition: boolean, action: (value: T, index: number, items: T[]) => R): any {
-    return this.enqueue('mapIf', action, condition) as unknown as PendingAsyncCollection<R>
+  mapIf<R> (condition: boolean, action: (value: T, index: number, items: T[]) => Promise<R>): PendingAsyncCollection<R>
+  mapIf<R> (condition: boolean, action: (value: T, index: number, items: T[]) => R | Promise<R>): PendingAsyncCollection<R> {
+    return this.enqueue<R>('mapIf', action, condition)
   }
 
   /**
