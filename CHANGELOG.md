@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.4.0](https://github.com/supercharge/collections/compare/v4.3.0...v4.4.0) - 2022-xx-xx
+
+### Updated
+- bump dependencies
+
+
 ## [4.3.0](https://github.com/supercharge/collections/compare/v4.2.0...v4.3.0) - 2022-04-02
 
 ### Updated
