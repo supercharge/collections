@@ -662,7 +662,7 @@ export class PendingAsyncCollection<T> {
    *
    * @returns {PendingAsyncCollection}
    */
-  unique (key?: string|Function): PendingAsyncCollection<T> {
+  unique (key?: string | Function): PendingAsyncCollection<T> {
     return this.enqueue('unique', undefined, key)
   }
 

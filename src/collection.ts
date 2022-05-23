@@ -169,7 +169,7 @@ export class Collection {
    *
    * @returns {*} the found value
    */
-  async find (callback: Function): Promise<any|undefined> {
+  async find (callback: Function): Promise<any | undefined> {
     for (const [index, value] of this.items.entries()) {
       const result = await callback(value, index, this.items)
 
@@ -415,7 +415,7 @@ export class Collection {
    *
    * @returns {Array}
    */
-  async pluck (key: string|string[]): Promise<any[]> {
+  async pluck (key: string | string[]): Promise<any[]> {
     const keys = ([] as any[]).concat(key)
 
     return keys.length === 1
@@ -678,7 +678,7 @@ export class Collection {
    *
    * @returns {Array}
    */
-  async unique (key?: string|Function): Promise<any[]> {
+  async unique (key?: string | Function): Promise<any[]> {
     if (key) {
       return this.uniqueBy(
         this.valueRetriever(key)
@@ -718,7 +718,7 @@ export class Collection {
    *
    * @returns {Function}
    */
-  valueRetriever (value: Function|any): (item: any) => any {
+  valueRetriever (value: Function | any): (item: any) => any {
     return typeof value === 'function'
       ? value
       : function (item: any) {
