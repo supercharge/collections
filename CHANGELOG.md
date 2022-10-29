@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.4.0](https://github.com/supercharge/collections/compare/v4.4.0...v5.0.0) - 2022-10-29
+
+### Updated
+- bump dependencies
+
+### Breaking Changes
+- require Node.js v16, drop support for Node.js v12 and v14
+
+
 ## [4.4.0](https://github.com/supercharge/collections/compare/v4.3.0...v4.4.0) - 2022-10-29
 
 ### Updated
