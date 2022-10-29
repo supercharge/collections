@@ -610,13 +610,7 @@ export class Collection {
    * @returns {Boolean}
    */
   async some (callback: Function): Promise<boolean> {
-    for (const [index, value] of this.items.entries()) {
-      if (await callback(value, index, this.items)) {
-        return true
-      }
-    }
-
-    return false
+    return !!await this.find(callback)
   }
 
   /**
