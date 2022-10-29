@@ -1,6 +1,12 @@
 # Changelog
 
-## [4.4.0](https://github.com/supercharge/collections/compare/v4.4.0...v5.0.0) - 2022-10-29
+## [5.0.1](https://github.com/supercharge/collections/compare/v5.0.0...v5.0.1) - 2022-10-29
+
+### Fixed
+- refined typings for methods returning promise- and non-promise values
+
+
+## [5.0.0](https://github.com/supercharge/collections/compare/v4.4.0...v5.0.0) - 2022-10-29
 
 ### Updated
 - bump dependencies
