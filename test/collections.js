@@ -378,6 +378,17 @@ test('any', async () => {
   expect(
     await Collect([1, 2, 3]).any(async item => item < 10)
   ).toBe(true)
+
+  // only checks the necessary items
+  const seenItems = []
+  expect(
+    await Collect([1, 2, 3, 4]).any(async item => {
+      seenItems.push(item)
+
+      return item > 1
+    })
+  ).toBe(true)
+  expect(seenItems).toEqual([1, 2])
 })
 
 test('sum', async () => {

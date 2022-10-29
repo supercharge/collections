@@ -610,9 +610,13 @@ export class Collection {
    * @returns {Boolean}
    */
   async some (callback: Function): Promise<boolean> {
-    const mapped = await this.map(callback)
+    for (const [index, value] of this.items.entries()) {
+      if (await callback(value, index, this.items)) {
+        return true
+      }
+    }
 
-    return mapped.some(value => value)
+    return false
   }
 
   /**
