@@ -9,8 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
       - run: npm install
@@ -21,10 +21,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set Node.js Version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 16
 
@@ -35,7 +35,7 @@ jobs:
         run: npm run build
 
       - name: Configure GitHub Package Registry as Publish Target
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           registry-url: 'https://npm.pkg.github.com'
           scope: '@supercharge'
