@@ -1,9 +1,10 @@
 # Changelog
 
-## [4.4.0](https://github.com/supercharge/collections/compare/v4.3.0...v4.4.0) - 2022-xx-xx
+## [4.4.0](https://github.com/supercharge/collections/compare/v4.3.0...v4.4.0) - 2022-10-29
 
 ### Updated
 - bump dependencies
+- `any|some`: only check necessary items instead of going through all items and checking the results afterwards
 
 
 ## [4.3.0](https://github.com/supercharge/collections/compare/v4.2.0...v4.3.0) - 2022-04-02
