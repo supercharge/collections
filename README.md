@@ -29,8 +29,12 @@
 
 ---
 
+## Notice
+This package is ESM-only.
+
+
 ## Introduction
-The `@supercharge/collections` package provides a convenient wrapper to work with arrays.
+The `@supercharge/collections` package provides a convenient, fully-async wrapper to work with arrays.
 
 
 ## Installation
@@ -48,50 +52,25 @@ Find all the [details and available methods in the extensive Supercharge docs](h
 The package exports a function accepting an array as a parameter. From there, you can chain all collection methods.
 
 
-### Sync Collections by default
-A created collection (`Collect([1, 2, 3])`) is synchronous by default. That means it behaves like JavaScript’s array methods.
+### SyncCollections by default
+### Collections are Asynchronous
+Collections are asynchronous by default. You can use `async` callback functions in all methods and need to `await` the result.
 
 In contrast to JavaScript’s array methods, collections have a lot more methods available making your code a lot simpler. Here are basic examples using a collection:
 
 ```js
-const User = require('../models/user')
-const Collect = require('@supercharge/collections')
+import User from '../models/user'
+import Collect from '@supercharge/collections'
 
 const users = await User.findAll()
 
-const notSubscribedUsers = Collect(users)
-  .filter(user => {
-    return user.notSubscribedToNewsletter
-  })
-  .all()
+const notSubscribedUsers = await Collect(users).filter(user => {
+  return user.notSubscribedToNewsletter
+})
 
 // notSubscribedUsers = [ <list of not-yet-subscribed users> ]
-```
 
-Here’s another example outlining how to determine whether the array “has” an item:
-
-```js
-// “has” in JS Arrays
-const hasNotSubscribedUsers = !![].concat(users).find(user => {
-  return user.notSubscribedToNewsletter
-})
-
-// “has” in Collections
-const hasNotSubscribedUsers = Collect(users).has(user => {
-  return user.notSubscribedToNewsletter
-})
-```
-
-All available methods are outlined in the [docs](https://superchargejs.com/docs/collections).
-
-
-### Async Collections
-The package is async/await-ready and supports async callback functions. A collection becomes async (returns a promise) as soon as you provide an async callback method to methods like `map`, `filter`, `find`, and so on. You then need to `await` the collection pipeline:
-
-```js
-const User = require('../models/user')
-const Collect = require('@supercharge/collections')
-
+// you can also chain further methods to the collection
 const users = await User.findAll()
 
 const subscribedUsers = await Collect(users)
@@ -107,7 +86,21 @@ const subscribedUsers = await Collect(users)
 // subscribedUsers = [ <list of newly-subscribed users> ]
 ```
 
-You can directly await async collections without ending the call chain with `.all()`. You can still call `.all()` though, it works as well.
+Here’s another example outlining how to determine whether the array “has” an item:
+
+```js
+// “has” in JS Arrays
+const hasNotSubscribedUsers = !![].concat(users).find(user => {
+  return user.notSubscribedToNewsletter
+})
+
+// “has” in Collections
+const hasNotSubscribedUsers = Collect(users).has(async user => {
+  return await User.isSubcribedToNewsletter(user)
+})
+```
+
+All available methods are outlined in the [docs](https://superchargejs.com/docs/collections).
 
 
 ## Contributing
