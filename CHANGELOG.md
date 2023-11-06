@@ -1,5 +1,15 @@
 # Changelog
 
+## [6.0.0](https://github.com/supercharge/collections/compare/v5.0.1...v6.0.0) - 2023-11-xx
+
+### Removed
+- removed JSdoc annotations from methods, TypeScript already provides proper typing
+
+### Breaking Changes
+- require Node.js v20
+- migrate this package to ESM
+
+
 ## [5.0.1](https://github.com/supercharge/collections/compare/v5.0.0...v5.0.1) - 2022-10-29
 
 ### Fixed
