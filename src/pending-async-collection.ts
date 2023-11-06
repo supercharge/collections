@@ -1,7 +1,7 @@
 'use strict'
 
-import { QueueItem } from './contracts'
-import { Collection } from './collection'
+import { QueueItem } from './contracts.js'
+import { Collection } from './collection.js'
 import Queue from '@supercharge/queue-datastructure'
 
 export class PendingAsyncCollection<T> {
@@ -719,6 +719,8 @@ export class PendingAsyncCollection<T> {
     } catch (error) {
       onRejected(error)
     }
+
+    return undefined
   }
 
   /**

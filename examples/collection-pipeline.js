@@ -1,6 +1,6 @@
 'use strict'
 
-const { Collect } = require('..')
+import { Collect } from '..'
 
 /**
  * Helper function that waits for the given amount

@@ -1,6 +1,6 @@
 'use strict'
 
-import { PendingAsyncCollection } from './pending-async-collection'
+import { PendingAsyncCollection } from './pending-async-collection.js'
 
 /**
  * Create a new collection for the given `items`. The `items`

@@ -1,8 +1,8 @@
 'use strict'
 
-const { test } = require('uvu')
-const { Collect } = require('../dist')
-const { expect } = require('./helpers/expect')
+import { test } from 'uvu'
+import { Collect } from '../dist/index.js'
+import { expect } from './helpers/expect.js'
 
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms))
 

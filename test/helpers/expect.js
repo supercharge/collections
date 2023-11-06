@@ -1,6 +1,6 @@
 'use strict'
 
-const { expect } = require('expect')
+import { expect } from 'expect'
 
 expect.extend({
   toBeWithinRange (received, floor, ceiling) {
@@ -24,4 +24,4 @@ expect.extend({
   }
 })
 
-exports.expect = expect
+export { expect }

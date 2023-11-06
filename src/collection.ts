@@ -706,6 +706,7 @@ export class Collection {
       }
 
       exists.add(id)
+      return false
     })
   }
 
