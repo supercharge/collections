@@ -1,4 +1,3 @@
-'use strict'
 
 import { test } from 'uvu'
 import { Collect } from '../dist/index.js'

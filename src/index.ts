@@ -1,4 +1,3 @@
-'use strict'
 
 import { PendingAsyncCollection } from './pending-async-collection.js'
 

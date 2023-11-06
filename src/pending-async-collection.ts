@@ -1,4 +1,3 @@
-'use strict'
 
 import { QueueItem } from './contracts.js'
 import { Collection } from './collection.js'
